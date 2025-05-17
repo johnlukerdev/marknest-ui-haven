@@ -31,23 +31,23 @@ const SignIn: React.FC = () => {
           <Logo />
         </div>
         
-        <h1 className="text-5xl font-bold tracking-tight mb-3 font-[Poppins] animate-fade-in">
+        <h1 className="text-4xl font-bold tracking-tight mb-3 font-[Poppins]">
           Welcome to MarkNest
         </h1>
         
-        <p className="text-xl text-primary mb-4 font-medium tracking-tight animate-fade-in" style={{animationDelay: '0.1s'}}>
+        <p className="text-xl text-primary mb-4 font-medium">
           Organize, access, and explore your digital world with one click.
         </p>
         
-        <p className="text-muted-foreground mb-10 max-w-md animate-fade-in" style={{animationDelay: '0.2s'}}>
+        <p className="text-muted-foreground mb-10 max-w-md">
           MarkNest helps you save, manage, and revisit your favorite content anytime. 
           From videos to articles to tools, keep everything in one nest — beautifully 
           encrypted and always at your fingertips.
         </p>
         
-        <div className="flex flex-col gap-4 sm:flex-row animate-fade-in" style={{animationDelay: '0.3s'}}>
+        <div className="flex flex-col gap-4 sm:flex-row">
           <Button 
-            className="gradient-primary text-white font-medium py-7 px-9 text-lg rounded-xl shadow-lg"
+            className="gradient-primary text-white font-medium py-6 px-8 text-lg"
             onClick={handleGetStarted}
           >
             Get Started
@@ -55,21 +55,12 @@ const SignIn: React.FC = () => {
           
           <Button 
             variant="outline" 
-            className="border-gray-500 hover:bg-muted py-7 px-9 text-lg"
+            className="border-gray-500 hover:bg-muted py-6 px-8 text-lg"
             onClick={() => setIsModalOpen(true)}
           >
             Sign In
           </Button>
         </div>
-
-        {/* Sign In button in top right */}
-        <Button 
-          variant="ghost" 
-          className="absolute top-6 right-6 hover:bg-muted"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Sign In
-        </Button>
       </div>
 
       {/* Right side - Illustration */}
@@ -77,17 +68,17 @@ const SignIn: React.FC = () => {
         <div className="max-w-md">
           <div className="relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg blur opacity-25"></div>
-            <div className="relative bg-card/30 backdrop-blur-md p-8 rounded-xl shadow-2xl border border-white/10">
+            <div className="relative bg-card p-8 rounded-xl shadow-2xl">
               <div className="grid grid-cols-3 gap-4">
                 {[1, 2, 3, 4, 5, 6].map(i => (
-                  <div key={i} className="aspect-video rounded-lg bg-gradient-to-br from-gray-700/50 to-gray-800/50 backdrop-blur-sm flex items-center justify-center border border-white/5">
+                  <div key={i} className="aspect-video rounded-lg bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
                     <div className="w-6 h-6 rounded-md bg-indigo-500/50"></div>
                   </div>
                 ))}
               </div>
               <div className="mt-4 space-y-2">
-                <div className="h-2 bg-gray-700/50 rounded w-3/4"></div>
-                <div className="h-2 bg-gray-700/50 rounded w-1/2"></div>
+                <div className="h-2 bg-gray-700 rounded w-3/4"></div>
+                <div className="h-2 bg-gray-700 rounded w-1/2"></div>
               </div>
             </div>
           </div>
@@ -118,7 +109,7 @@ const SignIn: React.FC = () => {
             
             <Button 
               type="submit" 
-              className="w-full gradient-primary hover:opacity-95 transition-opacity py-5 rounded-xl"
+              className="w-full gradient-primary hover:opacity-95 transition-opacity py-5"
             >
               Continue
             </Button>
