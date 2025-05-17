@@ -32,30 +32,18 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => 
           alt={title} 
           className="h-full w-full object-cover transition-transform group-hover:scale-105"
         />
-        <div className="absolute right-2 top-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="h-8 w-8 rounded-full bg-black/20 text-white backdrop-blur-md hover:bg-black/40"
-              >
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem className="text-destructive">
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
       </div>
       <CardContent className="p-4">
-        <h3 className="mb-1 line-clamp-2 font-medium">{title}</h3>
+        <a 
+          href={url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="mb-1 line-clamp-2 font-medium hover:underline"
+        >
+          {title}
+        </a>
       </CardContent>
-      <CardFooter className="border-t p-4 pt-3">
+      <CardFooter className="border-t p-4 pt-3 flex justify-between items-center">
         <a 
           href={url} 
           target="_blank" 
@@ -64,6 +52,23 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => 
         >
           {displayUrl}
         </a>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8 rounded-full hover:bg-muted"
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuItem className="text-destructive">
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardFooter>
     </Card>
   );

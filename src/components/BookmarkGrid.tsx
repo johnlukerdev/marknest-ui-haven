@@ -1,9 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import BookmarkCard from './BookmarkCard';
 
 // Sample bookmark data
-const BOOKMARKS = [
+const INITIAL_BOOKMARKS = [
   {
     id: '1',
     title: 'The Ultimate Guide to Web Development in 2025',
@@ -42,11 +42,41 @@ const BOOKMARKS = [
   },
 ];
 
-const BookmarkGrid: React.FC = () => {
+interface BookmarkType {
+  id: string;
+  title: string;
+  url: string;
+  imageUrl: string;
+}
+
+interface BookmarkGridProps {
+  onAddBookmark?: (url: string) => void;
+}
+
+const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
+  const [bookmarks, setBookmarks] = useState<BookmarkType[]>(INITIAL_BOOKMARKS);
+
+  // Function to handle adding a new bookmark (would typically connect to an API)
+  const handleAddBookmark = (url: string) => {
+    // This is a mock implementation, in a real app you'd fetch metadata from the URL
+    const newBookmark: BookmarkType = {
+      id: Math.random().toString(36).substring(7),
+      title: `Bookmark for ${url}`,
+      url,
+      imageUrl: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1000'
+    };
+    
+    setBookmarks([newBookmark, ...bookmarks]);
+    
+    if (onAddBookmark) {
+      onAddBookmark(url);
+    }
+  };
+
   return (
     <div className="container py-8">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {BOOKMARKS.map((bookmark) => (
+        {bookmarks.map((bookmark) => (
           <BookmarkCard
             key={bookmark.id}
             title={bookmark.title}

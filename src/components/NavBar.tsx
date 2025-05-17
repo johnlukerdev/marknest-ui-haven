@@ -10,9 +10,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { ChevronDown, Plus, Search, MoreHorizontal } from "lucide-react";
 import Logo from './Logo';
+import AddBookmarkForm from './AddBookmarkForm';
 
-const NavBar: React.FC = () => {
+interface NavBarProps {
+  onAddBookmark: (url: string) => void;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
   const [showSearch, setShowSearch] = useState(false);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-sm">
@@ -56,8 +62,11 @@ const NavBar: React.FC = () => {
             </Button>
           )}
           
-          <Button className="rounded-full" size="icon">
-            <Plus className="h-5 w-5" />
+          <Button 
+            onClick={() => setAddDialogOpen(true)} 
+            className="flex items-center gap-1"
+          >
+            <Plus className="h-4 w-4" /> Add
           </Button>
           
           <DropdownMenu>
@@ -73,6 +82,12 @@ const NavBar: React.FC = () => {
           </DropdownMenu>
         </div>
       </div>
+      
+      <AddBookmarkForm 
+        open={addDialogOpen} 
+        onOpenChange={setAddDialogOpen} 
+        onSubmit={onAddBookmark} 
+      />
     </nav>
   );
 };
