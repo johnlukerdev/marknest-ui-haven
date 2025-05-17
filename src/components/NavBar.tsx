@@ -34,12 +34,13 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
   }, [showSearch]);
 
   const handleSignOut = () => {
+    // Handle sign out and redirect to signin page
     navigate('/signin');
   };
   
   return (
     <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
-      <div className="container flex h-18 items-center justify-between py-3">
+      <div className="container flex h-20 items-center justify-between py-4">
         <div className="flex items-center gap-4">
           <Logo />
           
@@ -53,9 +54,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" className="w-48 animate-scale-in">
-                    <DropdownMenuItem>My List</DropdownMenuItem>
-                    <DropdownMenuItem>Trash</DropdownMenuItem>
-                    <DropdownMenuItem>Archive</DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-accent transition-colors duration-150">My List</DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-accent transition-colors duration-150">Trash</DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-accent transition-colors duration-150">Archive</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TooltipTrigger>
@@ -74,12 +75,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                   <div className="relative animate-fade-in">
                     <Input 
                       ref={searchInputRef}
-                      className="w-[220px] pr-8 md:w-[280px] shadow-sm" 
+                      className="w-[250px] pr-8 md:w-[320px] h-11 shadow-sm shadow-inner" 
                       placeholder="Search bookmarks..." 
                       autoFocus
                       onBlur={() => setShowSearch(false)}
                     />
-                    <Search className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   </div>
                 ) : (
                   <Button 
@@ -102,25 +103,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button 
-                  onClick={() => setAddDialogOpen(true)} 
-                  className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-opacity px-5 py-6"
-                >
-                  <Plus className="h-4 w-4" /> Add
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Add new bookmark</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button 
+                  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
                   variant="ghost" 
                   size="icon" 
-                  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
                   className="text-muted-foreground hover:text-foreground"
                 >
                   {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
@@ -135,6 +120,22 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
+                <Button 
+                  onClick={() => setAddDialogOpen(true)} 
+                  className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-opacity px-5 py-6"
+                >
+                  <Plus className="h-4 w-4" /> Add
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Add new bookmark</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
@@ -142,11 +143,11 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48 animate-scale-in">
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-accent transition-colors duration-150">
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleSignOut}>
+                    <DropdownMenuItem onClick={handleSignOut} className="hover:bg-accent transition-colors duration-150">
                       <LogOut className="mr-2 h-4 w-4" />
                       Sign Out
                     </DropdownMenuItem>
