@@ -17,10 +17,10 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavBar onAddBookmark={handleAddBookmark} />
-      <BookmarkGrid onAddBookmark={handleAddBookmark} />
-      <div className="fixed bottom-4 right-4">
-        <ThemeToggle />
-      </div>
+      <main className="pt-8">
+        <BookmarkGrid onAddBookmark={handleAddBookmark} />
+      </main>
+      <ThemeToggle />
     </div>
   );
 };
