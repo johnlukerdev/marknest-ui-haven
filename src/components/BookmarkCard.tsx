@@ -76,7 +76,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => 
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem className="text-destructive">
+                  <DropdownMenuItem className="text-white bg-red-600 hover:bg-red-700 px-4 py-2.5 font-medium text-[15px]">
                     <Trash2 className="mr-2 h-4 w-4" />
                     Delete
                   </DropdownMenuItem>

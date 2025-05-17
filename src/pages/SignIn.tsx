@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -9,12 +9,18 @@ import Logo from '@/components/Logo';
 const SignIn: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [secretKey, setSecretKey] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle authentication logic here
     console.log('Authenticating with:', secretKey);
     setIsModalOpen(false);
+    navigate('/');
+  };
+
+  const handleGetStarted = () => {
+    navigate('/');
   };
 
   return (
@@ -42,9 +48,9 @@ const SignIn: React.FC = () => {
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button 
             className="gradient-primary text-white font-medium py-6 px-8 text-lg"
-            asChild
+            onClick={handleGetStarted}
           >
-            <Link to="/">Get Started</Link>
+            Get Started
           </Button>
           
           <Button 

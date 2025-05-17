@@ -1,8 +1,7 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import NavBar from '@/components/NavBar';
 import BookmarkGrid from '@/components/BookmarkGrid';
-import ThemeToggle from '@/components/ThemeToggle';
 import { toast } from '@/hooks/use-toast';
 
 const Index: React.FC = () => {
@@ -20,7 +19,6 @@ const Index: React.FC = () => {
       <main className="pt-8">
         <BookmarkGrid onAddBookmark={handleAddBookmark} />
       </main>
-      <ThemeToggle />
     </div>
   );
 };

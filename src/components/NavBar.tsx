@@ -1,5 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { 
   DropdownMenu, 
@@ -9,9 +10,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { ChevronDown, Plus, Search, MoreHorizontal } from "lucide-react";
+import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon } from "lucide-react";
 import Logo from './Logo';
 import AddBookmarkForm from './AddBookmarkForm';
+import { useTheme } from '@/hooks/use-theme';
 
 interface NavBarProps {
   onAddBookmark: (url: string) => void;
@@ -21,6 +23,8 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
   
   // Focus search input when it appears
   useEffect(() => {
@@ -28,10 +32,14 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
       searchInputRef.current.focus();
     }
   }, [showSearch]);
+
+  const handleSignOut = () => {
+    navigate('/signin');
+  };
   
   return (
-    <nav className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-md">
-      <div className="container flex h-16 items-center justify-between">
+    <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
+      <div className="container flex h-18 items-center justify-between py-3">
         <div className="flex items-center gap-4">
           <Logo />
           
@@ -66,7 +74,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                   <div className="relative animate-fade-in">
                     <Input 
                       ref={searchInputRef}
-                      className="w-[180px] pr-8 md:w-[240px]" 
+                      className="w-[220px] pr-8 md:w-[280px] shadow-sm" 
                       placeholder="Search bookmarks..." 
                       autoFocus
                       onBlur={() => setShowSearch(false)}
@@ -95,13 +103,31 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
               <TooltipTrigger asChild>
                 <Button 
                   onClick={() => setAddDialogOpen(true)} 
-                  className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-opacity"
+                  className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-opacity px-5 py-6"
                 >
                   <Plus className="h-4 w-4" /> Add
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Add new bookmark</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -116,8 +142,14 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48 animate-scale-in">
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuItem>Sign Out</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TooltipTrigger>

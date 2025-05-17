@@ -54,29 +54,12 @@ interface BookmarkGridProps {
 }
 
 const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
-  const [bookmarks, setBookmarks] = useState<BookmarkType[]>(INITIAL_BOOKMARKS);
-
-  // Function to handle adding a new bookmark (would typically connect to an API)
-  const handleAddBookmark = (url: string) => {
-    // This is a mock implementation, in a real app you'd fetch metadata from the URL
-    const newBookmark: BookmarkType = {
-      id: Math.random().toString(36).substring(7),
-      title: `Bookmark for ${url}`,
-      url,
-      imageUrl: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1000'
-    };
-    
-    setBookmarks([newBookmark, ...bookmarks]);
-    
-    if (onAddBookmark) {
-      onAddBookmark(url);
-    }
-  };
+  const [bookmarks] = useState<BookmarkType[]>(INITIAL_BOOKMARKS);
 
   return (
-    <div className="container py-12 px-4 sm:px-6">
+    <div className="container py-12 px-6 sm:px-8 mx-auto max-w-7xl">
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {bookmarks.map((bookmark, index) => (
+        {bookmarks.map((bookmark) => (
           <BookmarkCard
             key={bookmark.id}
             title={bookmark.title}
