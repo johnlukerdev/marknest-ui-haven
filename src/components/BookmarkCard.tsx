@@ -19,16 +19,28 @@ import {
   TooltipTrigger
 } from "@/components/ui";
 import { MoreHorizontal, Trash2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 
 interface BookmarkCardProps {
+  id: string;
   title: string;
   url: string;
   imageUrl: string;
 }
 
-const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => {
+const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl }) => {
   // Extract domain for display
   const displayUrl = new URL(url).hostname;
+  const { moveToTrash } = useBookmarkContext();
+  
+  const handleDelete = () => {
+    moveToTrash(id);
+    toast({
+      title: "Moved to trash",
+      description: `"${title}" has been moved to trash`,
+    });
+  };
   
   return (
     <Card className="overflow-hidden hover-scale group card-enter flex flex-col h-full">
@@ -58,7 +70,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => 
           href={url} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-sm text-muted-foreground hover:text-primary"
+          className="text-sm text-muted-foreground hover:text-primary transition-colors"
         >
           Visit site
         </a>
@@ -70,14 +82,17 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => 
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="h-8 w-8 rounded-full hover:bg-muted"
+                    className="h-8 w-8 rounded-full hover:bg-muted transition-all duration-200"
                   >
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md font-medium text-[15px]">
-                    <Trash2 className="mr-2 h-4 w-4" />
+                <DropdownMenuContent align="end" className="w-48 animate-scale-in">
+                  <DropdownMenuItem 
+                    onClick={handleDelete}
+                    className="group text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md font-medium text-[15px] cursor-pointer transition-all duration-200 hover:shadow-sm"
+                  >
+                    <Trash2 className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                     Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>

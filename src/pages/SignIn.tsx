@@ -27,7 +27,7 @@ const SignIn: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col md:flex-row">
       {/* Left side - Content */}
       <div className="flex-1 flex flex-col justify-center px-8 py-12 md:px-16 lg:px-24">
-        <div className="mb-8">
+        <div className="mb-8 group hover:bg-background/10 inline-flex w-fit rounded-full p-2 transition-all duration-200">
           <Logo />
         </div>
         
@@ -47,7 +47,7 @@ const SignIn: React.FC = () => {
         
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button 
-            className="gradient-primary text-white font-medium py-6 px-8 text-lg"
+            className="gradient-primary text-white font-medium py-6 px-8 text-lg hover:opacity-90 transition-all duration-200 hover:shadow-md"
             onClick={handleGetStarted}
           >
             Get Started
@@ -55,7 +55,7 @@ const SignIn: React.FC = () => {
           
           <Button 
             variant="outline" 
-            className="border-gray-500 hover:bg-muted py-6 px-8 text-lg"
+            className="border-gray-500 hover:bg-muted py-6 px-8 text-lg transition-all duration-200 hover:shadow-sm"
             onClick={() => setIsModalOpen(true)}
           >
             Sign In
@@ -91,9 +91,9 @@ const SignIn: React.FC = () => {
           <DialogHeader>
             <DialogTitle className="text-center text-xl">Sign In to MarkNest</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label htmlFor="secret-key" className="text-sm font-medium">
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-3">
+              <label htmlFor="secret-key" className="text-base font-medium block">
                 Secret Key
               </label>
               <Input
@@ -102,14 +102,17 @@ const SignIn: React.FC = () => {
                 value={secretKey}
                 onChange={(e) => setSecretKey(e.target.value)}
                 placeholder="Enter your secret key"
-                className="w-full"
+                className="w-full p-6 text-lg shadow-sm border-2 focus:border-primary"
                 required
               />
+              <p className="text-sm text-muted-foreground">
+                Enter your secret key to access your bookmarks
+              </p>
             </div>
             
             <Button 
               type="submit" 
-              className="w-full gradient-primary hover:opacity-95 transition-opacity py-5"
+              className="w-full gradient-primary hover:opacity-90 transition-all duration-200 hover:shadow-md py-6 text-base"
             >
               Continue
             </Button>
@@ -117,14 +120,14 @@ const SignIn: React.FC = () => {
             <div className="text-center space-y-4">
               <Button 
                 variant="outline" 
-                className="w-full border-gray-500 hover:bg-muted"
+                className="w-full border-gray-500 hover:bg-muted transition-all duration-200 py-5"
               >
                 Sign in with Stacks Wallet
               </Button>
               
               <div className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
-                <Link to="#" className="text-primary hover:underline">
+                <Link to="#" className="text-primary hover:underline transition-colors">
                   Sign up
                 </Link>
               </div>
