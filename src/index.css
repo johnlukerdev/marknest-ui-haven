@@ -86,6 +86,11 @@
   .card-enter {
     @apply animate-scale-in;
   }
+
+  /* Add cursor:pointer to all buttons and interactive elements */
+  button, a, [role="button"], .cursor-pointer {
+    @apply hover:cursor-pointer;
+  }
 }
 
 @keyframes scale-in {

@@ -35,15 +35,31 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
   const { moveToTrash } = useBookmarkContext();
   
   const handleDelete = () => {
-    moveToTrash(id);
-    toast({
-      title: "Moved to trash",
-      description: `"${title}" has been moved to trash`,
-    });
+    // Add the animate-slide-out class to the card element
+    const cardElement = document.getElementById(`card-${id}`);
+    if (cardElement) {
+      cardElement.classList.add('animate-slide-out');
+      
+      // Wait for the animation to complete before moving to trash
+      setTimeout(() => {
+        moveToTrash(id);
+        toast({
+          title: "Moved to trash",
+          description: `"${title}" has been moved to trash`,
+        });
+      }, 300); // 300ms matches the animation duration
+    } else {
+      // Fallback if the element isn't found
+      moveToTrash(id);
+      toast({
+        title: "Moved to trash",
+        description: `"${title}" has been moved to trash`,
+      });
+    }
   };
   
   return (
-    <Card className="overflow-hidden hover-scale group card-enter flex flex-col h-full">
+    <Card id={`card-${id}`} className="overflow-hidden hover-scale group card-enter flex flex-col h-full">
       <div className="relative h-40 w-full overflow-hidden">
         <img 
           src={imageUrl} 
@@ -53,24 +69,26 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
         />
       </div>
       <CardContent className="p-4 flex-grow">
-        <a 
-          href={url} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="mb-1 line-clamp-2 font-medium transition-colors hover:text-primary hover:underline"
-        >
-          {title}
-        </a>
-        <p className="text-sm text-muted-foreground mt-1 truncate">
-          {displayUrl}
-        </p>
+        <div className="flex flex-col flex-grow">
+          <a 
+            href={url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="mb-1 line-clamp-2 font-medium transition-colors hover:text-primary hover:underline"
+          >
+            {title}
+          </a>
+          <p className="text-sm text-muted-foreground mt-1 truncate">
+            {displayUrl}
+          </p>
+        </div>
       </CardContent>
       <CardFooter className="border-t p-4 pt-3 flex justify-between items-center">
         <a 
           href={url} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-sm text-muted-foreground hover:text-primary transition-colors"
+          className="text-sm text-muted-foreground hover:text-primary transition-colors hover:cursor-pointer"
         >
           Visit site
         </a>
@@ -82,7 +100,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="h-8 w-8 rounded-full hover:bg-muted transition-all duration-200"
+                    className="h-8 w-8 rounded-full hover:bg-muted transition-all duration-200 hover:cursor-pointer"
                   >
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
@@ -90,7 +108,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
                 <DropdownMenuContent align="end" className="w-48 animate-scale-in">
                   <DropdownMenuItem 
                     onClick={handleDelete}
-                    className="group text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md font-medium text-[15px] cursor-pointer transition-all duration-200 hover:shadow-sm"
+                    className="group bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-md font-medium text-[15px] cursor-pointer transition-all duration-200 hover:shadow-md flex items-center"
                   >
                     <Trash2 className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                     Delete

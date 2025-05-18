@@ -51,21 +51,21 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
               <TooltipTrigger asChild>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200">
+                    <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200 hover:cursor-pointer">
                       My List <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" className="w-48 animate-scale-in">
-                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer">
                       <Link to="/">My List</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer">
                       <Link to="/trash">
                         <Trash2 className="mr-2 h-4 w-4" />
                         Trash
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer">
                       <Link to="/archive">
                         <Archive className="mr-2 h-4 w-4" />
                         Archive
@@ -89,7 +89,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                   <div className="relative animate-fade-in">
                     <Input 
                       ref={searchInputRef}
-                      className="w-[240px] pr-8 md:w-[300px] shadow-sm h-11" 
+                      className="w-[240px] pr-8 md:w-[300px] shadow-sm h-12" 
                       placeholder="Search bookmarks..." 
                       autoFocus
                       onBlur={() => setShowSearch(false)}
@@ -101,7 +101,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                     variant="ghost" 
                     size="icon" 
                     onClick={() => setShowSearch(true)}
-                    className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200 hover:cursor-pointer"
                   >
                     <Search className="h-5 w-5" />
                   </Button>
@@ -118,7 +118,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
               <TooltipTrigger asChild>
                 <Button 
                   onClick={() => setAddDialogOpen(true)} 
-                  className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-all duration-200 hover:shadow-md px-5 py-6"
+                  className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-all duration-200 hover:shadow-md hover:cursor-pointer px-5 py-6"
                 >
                   <Plus className="h-4 w-4" /> Add
                 </Button>
@@ -136,7 +136,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                   variant="ghost" 
                   size="icon" 
                   onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                  className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200 hover:cursor-pointer"
                 >
                   {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
                 </Button>
@@ -155,17 +155,17 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200 hover:cursor-pointer"
                     >
                       <MoreHorizontal className="h-5 w-5" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48 animate-scale-in">
-                    <DropdownMenuItem className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                    <DropdownMenuItem className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer">
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleSignOut} className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                    <DropdownMenuItem onClick={handleSignOut} className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer">
                       <LogOut className="mr-2 h-4 w-4" />
                       Sign Out
                     </DropdownMenuItem>
