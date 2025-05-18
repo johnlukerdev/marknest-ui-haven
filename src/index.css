@@ -87,9 +87,9 @@
     @apply animate-scale-in;
   }
 
-  /* Add cursor:pointer to all buttons and interactive elements */
+  /* Fix for circular dependency - use direct CSS instead of @apply */
   button, a, [role="button"], .cursor-pointer {
-    @apply hover:cursor-pointer;
+    cursor: pointer;
   }
 }
 
