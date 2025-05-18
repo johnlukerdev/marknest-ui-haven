@@ -142,11 +142,11 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48 animate-scale-in">
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleSignOut}>
+                    <DropdownMenuItem onClick={handleSignOut} className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
                       <LogOut className="mr-2 h-4 w-4" />
                       Sign Out
                     </DropdownMenuItem>

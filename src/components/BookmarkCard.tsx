@@ -31,7 +31,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => 
   const displayUrl = new URL(url).hostname;
   
   return (
-    <Card className="overflow-hidden hover-scale group card-enter">
+    <Card className="overflow-hidden hover-scale group card-enter flex flex-col h-full">
       <div className="relative h-40 w-full overflow-hidden">
         <img 
           src={imageUrl} 
@@ -40,7 +40,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => 
           loading="lazy"
         />
       </div>
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex-grow">
         <a 
           href={url} 
           target="_blank" 
@@ -76,7 +76,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ title, url, imageUrl }) => 
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem className="text-white bg-red-600 hover:bg-red-700 px-4 py-2.5 font-medium text-[15px]">
+                  <DropdownMenuItem className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md font-medium text-[15px]">
                     <Trash2 className="mr-2 h-4 w-4" />
                     Delete
                   </DropdownMenuItem>
