@@ -16,7 +16,7 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavBar onAddBookmark={handleAddBookmark} />
-      <main className="pt-8">
+      <main className="pt-4 md:pt-8">
         <BookmarkGrid onAddBookmark={handleAddBookmark} />
       </main>
     </div>
