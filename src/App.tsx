@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "./hooks/use-theme";
 import Trash from "./pages/Trash";
 import Archive from "./pages/Archive";
+import Settings from "./pages/Settings";
 import { BookmarkProvider } from "./hooks/useBookmarkContext";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
               <Route path="/signin" element={<SignIn />} />
               <Route path="/trash" element={<Trash />} />
               <Route path="/archive" element={<Archive />} />
+              <Route path="/settings" element={<Settings />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

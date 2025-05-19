@@ -37,6 +37,11 @@
     --ring: 246 83% 59%;
 
     --radius: 1rem;
+    
+    /* Card action button colors */
+    --button-bg: 0 0% 93%;
+    --delete-text: 0 74% 54%;
+    --action-text: 0 0% 20%; 
   }
 
   .light {
@@ -67,6 +72,11 @@
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 246 83% 59%;
+    
+    /* Card action button colors */
+    --button-bg: 0 0% 95%;
+    --delete-text: 0 74% 54%;
+    --action-text: 0 0% 20%;
   }
 }
 
@@ -93,6 +103,28 @@
   }
 }
 
+/* Card action buttons */
+.card-action-button {
+  @apply flex items-center gap-2 px-4 py-3 w-full text-left rounded-md transition-all duration-200 bg-[hsl(var(--button-bg))] text-[hsl(var(--action-text))];
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.card-action-button:hover {
+  @apply bg-[hsl(var(--button-bg)/0.9)] scale-[1.03];
+}
+
+.card-action-button:active {
+  @apply scale-[0.97];
+}
+
+.card-action-button.delete {
+  @apply text-[hsl(var(--delete-text))];
+}
+
+.card-action-menu {
+  @apply bg-white dark:bg-[hsl(var(--card))] p-1 rounded-lg shadow-lg border border-[hsl(var(--border))];
+}
+
 /* Mobile-specific styles */
 @media (max-width: 768px) {
   html {
@@ -107,6 +139,20 @@
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  
+  /* Center cards on mobile */
+  .grid {
+    justify-items: center;
+    max-width: 100%;
+  }
+  
+  /* Full-width cards on mobile */
+  .card {
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
