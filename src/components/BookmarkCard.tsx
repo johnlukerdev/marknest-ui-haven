@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "@/components/ui";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { MoreHorizontal, Trash2, Link, Archive } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 
@@ -32,7 +32,7 @@ interface BookmarkCardProps {
 const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl }) => {
   // Extract domain for display
   const displayUrl = new URL(url).hostname;
-  const { moveToTrash } = useBookmarkContext();
+  const { moveToTrash, moveToArchive } = useBookmarkContext();
   
   const handleDelete = () => {
     // Add the animate-slide-out class to the card element
@@ -54,6 +54,38 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
       toast({
         title: "Moved to trash",
         description: `"${title}" has been moved to trash`,
+      });
+    }
+  };
+  
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(url);
+    toast({
+      title: "Link copied",
+      description: "The bookmark link has been copied to your clipboard",
+    });
+  };
+  
+  const handleArchive = () => {
+    // Add the animate-slide-out class to the card element
+    const cardElement = document.getElementById(`card-${id}`);
+    if (cardElement) {
+      cardElement.classList.add('animate-slide-out');
+      
+      // Wait for the animation to complete before moving to archive
+      setTimeout(() => {
+        moveToArchive(id);
+        toast({
+          title: "Archived",
+          description: `"${title}" has been moved to archives`,
+        });
+      }, 300); // 300ms matches the animation duration
+    } else {
+      // Fallback if the element isn't found
+      moveToArchive(id);
+      toast({
+        title: "Archived",
+        description: `"${title}" has been moved to archives`,
       });
     }
   };
@@ -100,19 +132,37 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="h-8 w-8 rounded-full hover:bg-muted transition-all duration-200 hover:cursor-pointer"
+                    className="h-8 w-8 rounded-full hover:bg-muted transition-all duration-200"
                   >
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 animate-scale-in">
-                  <DropdownMenuItem 
-                    onClick={handleDelete}
-                    className="group bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-md font-medium text-[15px] cursor-pointer transition-all duration-200 hover:shadow-md flex items-center"
-                  >
-                    <Trash2 className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                    Delete
-                  </DropdownMenuItem>
+                <DropdownMenuContent align="end" className="w-48 bg-[#f5f5f5] p-1.5 rounded-lg shadow-md border-0 animate-scale-in">
+                  <div className="flex flex-col gap-1">
+                    <DropdownMenuItem 
+                      onClick={handleDelete}
+                      className="flex items-center gap-2 py-2.5 px-3 rounded-md cursor-pointer transition-all duration-200 hover:bg-[#ebebeb] hover:scale-[1.03] active:scale-[0.97]"
+                    >
+                      <Trash2 className="h-4 w-4 text-[#e53935]" />
+                      <span className="text-[#e53935] font-medium">Delete</span>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem 
+                      onClick={handleCopyLink}
+                      className="flex items-center gap-2 py-2.5 px-3 rounded-md cursor-pointer transition-all duration-200 hover:bg-[#ebebeb] hover:scale-[1.03] active:scale-[0.97]"
+                    >
+                      <Link className="h-4 w-4 text-[#333]" />
+                      <span className="text-[#333] font-medium">Copy Link</span>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem 
+                      onClick={handleArchive}
+                      className="flex items-center gap-2 py-2.5 px-3 rounded-md cursor-pointer transition-all duration-200 hover:bg-[#ebebeb] hover:scale-[1.03] active:scale-[0.97]"
+                    >
+                      <Archive className="h-4 w-4 text-[#333]" />
+                      <span className="text-[#333] font-medium">Archive</span>
+                    </DropdownMenuItem>
+                  </div>
                 </DropdownMenuContent>
               </DropdownMenu>
             </TooltipTrigger>
