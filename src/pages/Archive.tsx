@@ -41,7 +41,7 @@ const Archive: React.FC = () => {
               <p className="text-muted-foreground">Items you archive will appear here</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6 sm:gap-8 mx-auto max-w-md sm:max-w-none sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:gap-8 w-full mx-auto sm:grid-cols-2 lg:grid-cols-3">
               {archiveBookmarks.map((bookmark) => (
                 <Card key={bookmark.id} className="overflow-hidden hover-scale group card-enter flex flex-col h-full">
                   <div className="relative h-40 w-full overflow-hidden">

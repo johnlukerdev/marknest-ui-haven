@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive } from "lucide-react";
+import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive, X } from "lucide-react";
 import Logo from './Logo';
 import AddBookmarkForm from './AddBookmarkForm';
 import { useTheme } from '@/hooks/use-theme';
@@ -36,6 +36,13 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
 
   const handleSignOut = () => {
     navigate('/signin');
+  };
+
+  const handleClearSearch = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.value = '';
+    }
+    setShowSearch(false);
   };
   
   return (
@@ -92,9 +99,19 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                       className="w-full md:w-[240px] pr-8 md:w-[300px] shadow-sm h-12" 
                       placeholder="Search bookmarks..." 
                       autoFocus
-                      onBlur={() => setShowSearch(false)}
+                      onBlur={(e) => {
+                        // Prevent closing if user clicked within the search box
+                        if (!e.relatedTarget || !e.relatedTarget.closest('.search-container')) {
+                          setShowSearch(false);
+                        }
+                      }}
                     />
-                    <Search className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <button 
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      onClick={handleClearSearch}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                   </div>
                 ) : (
                   <Button 
@@ -113,70 +130,75 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
             </Tooltip>
           </TooltipProvider>
           
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button 
-                  onClick={() => setAddDialogOpen(true)} 
-                  className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-all duration-200 hover:shadow-md px-5 py-6"
-                >
-                  <Plus className="h-4 w-4" /> Add
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Add new bookmark</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {/* Hide these buttons when search is open on mobile/tablet */}
+          {(!showSearch || window.innerWidth > 768) && (
+            <>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      onClick={() => setAddDialogOpen(true)} 
+                      className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-all duration-200 hover:shadow-md px-5 py-6"
+                    >
+                      <Plus className="h-4 w-4" /> Add
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Add new bookmark</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                  className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
-                >
-                  {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
                     <Button 
                       variant="ghost" 
                       size="icon" 
+                      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
                       className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
                     >
-                      <MoreHorizontal className="h-5 w-5" />
+                      {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
                     </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48 animate-scale-in">
-                    <DropdownMenuItem className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                      <Settings className="mr-2 h-4 w-4" />
-                      Settings
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleSignOut} className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                      <LogOut className="mr-2 h-4 w-4" />
-                      Sign Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>More options</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                        >
+                          <MoreHorizontal className="h-5 w-5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48 animate-scale-in">
+                        <DropdownMenuItem className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                          <Settings className="mr-2 h-4 w-4" />
+                          Settings
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleSignOut} className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                          <LogOut className="mr-2 h-4 w-4" />
+                          Sign Out
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>More options</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </>
+          )}
         </div>
       </div>
       
