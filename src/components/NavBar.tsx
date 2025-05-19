@@ -14,7 +14,6 @@ import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon,
 import Logo from './Logo';
 import AddBookmarkForm from './AddBookmarkForm';
 import { useTheme } from '@/hooks/use-theme';
-import MobileSidebarDrawer from './MobileSidebarDrawer';
 
 interface NavBarProps {
   onAddBookmark: (url: string) => void;
@@ -23,9 +22,7 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const searchContainerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, setTheme } = useTheme();
@@ -37,24 +34,6 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
     }
   }, [showSearch]);
 
-  // Handle clicks outside the search bar
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        showSearch &&
-        searchContainerRef.current &&
-        !searchContainerRef.current.contains(event.target as Node)
-      ) {
-        setShowSearch(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showSearch]);
-
   const handleSignOut = () => {
     navigate('/signin');
   };
@@ -62,32 +41,79 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
   const handleClearSearch = () => {
     if (searchInputRef.current) {
       searchInputRef.current.value = '';
-      searchInputRef.current.focus();
     }
-  };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Implement search functionality here
     setShowSearch(false);
   };
   
   return (
     <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
       <div className="container flex flex-col md:flex-row h-auto md:h-18 items-center justify-between py-3 px-4 sm:px-6">
-        <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-start mb-3 md:mb-0">
-          <div className="flex items-center">
-            <MobileSidebarDrawer open={sidebarOpen} onOpenChange={setSidebarOpen} />
-            
-            <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
-              <Logo />
-            </Link>
-          </div>
+        <div className="flex items-center gap-4 w-full md:w-auto justify-center md:justify-start mb-3 md:mb-0">
+          <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
+            <Logo />
+          </Link>
           
-          <div className="md:hidden flex items-center">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200">
+                      My List <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48 animate-scale-in">
+                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                      <Link to="/">My List</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                      <Link to="/trash">
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Trash
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                      <Link to="/archive">
+                        <Archive className="mr-2 h-4 w-4" />
+                        Archive
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>View your collections</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        
+        <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-end">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {showSearch ? (
+                  <div className="relative animate-fade-in w-full max-w-[280px] md:max-w-none">
+                    <Input 
+                      ref={searchInputRef}
+                      className="w-full md:w-[240px] pr-8 md:w-[300px] shadow-sm h-12" 
+                      placeholder="Search bookmarks..." 
+                      autoFocus
+                      onBlur={(e) => {
+                        // Prevent closing if user clicked within the search box
+                        if (!e.relatedTarget || !e.relatedTarget.closest('.search-container')) {
+                          setShowSearch(false);
+                        }
+                      }}
+                    />
+                    <button 
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      onClick={handleClearSearch}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ) : (
                   <Button 
                     variant="ghost" 
                     size="icon" 
@@ -96,96 +122,17 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                   >
                     <Search className="h-5 w-5" />
                   </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Search bookmarks</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+                )}
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Search bookmarks</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           
-          <div className="hidden md:flex">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200">
-                        My List <ChevronDown className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start" className="w-48 animate-scale-in">
-                      <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                        <Link to="/">My List</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                        <Link to="/trash">
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Trash
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                        <Link to="/archive">
-                          <Archive className="mr-2 h-4 w-4" />
-                          Archive
-                        </Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>View your collections</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        </div>
-        
-        {/* Search bar and action buttons */}
-        <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-end">
-          {showSearch ? (
-            <div 
-              ref={searchContainerRef}
-              className="relative animate-fade-in w-full search-container z-10"
-            >
-              <form onSubmit={handleSearchSubmit}>
-                <Input 
-                  ref={searchInputRef}
-                  className="w-full pr-8 md:w-[300px] shadow-sm h-12" 
-                  placeholder="Search bookmarks..." 
-                  autoFocus
-                />
-                <button 
-                  type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                  onClick={handleClearSearch}
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </form>
-            </div>
-          ) : (
+          {/* Hide these buttons when search is open on mobile/tablet */}
+          {(!showSearch || window.innerWidth > 768) && (
             <>
-              <div className="hidden md:block">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        onClick={() => setShowSearch(true)}
-                        className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
-                      >
-                        <Search className="h-5 w-5" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Search bookmarks</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -254,32 +201,6 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
           )}
         </div>
       </div>
-      
-      {/* Mobile search bar shows below header when active */}
-      {showSearch && (
-        <div className="md:hidden px-4 pb-3 bg-background/90 backdrop-blur-lg animate-fade-in">
-          <div 
-            ref={searchContainerRef}
-            className="relative w-full search-container"
-          >
-            <form onSubmit={handleSearchSubmit} className="relative">
-              <Input 
-                ref={searchInputRef}
-                className="w-full pr-8 shadow-sm h-12" 
-                placeholder="Search bookmarks..." 
-                autoFocus
-              />
-              <button 
-                type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                onClick={handleClearSearch}
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
       
       <AddBookmarkForm 
         open={addDialogOpen} 
