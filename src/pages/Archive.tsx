@@ -25,9 +25,9 @@ const Archive: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavBar onAddBookmark={() => {}} />
-      <main className="pt-8">
-        <div className="container py-12 px-6 sm:px-8 mx-auto max-w-7xl">
-          <div className="mb-8">
+      <main className="pt-4 sm:pt-8">
+        <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
+          <div className="mb-6 sm:mb-8 text-center sm:text-left">
             <h1 className="text-2xl font-bold mb-2">Archive</h1>
             <p className="text-muted-foreground">Bookmarks you've archived but might need later.</p>
           </div>
@@ -41,7 +41,7 @@ const Archive: React.FC = () => {
               <p className="text-muted-foreground">Items you archive will appear here</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:gap-8 mx-auto max-w-md sm:max-w-none sm:grid-cols-2 lg:grid-cols-3">
               {archiveBookmarks.map((bookmark) => (
                 <Card key={bookmark.id} className="overflow-hidden hover-scale group card-enter flex flex-col h-full">
                   <div className="relative h-40 w-full overflow-hidden">
