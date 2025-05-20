@@ -62,7 +62,10 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				'dropdown-bg': 'hsl(var(--dropdown-bg))',
+				'dropdown-text': 'hsl(var(--dropdown-text))',
+				'dropdown-hover': 'hsl(var(--dropdown-hover))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

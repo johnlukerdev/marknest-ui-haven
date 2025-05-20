@@ -36,11 +36,15 @@
     --input: 217 33% 17%;
     --ring: 246 83% 59%;
 
+    --dropdown-bg: 217 33% 17%;
+    --dropdown-text: 0 0% 20%;
+    --dropdown-hover: 220 9% 46%;
+
     --radius: 1rem;
   }
 
   .light {
-    --background: 0 0% 98%;
+    --background: 60 33% 97%;
     --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
@@ -67,6 +71,10 @@
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 246 83% 59%;
+
+    --dropdown-bg: 0 0% 93%;
+    --dropdown-text: 0 0% 20%;
+    --dropdown-hover: 220 9% 46%;
   }
 }
 
@@ -77,6 +85,7 @@
 
   body {
     @apply bg-background text-foreground font-sans;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .hover-scale {

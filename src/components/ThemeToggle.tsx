@@ -3,31 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useTheme } from '@/hooks/use-theme';
 
 const ThemeToggle: React.FC = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle('light', savedTheme === 'light');
-    } else if (prefersDark) {
-      setTheme('dark');
-      document.documentElement.classList.remove('light');
-    } else {
-      setTheme('dark'); // Default to dark theme as requested
-      document.documentElement.classList.remove('light');
-    }
-  }, []);
+  const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    document.documentElement.classList.toggle('light', newTheme === 'light');
-    localStorage.setItem('theme', newTheme);
   };
 
   return (
