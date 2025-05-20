@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -67,7 +66,12 @@ export default {
 				'dropdown-text': 'hsl(var(--dropdown-text))',
 				'dropdown-hover': 'hsl(var(--dropdown-hover))',
 				'selected-bg': 'hsl(var(--selected-bg))',
-				'selected-border': 'hsl(var(--selected-border))'
+				'selected-border': 'hsl(var(--selected-border))',
+				'select-tick': 'hsl(var(--select-tick))',
+				'button-bg': 'hsl(var(--button-bg))',
+				'button-text': 'hsl(var(--button-text))',
+				'button-hover-bg': 'hsl(var(--button-hover-bg))',
+				'button-hover-text': 'hsl(var(--button-hover-text))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
