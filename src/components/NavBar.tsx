@@ -44,6 +44,10 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
     }
     setShowSearch(false);
   };
+
+  const goToSettings = () => {
+    navigate('/settings');
+  };
   
   return (
     <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
@@ -181,11 +185,17 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-48 animate-scale-in">
-                        <DropdownMenuItem className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                        <DropdownMenuItem 
+                          onClick={goToSettings} 
+                          className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900"
+                        >
                           <Settings className="mr-2 h-4 w-4" />
                           Settings
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleSignOut} className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
+                        <DropdownMenuItem 
+                          onClick={handleSignOut} 
+                          className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900"
+                        >
                           <LogOut className="mr-2 h-4 w-4" />
                           Sign Out
                         </DropdownMenuItem>
