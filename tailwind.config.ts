@@ -65,7 +65,9 @@ export default {
 				},
 				'dropdown-bg': 'hsl(var(--dropdown-bg))',
 				'dropdown-text': 'hsl(var(--dropdown-text))',
-				'dropdown-hover': 'hsl(var(--dropdown-hover))'
+				'dropdown-hover': 'hsl(var(--dropdown-hover))',
+				'selected-bg': 'hsl(var(--selected-bg))',
+				'selected-border': 'hsl(var(--selected-border))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -110,13 +112,24 @@ export default {
 						transform: 'scale(1)',
 						opacity: '1'
 					}
+				},
+				'slide-in-up': {
+					'0%': {
+						transform: 'translateY(20px)',
+						opacity: '0'
+					},
+					'100%': {
+						transform: 'translateY(0)',
+						opacity: '1'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
-				'scale-in': 'scale-in 0.2s ease-out'
+				'scale-in': 'scale-in 0.2s ease-out',
+				'slide-in-up': 'slide-in-up 0.3s ease-out'
 			},
 			fontFamily: {
 				sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],

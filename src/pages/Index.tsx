@@ -2,6 +2,7 @@
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import BookmarkGrid from '@/components/BookmarkGrid';
+import BulkActionsBar from '@/components/BulkActionsBar';
 import { toast } from '@/hooks/use-toast';
 
 const Index: React.FC = () => {
@@ -16,8 +17,9 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavBar onAddBookmark={handleAddBookmark} />
-      <main className="pt-8">
+      <main className="pt-8 pb-16">
         <BookmarkGrid onAddBookmark={handleAddBookmark} />
+        <BulkActionsBar />
       </main>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface Bookmark {
@@ -12,11 +11,18 @@ interface BookmarkContextType {
   bookmarks: Bookmark[];
   trashBookmarks: Bookmark[];
   archiveBookmarks: Bookmark[];
+  selectedBookmarks: string[];
+  isSelectMode: boolean;
   moveToTrash: (id: string) => void;
   restoreFromTrash: (id: string) => void;
   moveToArchive: (id: string) => void;
   restoreFromArchive: (id: string) => void;
   permanentlyDelete: (id: string) => void;
+  toggleSelectMode: () => void;
+  toggleSelectBookmark: (id: string) => void;
+  clearSelectedBookmarks: () => void;
+  bulkMoveToTrash: () => void;
+  bulkMoveToArchive: () => void;
 }
 
 const BookmarkContext = createContext<BookmarkContextType | undefined>(undefined);
@@ -73,6 +79,8 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(initialBookmarks);
   const [trashBookmarks, setTrashBookmarks] = useState<Bookmark[]>([]);
   const [archiveBookmarks, setArchiveBookmarks] = useState<Bookmark[]>([]);
+  const [selectedBookmarks, setSelectedBookmarks] = useState<string[]>([]);
+  const [isSelectMode, setIsSelectMode] = useState(false);
   
   const moveToTrash = (id: string) => {
     const bookmarkToTrash = bookmarks.find(b => b.id === id);
@@ -110,16 +118,70 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
     setTrashBookmarks(trashBookmarks.filter(b => b.id !== id));
   };
   
+  const toggleSelectMode = () => {
+    setIsSelectMode(!isSelectMode);
+    if (isSelectMode) {
+      setSelectedBookmarks([]);
+    }
+  };
+  
+  const toggleSelectBookmark = (id: string) => {
+    if (selectedBookmarks.includes(id)) {
+      setSelectedBookmarks(selectedBookmarks.filter(bookmarkId => bookmarkId !== id));
+    } else {
+      setSelectedBookmarks([...selectedBookmarks, id]);
+    }
+  };
+  
+  const clearSelectedBookmarks = () => {
+    setSelectedBookmarks([]);
+  };
+  
+  const bulkMoveToTrash = () => {
+    const bookmarksToTrash = bookmarks.filter(bookmark => 
+      selectedBookmarks.includes(bookmark.id)
+    );
+    
+    setBookmarks(bookmarks.filter(bookmark => 
+      !selectedBookmarks.includes(bookmark.id)
+    ));
+    
+    setTrashBookmarks([...trashBookmarks, ...bookmarksToTrash]);
+    setSelectedBookmarks([]);
+    setIsSelectMode(false);
+  };
+  
+  const bulkMoveToArchive = () => {
+    const bookmarksToArchive = bookmarks.filter(bookmark => 
+      selectedBookmarks.includes(bookmark.id)
+    );
+    
+    setBookmarks(bookmarks.filter(bookmark => 
+      !selectedBookmarks.includes(bookmark.id)
+    ));
+    
+    setArchiveBookmarks([...archiveBookmarks, ...bookmarksToArchive]);
+    setSelectedBookmarks([]);
+    setIsSelectMode(false);
+  };
+  
   return (
     <BookmarkContext.Provider value={{
       bookmarks,
       trashBookmarks,
       archiveBookmarks,
+      selectedBookmarks,
+      isSelectMode,
       moveToTrash,
       restoreFromTrash,
       moveToArchive,
       restoreFromArchive,
-      permanentlyDelete
+      permanentlyDelete,
+      toggleSelectMode,
+      toggleSelectBookmark,
+      clearSelectedBookmarks,
+      bulkMoveToTrash,
+      bulkMoveToArchive
     }}>
       {children}
     </BookmarkContext.Provider>

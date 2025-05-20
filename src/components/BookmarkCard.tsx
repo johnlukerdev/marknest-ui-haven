@@ -16,9 +16,10 @@ import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger
+  TooltipTrigger,
+  Checkbox
 } from "@/components/ui";
-import { MoreHorizontal, Trash2, Link, Archive } from "lucide-react";
+import { MoreHorizontal, Trash2, Link, Archive, Check } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 
@@ -32,7 +33,15 @@ interface BookmarkCardProps {
 const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl }) => {
   // Extract domain for display
   const displayUrl = new URL(url).hostname;
-  const { moveToTrash, moveToArchive } = useBookmarkContext();
+  const { 
+    moveToTrash, 
+    moveToArchive, 
+    isSelectMode, 
+    selectedBookmarks, 
+    toggleSelectBookmark 
+  } = useBookmarkContext();
+  
+  const isSelected = selectedBookmarks.includes(id);
   
   const handleDelete = () => {
     // Add the animate-slide-out class to the card element
@@ -90,8 +99,31 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
     }
   };
   
+  const handleCardClick = () => {
+    if (isSelectMode) {
+      toggleSelectBookmark(id);
+    }
+  };
+  
   return (
-    <Card id={`card-${id}`} className="overflow-hidden hover-scale group card-enter flex flex-col h-full">
+    <Card 
+      id={`card-${id}`} 
+      className={`overflow-hidden hover-scale group card-enter flex flex-col h-full relative ${
+        isSelectMode ? 'cursor-pointer' : ''
+      } ${
+        isSelected ? 'ring-2 ring-primary bg-selected' : ''
+      }`}
+      onClick={isSelectMode ? handleCardClick : undefined}
+    >
+      {isSelectMode && (
+        <div className="absolute top-2 left-2 z-10">
+          <div className={`h-6 w-6 rounded-full flex items-center justify-center ${
+            isSelected ? 'bg-primary text-white' : 'bg-background/80 border border-border'
+          }`}>
+            {isSelected && <Check className="h-4 w-4" />}
+          </div>
+        </div>
+      )}
       <div className="relative h-40 w-full overflow-hidden">
         <img 
           src={imageUrl} 
@@ -107,6 +139,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
             target="_blank" 
             rel="noopener noreferrer"
             className="mb-1 line-clamp-2 font-medium transition-colors hover:text-primary cursor-pointer"
+            onClick={(e) => isSelectMode && e.preventDefault()}
           >
             {title}
           </a>
@@ -121,6 +154,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
           target="_blank" 
           rel="noopener noreferrer" 
           className="text-sm text-muted-foreground hover:text-primary transition-colors hover:cursor-pointer"
+          onClick={(e) => isSelectMode && e.preventDefault()}
         >
           Visit site
         </a>

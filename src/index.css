@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
@@ -39,6 +40,9 @@
     --dropdown-text: 0 0% 88%; /* #E0E0E0 */
     --dropdown-hover: 0 0% 12%; /* #1F1F1F */
 
+    --selected-bg: 220 10% 23%; /* #3A3A3A */
+    --selected-border: 0 0% 35%; /* #5A5A5A */
+
     --radius: 1rem;
   }
 
@@ -74,6 +78,9 @@
     --dropdown-bg: 0 0% 18%; /* #2E2E2E - same as dark mode */
     --dropdown-text: 0 0% 88%; /* #E0E0E0 - same as dark mode */
     --dropdown-hover: 0 0% 12%; /* #1F1F1F - same as dark mode */
+
+    --selected-bg: 0 0% 95%; /* #F1F1F1 */
+    --selected-border: 0 0% 82%; /* #D0D0D0 */
   }
 }
 
@@ -173,6 +180,17 @@
   }
 }
 
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer utilities {
   .animate-scale-in {
     animation: scale-in 0.3s ease-out forwards;
@@ -194,6 +212,10 @@
     animation: slide-in-right 0.3s ease-out forwards;
   }
   
+  .animate-slide-in-up {
+    animation: slide-in-up 0.3s ease-out forwards;
+  }
+  
   .gradient-primary {
     @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600;
   }
@@ -209,5 +231,10 @@
 
   .settings-menu-item-active {
     @apply bg-primary/10 text-primary font-medium;
+  }
+  
+  /* Selection styles */
+  .bg-selected {
+    @apply bg-selected-bg border-selected-border;
   }
 }
