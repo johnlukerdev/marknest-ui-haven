@@ -1,71 +1,134 @@
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import React, { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import { toast } from '@/hooks/use-toast';
+import { DrawerTitle, DrawerHeader } from '@/components/ui/drawer';
 
 interface AddBookmarkFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (url: string) => void;
+  drawerMode?: boolean;
 }
 
-const AddBookmarkForm: React.FC<AddBookmarkFormProps> = ({ open, onOpenChange, onSubmit }) => {
+const AddBookmarkForm: React.FC<AddBookmarkFormProps> = ({ 
+  open, 
+  onOpenChange, 
+  onSubmit,
+  drawerMode = false
+}) => {
   const [url, setUrl] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  // Auto-focus the input when the dialog opens
-  useEffect(() => {
-    if (open && inputRef.current) {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    }
-  }, [open]);
-
+  const [loading, setLoading] = useState(false);
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (url.trim()) {
-      onSubmit(url);
+    
+    // Basic URL validation
+    if (!url || !url.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a URL",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    try {
+      // Ensure URL has a protocol
+      let processedUrl = url.trim();
+      if (!processedUrl.startsWith('http://') && !processedUrl.startsWith('https://')) {
+        processedUrl = 'https://' + processedUrl;
+      }
+      
+      // Validate URL format
+      new URL(processedUrl);
+      
+      setLoading(true);
+      
+      // Submit the URL
+      onSubmit(processedUrl);
+      
+      // Reset form and close dialog
       setUrl('');
       onOpenChange(false);
+      
+    } catch (error) {
+      toast({
+        title: "Invalid URL",
+        description: "Please enter a valid web address",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
     }
   };
+  
+  const FormContent = () => (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="space-y-3">
+        <Label htmlFor="url">URL</Label>
+        <Input 
+          id="url"
+          type="text"
+          placeholder="https://example.com"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          autoFocus
+          className="h-12"
+        />
+        <p className="text-sm text-muted-foreground">
+          Enter the web address of the page you want to bookmark
+        </p>
+      </div>
+      
+      <div className="flex gap-2 justify-end">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => {
+            setUrl('');
+            onOpenChange(false);
+          }}
+          className="flex-1 sm:flex-none"
+        >
+          Cancel
+        </Button>
+        <Button 
+          type="submit" 
+          disabled={loading}
+          className="flex-1 sm:flex-none"
+        >
+          {loading ? 'Adding...' : 'Add Bookmark'}
+        </Button>
+      </div>
+    </form>
+  );
+  
+  if (drawerMode) {
+    return (
+      <>
+        <div className="drawer-handle"></div>
+        <DrawerHeader>
+          <DrawerTitle className="text-center text-xl">Add Bookmark</DrawerTitle>
+        </DrawerHeader>
+        <div className="px-1 py-4">
+          <FormContent />
+        </div>
+      </>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md animate-scale-in">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center">Add Bookmark</DialogTitle>
+          <DialogTitle className="text-center text-xl">Add Bookmark</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            ref={inputRef}
-            type="url"
-            placeholder="https://example.com"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            className="w-full"
-            autoFocus
-            required
-          />
-          <DialogFooter className="sm:justify-end">
-            <Button 
-              type="button" 
-              variant="outline" 
-              onClick={() => onOpenChange(false)}
-              className="border-gray-500 hover:bg-muted"
-            >
-              Cancel
-            </Button>
-            <Button 
-              type="submit" 
-              className="ml-2 gradient-primary hover:opacity-95 transition-opacity"
-            >
-              Save
-            </Button>
-          </DialogFooter>
-        </form>
+        <FormContent />
       </DialogContent>
     </Dialog>
   );

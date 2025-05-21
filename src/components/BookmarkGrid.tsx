@@ -4,7 +4,8 @@ import BookmarkCard from './BookmarkCard';
 import BulkActionsBar from './BulkActionsBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { Button } from './ui/button';
-import { CheckSquare, X, Trash2, Archive } from 'lucide-react';
+import { CheckSquare, X, Trash2, Archive, Bookmark } from 'lucide-react';
+import EmptyState from './EmptyState';
 
 interface BookmarkGridProps {
   onAddBookmark?: (url: string) => void;
@@ -68,17 +69,30 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 gap-6 sm:gap-8 mx-auto w-full sm:grid-cols-2 lg:grid-cols-3">
-        {bookmarks.map((bookmark) => (
-          <BookmarkCard
-            key={bookmark.id}
-            id={bookmark.id}
-            title={bookmark.title}
-            url={bookmark.url}
-            imageUrl={bookmark.imageUrl}
-          />
-        ))}
-      </div>
+      {bookmarks.length > 0 ? (
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 mx-auto w-full sm:grid-cols-2 lg:grid-cols-3">
+          {bookmarks.map((bookmark) => (
+            <BookmarkCard
+              key={bookmark.id}
+              id={bookmark.id}
+              title={bookmark.title}
+              url={bookmark.url}
+              imageUrl={bookmark.imageUrl}
+            />
+          ))}
+        </div>
+      ) : (
+        <EmptyState 
+          icon={<Bookmark className="h-16 w-16 text-muted-foreground" />}
+          title="No bookmarks yet"
+          description="Save articles, tools, or anything inspiring. Start collecting the web you love."
+          action={
+            <div className="text-center mt-2 text-sm text-muted-foreground">
+              👉 Visit <a href="https://lovable.dev" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">lovable.dev</a> to get started
+            </div>
+          }
+        />
+      )}
     </div>
   );
 };

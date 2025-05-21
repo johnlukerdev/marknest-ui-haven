@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
@@ -9,7 +9,22 @@ import Logo from '@/components/Logo';
 const SignIn: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [secretKey, setSecretKey] = useState('');
+  const [showScrollInfo, setShowScrollInfo] = useState(false);
   const navigate = useNavigate();
+
+  // Track scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) { // Show after scrolling 100px
+        setShowScrollInfo(true);
+      } else {
+        setShowScrollInfo(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +75,21 @@ const SignIn: React.FC = () => {
           >
             Sign In
           </Button>
+        </div>
+
+        {/* Scroll info message */}
+        <div 
+          className={`fixed bottom-8 left-0 right-0 mx-auto w-full max-w-md bg-background/90 backdrop-blur-md rounded-lg shadow-lg p-4 transform transition-all duration-300 z-50 ${
+            showScrollInfo ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+          }`}
+        >
+          <div className="text-center">
+            <h3 className="font-bold text-lg mb-2">What is MarkNest?</h3>
+            <p className="text-muted-foreground">
+              MarkNest is your personal web library.<br/>
+              Save, organize, and revisit the things that matter to you — all in one place.
+            </p>
+          </div>
         </div>
       </div>
 
