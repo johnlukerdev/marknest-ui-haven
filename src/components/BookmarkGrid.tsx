@@ -52,7 +52,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
             variant={isSelectMode ? "default" : "outline"}
             size="sm"
             onClick={toggleSelectMode}
-            className="flex items-center gap-2"
+            className="flex items-center gap-1.5 whitespace-nowrap"
           >
             {isSelectMode ? (
               <>
