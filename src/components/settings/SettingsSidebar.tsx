@@ -59,7 +59,7 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
   // Mobile sidebar with drawer
   return (
     <>
-      <div className="md:hidden flex items-center h-12 px-4 border-b border-border w-full">
+      <div className="md:hidden flex items-center justify-between h-12 px-4 border-b border-border w-full bg-background">
         <Button
           variant="ghost"
           size="sm"
@@ -67,9 +67,10 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
           className="mr-2"
         >
           <Menu className="h-5 w-5" />
-          <span className="ml-2">Settings</span>
+          <span className="ml-2">Menu</span>
         </Button>
         <div className="flex-1 text-center font-medium">{menuItems.find(item => item.id === activeTab)?.label}</div>
+        <div className="w-12"></div> {/* Empty space to balance the layout */}
       </div>
 
       <Drawer open={isOpen} onOpenChange={setIsOpen}>

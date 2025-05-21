@@ -25,7 +25,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
     <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold">My Bookmarks</h2>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap justify-end">
           {isSelectMode && selectedBookmarks.length > 0 && (
             <>
               <Button 
@@ -57,12 +57,12 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
             {isSelectMode ? (
               <>
                 <X className="h-4 w-4" />
-                Cancel
+                <span className="sm:inline">Cancel</span>
               </>
             ) : (
               <>
                 <CheckSquare className="h-4 w-4" />
-                Select
+                <span className="sm:inline">Select</span>
               </>
             )}
           </Button>
@@ -86,11 +86,6 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
           icon={<Bookmark className="h-16 w-16 text-muted-foreground" />}
           title="No bookmarks yet"
           description="Save articles, tools, or anything inspiring. Start collecting the web you love."
-          action={
-            <div className="text-center mt-2 text-sm text-muted-foreground">
-              👉 Visit <a href="https://lovable.dev" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">lovable.dev</a> to get started
-            </div>
-          }
         />
       )}
     </div>

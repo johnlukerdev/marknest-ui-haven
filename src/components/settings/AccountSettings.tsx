@@ -41,31 +41,6 @@ const AccountSettings: React.FC = () => {
     <div className="space-y-8">
       <h2 className="text-2xl font-semibold">Account Settings</h2>
 
-      {/* Account Info Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Personal Information</CardTitle>
-          <CardDescription>Update your personal information.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium">Name</label>
-                <Input id="name" placeholder="Your name" defaultValue="User Name" />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">Email</label>
-                <Input id="email" type="email" placeholder="Your email" defaultValue="user@example.com" />
-              </div>
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button>Save Changes</Button>
-        </CardFooter>
-      </Card>
-
       {/* Delete Account Section */}
       <Card className="border-destructive/20">
         <CardHeader className="border-b border-destructive/20">
