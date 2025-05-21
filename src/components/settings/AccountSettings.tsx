@@ -22,14 +22,18 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
+import { toast } from '@/hooks/use-toast';
 
 const AccountSettings: React.FC = () => {
   const [confirmValue, setConfirmValue] = useState('');
   const [showDialog, setShowDialog] = useState(false);
 
   const handleDeleteAccount = () => {
-    // Removed toast to eliminate popups
-    console.log('Account deletion requested');
+    toast({
+      title: "Account deletion requested",
+      description: "If this were a real app, your account would be deleted.",
+      variant: "destructive",
+    });
     setShowDialog(false);
   };
 

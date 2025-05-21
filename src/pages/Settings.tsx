@@ -8,6 +8,8 @@ import ListsSettings from '@/components/settings/ListsSettings';
 import AccountSettings from '@/components/settings/AccountSettings';
 import AboutSettings from '@/components/settings/AboutSettings';
 import NavBar from '@/components/NavBar';
+import { toast } from '@/hooks/use-toast';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useTheme } from '@/hooks/use-theme';
 import { useMobile } from '@/hooks/use-mobile';
 
@@ -28,8 +30,10 @@ const Settings: React.FC = () => {
   };
 
   const handleAddBookmark = (url: string) => {
-    // Removed toast to eliminate popups
-    console.log('Bookmark added:', url);
+    toast({
+      title: "Bookmark added",
+      description: `Added bookmark: ${url}`
+    });
   };
 
   // Update URL when tab changes
