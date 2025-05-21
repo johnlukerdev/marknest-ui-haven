@@ -1,21 +1,25 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import SettingsSidebar from '@/components/settings/SettingsSidebar';
 import ListsSettings from '@/components/settings/ListsSettings';
+import AccountSettings from '@/components/settings/AccountSettings';
 import AboutSettings from '@/components/settings/AboutSettings';
 import NavBar from '@/components/NavBar';
 import { toast } from '@/hooks/use-toast';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useTheme } from '@/hooks/use-theme';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState<string>(() => {
-    // Get tab from URL or default to "lists"
+    // Get tab from URL or default to "account"
     const tabFromUrl = location.hash.replace('#', '');
-    return tabFromUrl || "lists";
+    return tabFromUrl || "account";
   });
 
   const handleTabChange = (tab: string) => {
@@ -30,6 +34,14 @@ const Settings: React.FC = () => {
     });
   };
 
+  // Update URL when tab changes
+  useEffect(() => {
+    const tabFromUrl = location.hash.replace('#', '');
+    if (tabFromUrl && tabFromUrl !== activeTab) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [location.hash, activeTab]);
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <NavBar onAddBookmark={handleAddBookmark} />
@@ -42,12 +54,8 @@ const Settings: React.FC = () => {
         <div className="flex-1 px-4 md:px-8 pb-20 md:pb-8">
           <ScrollArea className="h-[calc(100vh-120px)] pr-4">
             <Tabs value={activeTab} className="w-full">
-              <TabsContent value="lists" className="mt-0">
-                <ListsSettings />
-              </TabsContent>
               <TabsContent value="account" className="mt-0">
-                <h2 className="text-2xl font-semibold mb-6">Account</h2>
-                <p className="text-muted-foreground">Account settings will go here.</p>
+                <AccountSettings />
               </TabsContent>
               <TabsContent value="subscription" className="mt-0">
                 <h2 className="text-2xl font-semibold mb-6">Subscription</h2>
@@ -56,6 +64,9 @@ const Settings: React.FC = () => {
               <TabsContent value="data" className="mt-0">
                 <h2 className="text-2xl font-semibold mb-6">Data</h2>
                 <p className="text-muted-foreground">Data settings will go here.</p>
+              </TabsContent>
+              <TabsContent value="lists" className="mt-0">
+                <ListsSettings />
               </TabsContent>
               <TabsContent value="tags" className="mt-0">
                 <h2 className="text-2xl font-semibold mb-6">Tags</h2>

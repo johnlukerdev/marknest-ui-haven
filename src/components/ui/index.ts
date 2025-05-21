@@ -13,3 +13,25 @@ export { Input } from './input';
 export { Textarea } from './textarea';
 export { Toggle } from './toggle';
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
+export { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from './alert-dialog';
+export { 
+  Drawer, 
+  DrawerClose, 
+  DrawerContent, 
+  DrawerDescription, 
+  DrawerFooter, 
+  DrawerHeader, 
+  DrawerTitle, 
+  DrawerTrigger 
+} from './drawer';
+export { Alert, AlertDescription } from './alert';
