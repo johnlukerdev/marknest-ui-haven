@@ -1,10 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 import { toast } from '@/hooks/use-toast';
 import { DrawerTitle, DrawerHeader } from '@/components/ui/drawer';
 
@@ -23,17 +22,32 @@ const AddBookmarkForm: React.FC<AddBookmarkFormProps> = ({
 }) => {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  
+  // Clear error when user starts typing
+  useEffect(() => {
+    if (url.trim() && error) {
+      setError(null);
+    }
+  }, [url, error]);
+  
+  // Focus the input field when the dialog opens
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100); // Small delay to ensure the dialog is fully rendered
+    }
+  }, [open]);
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic URL validation
+    // Validation for empty input
     if (!url || !url.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a URL",
-        variant: "destructive"
-      });
+      setError("Please enter a URL");
+      inputRef.current?.focus();
       return;
     }
     
@@ -54,6 +68,7 @@ const AddBookmarkForm: React.FC<AddBookmarkFormProps> = ({
       
       // Reset form and close dialog
       setUrl('');
+      setError(null);
       onOpenChange(false);
       
     } catch (error) {
@@ -78,8 +93,14 @@ const AddBookmarkForm: React.FC<AddBookmarkFormProps> = ({
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           autoFocus
-          className="h-12"
+          ref={inputRef}
+          className={`h-12 ${error ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
         />
+        {error && (
+          <p className="text-sm text-red-600 dark:text-red-400 mt-2 animate-fade-in">
+            {error}
+          </p>
+        )}
         <p className="text-sm text-muted-foreground">
           Enter the web address of the page you want to bookmark
         </p>
@@ -91,6 +112,7 @@ const AddBookmarkForm: React.FC<AddBookmarkFormProps> = ({
           variant="outline"
           onClick={() => {
             setUrl('');
+            setError(null);
             onOpenChange(false);
           }}
           className="flex-1 sm:flex-none"

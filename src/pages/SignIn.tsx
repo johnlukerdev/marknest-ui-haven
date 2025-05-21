@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
@@ -10,6 +10,8 @@ const SignIn: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [secretKey, setSecretKey] = useState('');
   const [showScrollInfo, setShowScrollInfo] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
 
   // Track scroll position
@@ -26,8 +28,32 @@ const SignIn: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Clear error when user starts typing
+  useEffect(() => {
+    if (secretKey.trim() && error) {
+      setError(null);
+    }
+  }, [secretKey, error]);
+
+  // Focus textarea when modal opens
+  useEffect(() => {
+    if (isModalOpen && textareaRef.current) {
+      setTimeout(() => {
+        textareaRef.current?.focus();
+      }, 100);
+    }
+  }, [isModalOpen]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate input
+    if (!secretKey || !secretKey.trim()) {
+      setError("Please enter your secret key");
+      textareaRef.current?.focus();
+      return;
+    }
+    
     // Handle authentication logic here
     console.log('Authenticating with:', secretKey);
     setIsModalOpen(false);
@@ -116,7 +142,10 @@ const SignIn: React.FC = () => {
       </div>
 
       {/* Sign In Modal */}
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <Dialog open={isModalOpen} onOpenChange={(open) => {
+        setIsModalOpen(open);
+        if (!open) setError(null);
+      }}>
         <DialogContent className="sm:max-w-md animate-scale-in">
           <DialogHeader>
             <DialogTitle className="text-center text-xl">Sign In to MarkNest</DialogTitle>
@@ -131,9 +160,17 @@ const SignIn: React.FC = () => {
                 value={secretKey}
                 onChange={(e) => setSecretKey(e.target.value)}
                 placeholder="Enter your secret key"
-                className="w-full p-4 min-h-[300px] text-lg shadow-sm border-2 focus:border-primary rounded-md resize-none bg-background"
+                className={`w-full p-4 min-h-[300px] text-lg shadow-sm border-2 focus:border-primary rounded-md resize-none bg-background ${
+                  error ? 'border-red-500 focus:border-red-500 focus-visible:ring-red-500' : ''
+                }`}
+                ref={textareaRef}
                 required
               />
+              {error && (
+                <p className="text-sm text-red-600 dark:text-red-400 mt-2 animate-fade-in">
+                  {error}
+                </p>
+              )}
               <p className="text-sm text-muted-foreground">
                 Enter your secret key to access your bookmarks
               </p>

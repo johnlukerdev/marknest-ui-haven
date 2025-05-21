@@ -10,5 +10,6 @@ export {
   DropdownMenuItem 
 } from './dropdown-menu';
 export { Input } from './input';
+export { Textarea } from './textarea';
 export { Toggle } from './toggle';
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
