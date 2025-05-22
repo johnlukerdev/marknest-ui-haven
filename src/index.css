@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
@@ -119,6 +118,12 @@
   /* Fix for circular dependency - use direct CSS instead of @apply */
   button, a, [role="button"], .cursor-pointer {
     cursor: pointer;
+  }
+  
+  /* Remove focus ring for all buttons */
+  button:focus, a:focus, [role="button"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
   }
 }
 
@@ -273,6 +278,11 @@
   /* Bottom sheet styles */
   .bottom-sheet {
     @apply rounded-t-2xl shadow-lg;
+  }
+  
+  /* Auth page transitions */
+  .auth-transition {
+    @apply transition-all duration-300 ease-in-out;
   }
 }
 

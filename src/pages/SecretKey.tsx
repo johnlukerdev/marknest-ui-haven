@@ -12,6 +12,8 @@ import {
 import { Card } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 import confetti from 'canvas-confetti';
+import { Input } from '@/components/ui/input';
+import Logo from '@/components/Logo';
 
 const SecretKey: React.FC = () => {
   const navigate = useNavigate();
@@ -65,6 +67,11 @@ const SecretKey: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
         <div className="w-full max-w-2xl">
+          {/* Logo and Branding */}
+          <div className="flex justify-center mb-8">
+            <Logo />
+          </div>
+          
           {/* Main Content */}
           <div className="bg-card border border-border rounded-xl p-8 shadow-lg animate-fade-in">
             <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 font-[Poppins]">
@@ -118,7 +125,7 @@ const SecretKey: React.FC = () => {
             <div className="space-y-4 mt-8">
               <Button 
                 variant="outline" 
-                className="w-full py-5 flex items-center justify-center gap-2"
+                className="w-full py-5 flex items-center justify-center gap-2 focus:ring-0"
                 onClick={handleCopyToClipboard}
               >
                 {copied ? (
@@ -135,7 +142,7 @@ const SecretKey: React.FC = () => {
               </Button>
               
               <Button 
-                className="w-full py-5 text-lg gradient-primary"
+                className="w-full py-5 text-lg gradient-primary focus:ring-0"
                 onClick={handleSaved}
               >
                 I've Saved It

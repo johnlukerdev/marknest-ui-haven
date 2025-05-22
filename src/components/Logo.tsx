@@ -1,17 +1,25 @@
-
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface LogoProps {
   onClick?: () => void;
 }
 
 const Logo: React.FC<LogoProps> = ({ onClick }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const handleClick = () => {
     if (onClick) {
       onClick();
     } else {
-      // Default behavior: refresh the current page without changing URL
-      window.location.reload();
+      // If we're already on the main page, just refresh content without changing URL
+      if (location.pathname === '/') {
+        window.location.reload();
+      } else {
+        // Otherwise, navigate to the main page
+        navigate('/');
+      }
     }
   };
 
