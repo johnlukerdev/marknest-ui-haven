@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Card, 
   CardContent, 
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui";
 import { MoreHorizontal, Trash2, Link, Archive, Check } from "lucide-react";
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
+import { toast } from '@/hooks/use-toast';
 
 interface BookmarkCardProps {
   id: string;
@@ -40,6 +41,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
     toggleSelectBookmark 
   } = useBookmarkContext();
   
+  const [isCopying, setIsCopying] = useState(false);
   const isSelected = selectedBookmarks.includes(id);
   
   const handleDelete = () => {
@@ -60,6 +62,17 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
   
   const handleCopyLink = () => {
     navigator.clipboard.writeText(url);
+    setIsCopying(true);
+    toast({
+      title: "Copied!",
+      description: `Link copied to clipboard`,
+      duration: 2000,
+    });
+    
+    // Reset the copying state after 1 second
+    setTimeout(() => {
+      setIsCopying(false);
+    }, 1000);
   };
   
   const handleArchive = () => {
@@ -145,7 +158,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="h-8 w-8 rounded-full hover:bg-muted transition-all duration-200"
+                    className="h-8 w-8 rounded-full hover:bg-muted transition-all duration-200 focus:ring-0"
                   >
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
@@ -164,8 +177,12 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
                       onClick={handleCopyLink}
                       className="flex items-center gap-2 py-2.5 px-3 rounded-md cursor-pointer transition-all duration-200 hover:bg-[#1F1F1F] hover:scale-[1.03] active:scale-[0.97] text-[#E0E0E0] hover:text-white"
                     >
-                      <Link className="h-4 w-4" />
-                      <span className="font-medium">Copy Link</span>
+                      {isCopying ? (
+                        <Check className="h-4 w-4" />
+                      ) : (
+                        <Link className="h-4 w-4" />
+                      )}
+                      <span className="font-medium">{isCopying ? "Copied!" : "Copy Link"}</span>
                     </DropdownMenuItem>
                     
                     <DropdownMenuItem 

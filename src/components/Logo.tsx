@@ -1,9 +1,25 @@
 
 import React from 'react';
 
-const Logo: React.FC = () => {
+interface LogoProps {
+  onClick?: () => void;
+}
+
+const Logo: React.FC<LogoProps> = ({ onClick }) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else {
+      // Default behavior: refresh the current page without changing URL
+      window.location.reload();
+    }
+  };
+
   return (
-    <div className="flex items-center gap-2.5 transition-all duration-200 hover:cursor-pointer">
+    <div 
+      className="flex items-center gap-2.5 transition-all duration-200 hover:cursor-pointer" 
+      onClick={handleClick}
+    >
       <div className="relative h-10 w-10 overflow-hidden">
         <div className="absolute inset-0 gradient-primary rounded-full"></div>
         <div className="absolute inset-[3px] bg-background rounded-full"></div>

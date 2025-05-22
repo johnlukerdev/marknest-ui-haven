@@ -3,7 +3,7 @@ import React from 'react';
 import BookmarkCard from './BookmarkCard';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { Button } from './ui/button';
-import { CheckSquare, X, Archive, Bookmark } from 'lucide-react';
+import { CheckSquare, X, Archive, Trash2 } from 'lucide-react';
 import EmptyState from './EmptyState';
 
 interface BookmarkGridProps {
@@ -16,7 +16,8 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
     isSelectMode, 
     toggleSelectMode, 
     selectedBookmarks,
-    bulkMoveToArchive
+    bulkMoveToArchive,
+    bulkMoveToTrash
   } = useBookmarkContext();
 
   return (
@@ -26,15 +27,26 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
         {bookmarks.length > 0 && (
           <div className="flex items-center gap-2 flex-wrap justify-end">
             {isSelectMode && selectedBookmarks.length > 0 && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={bulkMoveToArchive}
-                className="rounded-full px-4 py-1.5 text-sm font-semibold flex items-center gap-1.5 select-action-btn"
-              >
-                <Archive className="h-3.5 w-3.5" />
-                Archive
-              </Button>
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={bulkMoveToArchive}
+                  className="rounded-full px-4 py-1.5 text-sm font-semibold flex items-center gap-1.5 select-action-btn"
+                >
+                  <Archive className="h-3.5 w-3.5" />
+                  Archive
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={bulkMoveToTrash}
+                  className="rounded-full px-4 py-1.5 text-sm font-semibold flex items-center gap-1.5 select-action-btn"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  Delete
+                </Button>
+              </>
             )}
             <Button 
               variant={isSelectMode ? "default" : "outline"}
@@ -72,7 +84,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
         </div>
       ) : (
         <EmptyState 
-          icon={<Bookmark className="h-16 w-16 text-muted-foreground" />}
+          icon={<Archive className="h-16 w-16 text-muted-foreground" />}
           title="No bookmarks yet"
           description="Save articles, tools, or anything inspiring. Start collecting the web you love."
         />

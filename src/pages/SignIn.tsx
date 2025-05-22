@@ -1,9 +1,11 @@
+
 import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Github, Twitter } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { useTheme } from '@/hooks/use-theme';
 import Logo from '@/components/Logo';
+import { Input } from '@/components/ui/input';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -28,26 +30,17 @@ const SignIn: React.FC = () => {
           {/* Main Content */}
           <div className="bg-card border border-border rounded-xl p-8 shadow-lg animate-fade-in">
             <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 font-[Poppins]">
-              Welcome Back
+              Sign In
             </h1>
             
-            {/* Value Proposition */}
-            <div className="mb-8 text-center">
-              <p className="text-lg text-foreground mb-4">Your privacy comes first:</p>
-              <ul className="space-y-3 text-left max-w-md mx-auto">
-                <li className="flex items-start">
-                  <span className="mr-2 mt-1">🔒</span>
-                  <span>Everything encrypted with your Secret Key</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 mt-1">🌐</span>
-                  <span>Access from any device securely</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 mt-1">🚫</span>
-                  <span>No tracking, no ads, no compromises</span>
-                </li>
-              </ul>
+            {/* Secret Key Input */}
+            <div className="mb-8">
+              <label className="block text-sm font-medium mb-2">Enter your Secret Key</label>
+              <Input
+                type="password"
+                placeholder="Enter your 24-word secret key"
+                className="w-full p-4 h-auto"
+              />
             </div>
             
             {/* Animated Lock Icon */}
@@ -63,31 +56,36 @@ const SignIn: React.FC = () => {
             {/* CTA Buttons */}
             <div className="space-y-4 mt-8">
               <Button 
-                className="w-full py-6 text-lg gradient-primary"
+                className="w-full py-6 text-lg gradient-primary focus:ring-0"
                 onClick={() => navigate('/')}
               >
-                Enter Secret Key
+                Sign In
               </Button>
               
               <Button 
                 variant="outline" 
-                className="w-full py-6 text-lg"
+                className="w-full py-6 text-lg focus:ring-0"
               >
                 Sign in with Stacks Wallet
               </Button>
             </div>
             
-            {/* Social Login Options (Optional) */}
-            {/*
-            <div className="flex items-center justify-center space-x-4 mt-6">
-              <Button variant="ghost" size="icon">
-                <Github className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Twitter className="h-5 w-5" />
-              </Button>
+            {/* Link to Sign Up */}
+            <div className="mt-6 text-center">
+              <p className="text-muted-foreground">
+                Don't have an account?{" "}
+                <a 
+                  href="/signup"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/signup');
+                  }}
+                  className="text-primary hover:underline"
+                >
+                  Sign Up
+                </a>
+              </p>
             </div>
-            */}
           </div>
         </div>
       </div>

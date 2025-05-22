@@ -68,7 +68,7 @@ const SignUp: React.FC = () => {
             {/* CTA Buttons */}
             <div className="space-y-4 mt-8">
               <Button 
-                className="w-full py-6 text-lg gradient-primary"
+                className="w-full py-6 text-lg gradient-primary focus:ring-0"
                 onClick={handleGetSecretKey}
               >
                 Get Your Secret Key
@@ -76,10 +76,27 @@ const SignUp: React.FC = () => {
               
               <Button 
                 variant="outline" 
-                className="w-full py-6 text-lg"
+                className="w-full py-6 text-lg focus:ring-0"
               >
                 Sign up with Stacks Wallet
               </Button>
+            </div>
+            
+            {/* Link to Sign In */}
+            <div className="mt-6 text-center">
+              <p className="text-muted-foreground">
+                Already have an account?{" "}
+                <a 
+                  href="/signin"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/signin');
+                  }}
+                  className="text-primary hover:underline"
+                >
+                  Sign In
+                </a>
+              </p>
             </div>
           </div>
         </div>

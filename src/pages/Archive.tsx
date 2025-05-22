@@ -9,18 +9,31 @@ import {
   CardFooter 
 } from "@/components/ui/card";
 import { Archive as ArchiveIcon, RotateCcw, CheckSquare, X, Link, Check } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const Archive: React.FC = () => {
   const { archiveBookmarks, restoreFromArchive } = useBookmarkContext();
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [copyingId, setCopyingId] = useState<string | null>(null);
 
   const handleRestore = (id: string) => {
     restoreFromArchive(id);
   };
 
-  const handleCopyLink = (url: string) => {
+  const handleCopyLink = (url: string, id: string) => {
     navigator.clipboard.writeText(url);
+    setCopyingId(id);
+    
+    toast({
+      title: "Copied!",
+      description: "Link copied to clipboard",
+      duration: 2000,
+    });
+    
+    setTimeout(() => {
+      setCopyingId(null);
+    }, 1000);
   };
 
   const toggleSelectionMode = () => {
@@ -65,7 +78,7 @@ const Archive: React.FC = () => {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 focus:ring-0"
                     onClick={handleBulkRestore}
                   >
                     <RotateCcw className="h-4 w-4" />
@@ -76,7 +89,7 @@ const Archive: React.FC = () => {
                 <Button 
                   variant={isSelectionMode ? "default" : "outline"} 
                   size="sm"
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 focus:ring-0"
                   onClick={toggleSelectionMode}
                 >
                   {isSelectionMode ? (
@@ -142,13 +155,17 @@ const Archive: React.FC = () => {
                     <Button 
                       variant="ghost" 
                       size="sm"
-                      className="px-2"
+                      className="px-2 focus:ring-0"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleCopyLink(bookmark.url);
+                        handleCopyLink(bookmark.url, bookmark.id);
                       }}
                     >
-                      <Link className="h-4 w-4" />
+                      {copyingId === bookmark.id ? (
+                        <Check className="h-4 w-4" />
+                      ) : (
+                        <Link className="h-4 w-4" />
+                      )}
                     </Button>
                     
                     <Button 
@@ -157,7 +174,7 @@ const Archive: React.FC = () => {
                         e.stopPropagation();
                         handleRestore(bookmark.id);
                       }}
-                      className="transition-all duration-200"
+                      className="transition-all duration-200 focus:ring-0"
                       size="sm"
                     >
                       <RotateCcw className="mr-2 h-4 w-4" />
