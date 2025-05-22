@@ -235,6 +235,11 @@
     @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600;
   }
 
+  /* New rotate utility */
+  .group-hover\:rotate-360:hover {
+    transform: rotate(360deg);
+  }
+
   /* Settings page specific */
   .settings-sidebar {
     @apply border-r border-border p-4;
@@ -285,4 +290,3 @@
 .drawer-handle {
   @apply w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-6;
 }
-

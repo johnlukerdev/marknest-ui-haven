@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import SecretKey from "./pages/SecretKey";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "./hooks/use-theme";
 import Trash from "./pages/Trash";
@@ -26,6 +28,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/secret-key" element={<SecretKey />} />
               <Route path="/trash" element={<Trash />} />
               <Route path="/archive" element={<Archive />} />
               <Route path="/settings" element={<Settings />} />
