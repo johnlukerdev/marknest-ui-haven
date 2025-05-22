@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { toast } from '@/hooks/use-toast';
 
 interface ListItem {
   id: string;
@@ -18,23 +17,17 @@ interface ListItem {
 
 const ListsSettings: React.FC = () => {
   const [lists, setLists] = useState<ListItem[]>([
-    { id: '1', name: 'My List', isDefault: true },
-    { id: '2', name: 'Archive' },
-    { id: '3', name: 'Trash' }
+    { id: '1', name: 'Default List', isDefault: true },
+    { id: '2', name: 'Videos', isDefault: false },
+    { id: '3', name: 'Websites', isDefault: false }
   ]);
 
   const handleCreateList = () => {
-    toast({
-      title: "New List",
-      description: "This would open a dialog to create a new list"
-    });
+    // Will be implemented in future
   };
 
   const handleEditList = (list: ListItem) => {
-    toast({
-      title: "Edit List",
-      description: `Editing ${list.name}`
-    });
+    // Will be implemented in future
   };
 
   const moveList = (index: number, direction: 'up' | 'down') => {
@@ -50,17 +43,10 @@ const ListsSettings: React.FC = () => {
     [newLists[index], newLists[targetIndex]] = [newLists[targetIndex], newLists[index]];
     
     setLists(newLists);
-    toast({
-      title: "List Reordered",
-      description: `${lists[index].name} moved ${direction}`
-    });
   };
 
   const handleMoreActions = (list: ListItem) => {
-    toast({
-      title: "More Actions",
-      description: `Options for ${list.name}`
-    });
+    // Will be implemented in future
   };
 
   return (
@@ -68,7 +54,7 @@ const ListsSettings: React.FC = () => {
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-semibold">Lists</h2>
         <Button onClick={handleCreateList} className="flex items-center gap-1">
-          <Plus className="h-4 w-4" /> Create New List
+          <Plus className="h-4 w-4" /> Add List
         </Button>
       </div>
 

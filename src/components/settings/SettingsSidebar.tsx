@@ -15,13 +15,13 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
   const [isOpen, setIsOpen] = useState(false);
   
   const menuItems = [
-    { id: 'account', label: 'Account', icon: <User className="h-4 w-4" /> },
+    { id: 'about', label: 'About', icon: <Info className="h-4 w-4" /> },
     { id: 'subscription', label: 'Subscription', icon: <CreditCard className="h-4 w-4" /> },
     { id: 'data', label: 'Data', icon: <Database className="h-4 w-4" /> },
     { id: 'lists', label: 'Lists', icon: <List className="h-4 w-4" /> },
     { id: 'tags', label: 'Tags', icon: <Tags className="h-4 w-4" /> },
     { id: 'misc', label: 'Misc.', icon: <Settings className="h-4 w-4" /> },
-    { id: 'about', label: 'About', icon: <Info className="h-4 w-4" /> },
+    { id: 'account', label: 'Account', icon: <User className="h-4 w-4" /> },
   ];
 
   const handleItemClick = (id: string) => {

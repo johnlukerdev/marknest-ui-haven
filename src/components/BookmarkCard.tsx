@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { 
   Card, 
@@ -19,7 +20,6 @@ import {
   Checkbox
 } from "@/components/ui";
 import { MoreHorizontal, Trash2, Link, Archive, Check } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 
 interface BookmarkCardProps {
@@ -51,27 +51,15 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
       // Wait for the animation to complete before moving to trash
       setTimeout(() => {
         moveToTrash(id);
-        toast({
-          title: "Moved to trash",
-          description: `"${title}" has been moved to trash`,
-        });
       }, 300); // 300ms matches the animation duration
     } else {
       // Fallback if the element isn't found
       moveToTrash(id);
-      toast({
-        title: "Moved to trash",
-        description: `"${title}" has been moved to trash`,
-      });
     }
   };
   
   const handleCopyLink = () => {
     navigator.clipboard.writeText(url);
-    toast({
-      title: "Link copied",
-      description: "The bookmark link has been copied to your clipboard",
-    });
   };
   
   const handleArchive = () => {
@@ -83,18 +71,10 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
       // Wait for the animation to complete before moving to archive
       setTimeout(() => {
         moveToArchive(id);
-        toast({
-          title: "Archived",
-          description: `"${title}" has been moved to archives`,
-        });
       }, 300); // 300ms matches the animation duration
     } else {
       // Fallback if the element isn't found
       moveToArchive(id);
-      toast({
-        title: "Archived",
-        description: `"${title}" has been moved to archives`,
-      });
     }
   };
   

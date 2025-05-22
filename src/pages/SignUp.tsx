@@ -1,12 +1,21 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Lock } from 'lucide-react';
 import Logo from '@/components/Logo';
+import { useTheme } from '@/hooks/use-theme';
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
+  
+  // Force dark mode
+  useEffect(() => {
+    if (theme !== 'dark') {
+      setTheme('dark');
+    }
+  }, [theme, setTheme]);
   
   const handleGetSecretKey = () => {
     navigate('/secret-key');

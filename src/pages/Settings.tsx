@@ -8,8 +8,6 @@ import ListsSettings from '@/components/settings/ListsSettings';
 import AccountSettings from '@/components/settings/AccountSettings';
 import AboutSettings from '@/components/settings/AboutSettings';
 import NavBar from '@/components/NavBar';
-import { toast } from '@/hooks/use-toast';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useTheme } from '@/hooks/use-theme';
 import { useMobile } from '@/hooks/use-mobile';
 
@@ -19,9 +17,9 @@ const Settings: React.FC = () => {
   const { theme } = useTheme();
   const isMobile = useMobile();
   const [activeTab, setActiveTab] = useState<string>(() => {
-    // Get tab from URL or default to "account"
+    // Get tab from URL or default to "about"
     const tabFromUrl = location.hash.replace('#', '');
-    return tabFromUrl || "account";
+    return tabFromUrl || "about";
   });
 
   const handleTabChange = (tab: string) => {
@@ -30,10 +28,7 @@ const Settings: React.FC = () => {
   };
 
   const handleAddBookmark = (url: string) => {
-    toast({
-      title: "Bookmark added",
-      description: `Added bookmark: ${url}`
-    });
+    // Functionality remains but toast removed
   };
 
   // Update URL when tab changes
@@ -56,8 +51,8 @@ const Settings: React.FC = () => {
         <div className="flex-1 md:px-8 pb-20 md:pb-8 w-full">
           <ScrollArea className={`h-[calc(100vh-${isMobile ? '72px' : '120px'})] ${isMobile ? 'px-4' : 'pr-4'}`}>
             <Tabs value={activeTab} className="w-full">
-              <TabsContent value="account" className="mt-0 w-full">
-                <AccountSettings />
+              <TabsContent value="about" className="mt-0 w-full">
+                <AboutSettings />
               </TabsContent>
               <TabsContent value="subscription" className="mt-0 w-full">
                 <h2 className="text-2xl font-semibold mb-6">Subscription</h2>
@@ -78,8 +73,8 @@ const Settings: React.FC = () => {
                 <h2 className="text-2xl font-semibold mb-6">Miscellaneous</h2>
                 <p className="text-muted-foreground">Miscellaneous settings will go here.</p>
               </TabsContent>
-              <TabsContent value="about" className="mt-0 w-full">
-                <AboutSettings />
+              <TabsContent value="account" className="mt-0 w-full">
+                <AccountSettings />
               </TabsContent>
             </Tabs>
           </ScrollArea>

@@ -8,36 +8,35 @@ import {
   CardContent, 
   CardFooter 
 } from "@/components/ui/card";
-import { toast } from '@/hooks/use-toast';
-import { Trash2, RotateCcw, CheckSquare, X, Link, Check } from 'lucide-react';
+import { Trash2, RotateCcw, CheckSquare, X, Link, Check, AlertTriangle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const Trash: React.FC = () => {
   const { trashBookmarks, restoreFromTrash, permanentlyDelete } = useBookmarkContext();
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [showDeleteWarning, setShowDeleteWarning] = useState(false);
+  const [bookmarkToDelete, setBookmarkToDelete] = useState<string | null>(null);
 
-  const handleRestore = (id: string, title: string) => {
+  const handleRestore = (id: string) => {
     restoreFromTrash(id);
-    toast({
-      title: "Bookmark restored",
-      description: `"${title}" has been restored to your bookmarks`
-    });
   };
 
-  const handleDeletePermanently = (id: string, title: string) => {
-    permanentlyDelete(id);
-    toast({
-      title: "Bookmark deleted permanently",
-      description: `"${title}" has been permanently removed`
-    });
+  const handleInitiateDelete = (id: string) => {
+    setBookmarkToDelete(id);
+    setShowDeleteWarning(true);
   };
 
-  const handleCopyLink = (url: string, title: string) => {
+  const handleDeletePermanently = () => {
+    if (bookmarkToDelete) {
+      permanentlyDelete(bookmarkToDelete);
+      setShowDeleteWarning(false);
+      setBookmarkToDelete(null);
+    }
+  };
+
+  const handleCopyLink = (url: string) => {
     navigator.clipboard.writeText(url);
-    toast({
-      title: "Link copied",
-      description: `The link for "${title}" has been copied to your clipboard`
-    });
   };
 
   const toggleSelectionMode = () => {
@@ -61,41 +60,13 @@ const Trash: React.FC = () => {
       }
     });
     
-    toast({
-      title: "Bookmarks restored",
-      description: `${selectedItems.length} bookmark(s) have been restored`
-    });
-    
     setIsSelectionMode(false);
     setSelectedItems([]);
   };
 
-  const handleBulkDeletePermanently = () => {
-    selectedItems.forEach(id => {
-      permanentlyDelete(id);
-    });
-    
-    toast({
-      title: "Bookmarks deleted",
-      description: `${selectedItems.length} bookmark(s) have been permanently deleted`
-    });
-    
-    setIsSelectionMode(false);
-    setSelectedItems([]);
-  };
-
-  const handleBulkCopyLinks = () => {
-    const urls = selectedItems
-      .map(id => trashBookmarks.find(bookmark => bookmark.id === id)?.url)
-      .filter(Boolean)
-      .join('\n');
-    
-    navigator.clipboard.writeText(urls);
-    
-    toast({
-      title: "Links copied",
-      description: `${selectedItems.length} link(s) have been copied to clipboard`
-    });
+  const handleCancelDelete = () => {
+    setShowDeleteWarning(false);
+    setBookmarkToDelete(null);
   };
 
   return (
@@ -109,25 +80,52 @@ const Trash: React.FC = () => {
               <p className="text-muted-foreground">Items in the trash will be automatically deleted after 30 days.</p>
             </div>
             
-            <Button 
-              variant={isSelectionMode ? "default" : "outline"} 
-              size="sm"
-              className="flex items-center gap-2"
-              onClick={toggleSelectionMode}
-            >
-              {isSelectionMode ? (
-                <>
-                  <X className="h-4 w-4" />
-                  <span className="sm:inline">Cancel</span>
-                </>
-              ) : (
-                <>
-                  <CheckSquare className="h-4 w-4" />
-                  <span className="sm:inline">Select</span>
-                </>
-              )}
-            </Button>
+            {trashBookmarks.length > 0 && (
+              <Button 
+                variant={isSelectionMode ? "default" : "outline"} 
+                size="sm"
+                className="flex items-center gap-2"
+                onClick={toggleSelectionMode}
+              >
+                {isSelectionMode ? (
+                  <>
+                    <X className="h-4 w-4" />
+                    <span className="sm:inline">Cancel</span>
+                  </>
+                ) : (
+                  <>
+                    <CheckSquare className="h-4 w-4" />
+                    <span className="sm:inline">Select</span>
+                  </>
+                )}
+              </Button>
+            )}
           </div>
+
+          {showDeleteWarning && (
+            <Alert className="mb-6 border-yellow-600/30 bg-yellow-600/10">
+              <AlertTriangle className="h-4 w-4 text-yellow-600" />
+              <AlertDescription className="flex flex-wrap justify-between items-center">
+                <span className="mr-4">Permanent deletion cannot be undone.</span>
+                <div className="flex gap-2 mt-2 sm:mt-0">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleCancelDelete}
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    variant="destructive" 
+                    size="sm"
+                    onClick={handleDeletePermanently}
+                  >
+                    Confirm Delete
+                  </Button>
+                </div>
+              </AlertDescription>
+            </Alert>
+          )}
 
           {trashBookmarks.length === 0 ? (
             <div className="text-center py-16">
@@ -180,7 +178,7 @@ const Trash: React.FC = () => {
                         className="px-2"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleCopyLink(bookmark.url, bookmark.title);
+                          handleCopyLink(bookmark.url);
                         }}
                       >
                         <Link className="h-4 w-4" />
@@ -193,7 +191,7 @@ const Trash: React.FC = () => {
                           className="transition-all duration-200"
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleRestore(bookmark.id, bookmark.title);
+                            handleRestore(bookmark.id);
                           }}
                         >
                           <RotateCcw className="mr-2 h-4 w-4" />
@@ -206,7 +204,7 @@ const Trash: React.FC = () => {
                           className="transition-all duration-200"
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleDeletePermanently(bookmark.id, bookmark.title);
+                            handleInitiateDelete(bookmark.id);
                           }}
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
@@ -225,30 +223,10 @@ const Trash: React.FC = () => {
                     variant="outline" 
                     size="sm" 
                     className="flex items-center gap-2"
-                    onClick={handleBulkCopyLinks}
-                  >
-                    <Link className="h-4 w-4" />
-                    Copy Links
-                  </Button>
-                  
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="flex items-center gap-2"
                     onClick={handleBulkRestore}
                   >
                     <RotateCcw className="h-4 w-4" />
                     Restore
-                  </Button>
-                  
-                  <Button 
-                    variant="destructive" 
-                    size="sm" 
-                    className="flex items-center gap-2"
-                    onClick={handleBulkDeletePermanently}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Delete Forever
                   </Button>
                 </div>
               )}
