@@ -59,7 +59,7 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
   // Mobile sidebar with drawer
   return (
     <>
-      <div className="md:hidden flex items-center justify-between h-12 px-4 border-b border-border w-full bg-background">
+      <div className="md:hidden flex items-center justify-between h-12 px-4 border-b border-border w-full bg-background sticky top-0 z-10">
         <Button
           variant="ghost"
           size="sm"

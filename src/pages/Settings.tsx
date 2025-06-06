@@ -47,10 +47,10 @@ const Settings: React.FC = () => {
         {/* Settings Sidebar */}
         <SettingsSidebar activeTab={activeTab} onTabChange={handleTabChange} />
         
-        {/* Main Content Area */}
-        <div className="flex-1 md:px-8 pb-20 md:pb-8 w-full">
-          <ScrollArea className={`h-[calc(100vh-${isMobile ? '72px' : '120px'})] ${isMobile ? 'px-4' : 'pr-4'}`}>
-            <Tabs value={activeTab} className="w-full">
+        {/* Main Content Area - Improved responsive layout */}
+        <div className="flex-1 w-full">
+          <ScrollArea className={`h-[calc(100vh-${isMobile ? '72px' : '120px'})] w-full ${isMobile ? 'px-4' : 'px-4 md:px-8'}`}>
+            <Tabs value={activeTab} className="w-full max-w-full">
               <TabsContent value="about" className="mt-0 w-full">
                 <AboutSettings />
               </TabsContent>

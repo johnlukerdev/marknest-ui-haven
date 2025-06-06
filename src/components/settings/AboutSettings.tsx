@@ -4,11 +4,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 const AboutSettings: React.FC = () => {
   return (
-    <div className="animate-fade-in max-w-3xl">
+    <div className="animate-fade-in w-full pb-16">
       <h2 className="text-2xl font-semibold mb-8">About MarkNest</h2>
       
-      <div className="space-y-8 pb-8">
-        <div className="space-y-4">
+      <div className="space-y-8 pb-8 w-full">
+        <div className="space-y-4 w-full">
           <h3 className="text-xl font-medium text-primary">✨ Why MarkNest?</h3>
           <p className="text-muted-foreground leading-relaxed">
             While other bookmark managers get the job done, MarkNest is built for the modern web user — with a clean, 
@@ -17,7 +17,7 @@ const AboutSettings: React.FC = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
           <div className="p-6 rounded-lg border border-border bg-card hover:bg-card/80 transition-colors">
             <h4 className="text-lg font-medium mb-2">🚀 Fast & Simple</h4>
             <p className="text-muted-foreground">
@@ -47,7 +47,7 @@ const AboutSettings: React.FC = () => {
           </div>
         </div>
         
-        <div className="bg-card p-6 rounded-lg border border-border">
+        <div className="bg-card p-6 rounded-lg border border-border w-full">
           <h3 className="text-xl font-medium text-primary mb-4">🛡️ Safe, Secure, and Open Source</h3>
           <p className="mb-4 text-muted-foreground leading-relaxed">
             We care about your privacy. That's why MarkNest is:
@@ -67,7 +67,7 @@ const AboutSettings: React.FC = () => {
           </ul>
         </div>
         
-        <div className="text-center py-6">
+        <div className="text-center py-6 w-full">
           <p className="text-sm text-muted-foreground">
             MarkNest © {new Date().getFullYear()} • All Rights Reserved
           </p>
