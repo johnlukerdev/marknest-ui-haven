@@ -50,7 +50,7 @@ const SignIn: React.FC = () => {
           <Button 
             variant="outline" 
             className="text-lg py-6 border-border w-full sm:w-auto min-w-[150px]"
-            onClick={() => navigate('/secret-key')}
+            onClick={() => navigate('/secret-key', { state: { isSignIn: true } })}
           >
             Sign In
           </Button>

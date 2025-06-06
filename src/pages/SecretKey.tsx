@@ -1,6 +1,5 @@
-
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Copy, Check, HelpCircle } from 'lucide-react';
 import { 
@@ -17,6 +16,67 @@ import Logo from '@/components/Logo';
 
 const SecretKey: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [secretKey, setSecretKey] = useState('');
+  
+  // Check if we're coming from sign-in button
+  const isSignIn = location.state?.isSignIn || false;
+  
+  const handleContinue = () => {
+    // In a real app, you would validate the secret key here
+    
+    // Navigate to main app
+    navigate('/');
+  };
+  
+  // Two different layouts based on where the user is coming from
+  if (isSignIn) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+          <div className="w-full max-w-lg">
+            {/* Logo and Branding */}
+            <div className="flex justify-center mb-8">
+              <Logo />
+            </div>
+            
+            {/* Main Content */}
+            <div className="bg-card border border-border rounded-xl p-8 shadow-lg animate-fade-in">
+              <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 font-[Poppins]">
+                Your Secret Key
+              </h1>
+              
+              <p className="text-center text-lg mb-8 text-muted-foreground">
+                Enter your Secret Key below to sign in.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Input
+                    type="password"
+                    placeholder="Enter your Secret Key"
+                    className="py-6 text-lg"
+                    value={secretKey}
+                    onChange={(e) => setSecretKey(e.target.value)}
+                  />
+                </div>
+                
+                <Button 
+                  className="w-full py-6 text-lg gradient-primary focus:ring-0"
+                  onClick={handleContinue}
+                  disabled={!secretKey.trim()}
+                >
+                  Continue
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Original secret key generation page when coming from sign-up flow
   const [copied, setCopied] = useState(false);
   const secretKeyRef = useRef<HTMLDivElement>(null);
   

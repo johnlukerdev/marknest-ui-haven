@@ -73,13 +73,6 @@ const SignUp: React.FC = () => {
               >
                 Get Your Secret Key
               </Button>
-              
-              <Button 
-                variant="outline" 
-                className="w-full py-6 text-lg focus:ring-0"
-              >
-                Sign up with Stacks Wallet
-              </Button>
             </div>
             
             {/* Link to Sign In */}
