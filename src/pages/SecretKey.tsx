@@ -33,7 +33,7 @@ const SecretKey: React.FC = () => {
   // Sign-in layout with improved design
   if (isSignIn) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex">
+      <div className="min-h-screen bg-background flex">
         {/* Left Side - Form */}
         <div className="flex-1 flex flex-col items-center justify-center px-4 py-12 relative">
           {/* Background decoration */}
@@ -68,7 +68,7 @@ const SecretKey: React.FC = () => {
                   <Input
                     type="password"
                     placeholder="Enter your Secret Key"
-                    className="py-8 text-xl rounded-xl border-2 border-border/50 bg-background/50 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/60"
+                    className="py-10 text-xl rounded-xl border-2 border-border/50 bg-background/50 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/60"
                     value={secretKey}
                     onChange={(e) => setSecretKey(e.target.value)}
                   />
@@ -171,7 +171,7 @@ const SecretKey: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col relative">
+    <div className="min-h-screen bg-background flex flex-col relative">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5"></div>
       <div className="absolute top-20 left-20 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl"></div>
