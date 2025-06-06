@@ -1,7 +1,8 @@
+
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Copy, Check, HelpCircle } from 'lucide-react';
+import { Copy, Check, HelpCircle, Key, Shield, Lock } from 'lucide-react';
 import { 
   Accordion,
   AccordionContent,
@@ -29,20 +30,32 @@ const SecretKey: React.FC = () => {
     navigate('/');
   };
   
-  // Two different layouts based on where the user is coming from
+  // Sign-in layout with improved design
   if (isSignIn) {
     return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
-          <div className="w-full max-w-lg">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex">
+        {/* Left Side - Form */}
+        <div className="flex-1 flex flex-col items-center justify-center px-4 py-12 relative">
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5"></div>
+          <div className="absolute top-20 left-20 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-xl"></div>
+          
+          <div className="w-full max-w-lg relative z-10">
             {/* Logo and Branding */}
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-12">
               <Logo />
             </div>
             
             {/* Main Content */}
-            <div className="bg-card border border-border rounded-xl p-8 shadow-lg animate-fade-in">
-              <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 font-[Poppins]">
+            <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-2xl animate-fade-in">
+              <div className="flex justify-center mb-6">
+                <div className="p-4 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full">
+                  <Key className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              
+              <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 font-[Poppins] bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 Your Secret Key
               </h1>
               
@@ -55,19 +68,53 @@ const SecretKey: React.FC = () => {
                   <Input
                     type="password"
                     placeholder="Enter your Secret Key"
-                    className="py-6 text-lg"
+                    className="py-8 text-xl rounded-xl border-2 border-border/50 bg-background/50 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/60"
                     value={secretKey}
                     onChange={(e) => setSecretKey(e.target.value)}
                   />
                 </div>
                 
                 <Button 
-                  className="w-full py-6 text-lg gradient-primary focus:ring-0"
+                  className="w-full py-8 text-xl gradient-primary focus:ring-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
                   onClick={handleContinue}
                   disabled={!secretKey.trim()}
                 >
                   Continue
                 </Button>
+              </div>
+              
+              {/* Security indicators */}
+              <div className="mt-8 flex items-center justify-center gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-green-400" />
+                  <span>Encrypted</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Lock className="w-4 h-4 text-blue-400" />
+                  <span>Secure</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Right Side - Illustration */}
+        <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-slate-800 to-slate-900 items-center justify-center relative overflow-hidden">
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(120,119,198,0.3),_rgba(255,255,255,0))]"></div>
+          </div>
+          
+          {/* Key illustration */}
+          <div className="relative z-10 p-12 max-w-md">
+            <div className="w-64 h-64 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-3xl flex flex-col items-center justify-center mx-auto backdrop-blur-sm border border-white/10">
+              <div className="mb-8">
+                <Key className="w-24 h-24 text-indigo-300" />
+              </div>
+              <div className="space-y-3 w-full px-8">
+                <div className="h-3 bg-indigo-300/40 rounded-full"></div>
+                <div className="h-3 bg-purple-300/40 rounded-full w-3/4"></div>
+                <div className="h-3 bg-indigo-300/40 rounded-full w-1/2"></div>
               </div>
             </div>
           </div>
@@ -124,17 +171,28 @@ const SecretKey: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5"></div>
+      <div className="absolute top-20 left-20 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl"></div>
+      <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-xl"></div>
+      
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-12 relative z-10">
         <div className="w-full max-w-2xl">
           {/* Logo and Branding */}
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-12">
             <Logo />
           </div>
           
           {/* Main Content */}
-          <div className="bg-card border border-border rounded-xl p-8 shadow-lg animate-fade-in">
-            <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 font-[Poppins]">
+          <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-2xl animate-fade-in">
+            <div className="flex justify-center mb-6">
+              <div className="p-4 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full">
+                <Key className="w-8 h-8 text-white" />
+              </div>
+            </div>
+            
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 font-[Poppins] bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
               Your Secret Key
             </h1>
             
@@ -163,9 +221,9 @@ const SecretKey: React.FC = () => {
             <div className="my-8">
               <div 
                 ref={secretKeyRef} 
-                className="relative p-1 rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600"
+                className="relative p-1 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600"
               >
-                <Card className="p-6 select-none animate-pulse" style={{animationDuration: '3s'}}>
+                <Card className="p-6 select-none animate-pulse rounded-xl bg-card/90 backdrop-blur-sm" style={{animationDuration: '3s'}}>
                   <div className="grid grid-cols-6 gap-x-3 gap-y-4 sm:text-sm text-xs text-center">
                     {formatKeyWords().map((row, rowIndex) => (
                       <React.Fragment key={`row-${rowIndex}`}>
@@ -185,7 +243,7 @@ const SecretKey: React.FC = () => {
             <div className="space-y-4 mt-8">
               <Button 
                 variant="outline" 
-                className="w-full py-5 flex items-center justify-center gap-2 focus:ring-0"
+                className="w-full py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300"
                 onClick={handleCopyToClipboard}
               >
                 {copied ? (
@@ -202,7 +260,7 @@ const SecretKey: React.FC = () => {
               </Button>
               
               <Button 
-                className="w-full py-5 text-lg gradient-primary focus:ring-0"
+                className="w-full py-6 text-xl gradient-primary focus:ring-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
                 onClick={handleSaved}
               >
                 I've Saved It

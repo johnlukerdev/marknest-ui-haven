@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Logo from '@/components/Logo';
+import { Shield, Lock, Key, Bookmark } from 'lucide-react';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -57,18 +58,52 @@ const SignIn: React.FC = () => {
         </div>
       </div>
       
-      {/* Right Section - Purple Gradient with Illustration */}
-      <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-indigo-700 to-purple-800 items-center justify-center">
-        <div className="p-12 max-w-md">
-          {/* Simplified bookmark icon illustration */}
-          <div className="w-48 h-48 bg-background/10 rounded-lg flex flex-col items-center justify-center mx-auto">
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {[...Array(9)].map((_, i) => (
-                <div key={i} className="w-6 h-6 bg-indigo-300/70 rounded-full"></div>
-              ))}
+      {/* Right Section - Dark Shade Design */}
+      <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 items-center justify-center relative overflow-hidden">
+        {/* Background patterns */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,_rgba(120,119,198,0.15),_rgba(255,255,255,0))]"></div>
+          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,_rgba(147,51,234,0.15),_rgba(255,255,255,0))]"></div>
+        </div>
+        
+        {/* Floating elements */}
+        <div className="absolute top-20 left-12 w-16 h-16 bg-indigo-500/20 rounded-full blur-sm"></div>
+        <div className="absolute top-40 right-16 w-12 h-12 bg-purple-500/20 rounded-full blur-sm"></div>
+        <div className="absolute bottom-32 left-8 w-20 h-20 bg-indigo-400/10 rounded-full blur-lg"></div>
+        
+        <div className="relative z-10 p-12 max-w-md">
+          {/* Main illustration container */}
+          <div className="w-72 h-72 bg-gradient-to-br from-slate-700/40 to-slate-800/60 rounded-3xl flex flex-col items-center justify-center mx-auto backdrop-blur-sm border border-slate-600/30 shadow-2xl">
+            {/* Top section with security icons */}
+            <div className="flex gap-6 mb-8">
+              <div className="p-3 bg-indigo-500/20 rounded-xl border border-indigo-400/30">
+                <Shield className="w-8 h-8 text-indigo-300" />
+              </div>
+              <div className="p-3 bg-purple-500/20 rounded-xl border border-purple-400/30">
+                <Lock className="w-8 h-8 text-purple-300" />
+              </div>
+              <div className="p-3 bg-blue-500/20 rounded-xl border border-blue-400/30">
+                <Key className="w-8 h-8 text-blue-300" />
+              </div>
             </div>
-            <div className="w-32 h-2 bg-indigo-300/70 rounded-full mb-3"></div>
-            <div className="w-24 h-2 bg-indigo-300/70 rounded-full"></div>
+            
+            {/* Central bookmark icon */}
+            <div className="p-6 bg-gradient-to-br from-indigo-500/30 to-purple-500/30 rounded-2xl mb-8 border border-indigo-400/20">
+              <Bookmark className="w-12 h-12 text-indigo-200" />
+            </div>
+            
+            {/* Bottom decorative lines */}
+            <div className="space-y-3 w-full px-8">
+              <div className="h-2 bg-gradient-to-r from-indigo-400/40 to-purple-400/40 rounded-full"></div>
+              <div className="h-2 bg-gradient-to-r from-purple-400/40 to-indigo-400/40 rounded-full w-3/4"></div>
+              <div className="h-2 bg-gradient-to-r from-indigo-400/40 to-blue-400/40 rounded-full w-1/2"></div>
+            </div>
+          </div>
+          
+          {/* Bottom text */}
+          <div className="mt-8 text-center">
+            <p className="text-slate-300 text-lg font-medium mb-2">Secure & Private</p>
+            <p className="text-slate-400 text-sm">Your data, encrypted and protected</p>
           </div>
         </div>
       </div>
