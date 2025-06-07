@@ -41,7 +41,12 @@ const Settings: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <NavBar onAddBookmark={handleAddBookmark} />
+      <NavBar 
+        onAddBookmark={handleAddBookmark} 
+        onMobileMenuToggle={() => {
+          // This will be handled by the SettingsSidebar floating button
+        }} 
+      />
       
       <div className="flex flex-1 w-full">
         {/* Settings Sidebar - hidden on mobile */}

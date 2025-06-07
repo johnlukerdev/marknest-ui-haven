@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive, X } from "lucide-react";
+import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive, X, Menu } from "lucide-react";
 import Logo from './Logo';
 import AddBookmarkForm from './AddBookmarkForm';
 import { useTheme } from '@/hooks/use-theme';
@@ -20,9 +19,10 @@ import { useMobile } from '@/hooks/use-mobile';
 
 interface NavBarProps {
   onAddBookmark: (url: string) => void;
+  onMobileMenuToggle?: () => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
+const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
@@ -57,15 +57,34 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark }) => {
     navigate('/settings');
     setMobileMenuOpen(false);
   };
+
+  const handleMobileMenuClick = () => {
+    if (onMobileMenuToggle) {
+      onMobileMenuToggle();
+    }
+  };
   
   return (
     <>
       <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
         <div className="container flex flex-col md:flex-row h-auto md:h-18 items-center justify-between py-3 px-4 sm:px-6">
           <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start mb-3 md:mb-0">
-            <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
-              <Logo />
-            </Link>
+            <div className="flex items-center gap-3">
+              {/* Mobile hamburger menu - only show on mobile */}
+              {isMobile && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={handleMobileMenuClick}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              )}
+              
+              <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
+                <Logo />
+              </Link>
             
             {!isMobile && (
               <TooltipProvider>
