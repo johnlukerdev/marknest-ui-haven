@@ -85,6 +85,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
                 <Logo />
               </Link>
+            </div>
             
             {!isMobile && (
               <TooltipProvider>
