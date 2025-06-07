@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Button } from '@/components/ui/button';
+import { Menu } from 'lucide-react';
 import SettingsSidebar from '@/components/settings/SettingsSidebar';
 import ListsSettings from '@/components/settings/ListsSettings';
 import AccountSettings from '@/components/settings/AccountSettings';
@@ -21,6 +23,7 @@ const Settings: React.FC = () => {
     const tabFromUrl = location.hash.replace('#', '');
     return tabFromUrl || "about";
   });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -29,6 +32,10 @@ const Settings: React.FC = () => {
 
   const handleAddBookmark = (url: string) => {
     // Functionality remains but toast removed
+  };
+
+  const handleMobileMenuToggle = () => {
+    setSidebarOpen(true);
   };
 
   // Update URL when tab changes
@@ -43,16 +50,19 @@ const Settings: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <NavBar 
         onAddBookmark={handleAddBookmark} 
-        onMobileMenuToggle={() => {
-          // This will be handled by the SettingsSidebar floating button
-        }} 
+        onMobileMenuToggle={handleMobileMenuToggle} 
       />
       
       <div className="flex flex-1 w-full">
-        {/* Settings Sidebar - hidden on mobile */}
-        <SettingsSidebar activeTab={activeTab} onTabChange={handleTabChange} />
+        {/* Settings Sidebar */}
+        <SettingsSidebar 
+          activeTab={activeTab} 
+          onTabChange={handleTabChange}
+          isOpen={sidebarOpen}
+          onOpenChange={setSidebarOpen}
+        />
         
-        {/* Main Content Area - Full width on mobile */}
+        {/* Main Content Area */}
         <div className={`flex-1 w-full ${isMobile ? '' : 'border-l border-border'}`}>
           <ScrollArea className={`h-[calc(100vh-${isMobile ? '72px' : '120px'})] w-full px-4 md:px-8`}>
             <Tabs value={activeTab} className="w-full max-w-full">
