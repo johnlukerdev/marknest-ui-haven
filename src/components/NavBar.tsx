@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive, X, Menu } from "lucide-react";
 import Logo from './Logo';
@@ -25,6 +26,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const [showSearch, setShowSearch] = useState(false);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const searchInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
 
   const handleSignOut = () => {
     navigate('/signin');
+    setMobileMenuOpen(false);
   };
 
   const handleClearSearch = () => {
@@ -52,9 +55,11 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
 
   const goToSettings = () => {
     navigate('/settings');
+    setMobileMenuOpen(false);
   };
 
   const handleMobileMenuClick = () => {
+    setMobileMenuOpen(true);
     if (onMobileMenuToggle) {
       onMobileMenuToggle();
     }
@@ -280,7 +285,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
         </div>
       </nav>
       
-      {/* Mobile Bottom Navigation - Removed the blue background 3-bar menu */}
+      {/* Mobile Bottom Navigation - only Add and Search */}
       {isMobile && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
           <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
@@ -326,6 +331,30 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
           </Drawer>
         </div>
       )}
+      
+      {/* Mobile Menu Sheet - controlled by hamburger menu */}
+      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <SheetContent side="bottom" className="h-auto pb-16 rounded-t-xl">
+          <div className="grid gap-4 py-4">
+            <Button 
+              variant="ghost" 
+              className="flex justify-start" 
+              onClick={goToSettings}
+            >
+              <Settings className="mr-2 h-5 w-5" />
+              Settings
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="flex justify-start" 
+              onClick={handleSignOut}
+            >
+              <LogOut className="mr-2 h-5 w-5" />
+              Sign Out
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
       
       {!isMobile && (
         <AddBookmarkForm 
