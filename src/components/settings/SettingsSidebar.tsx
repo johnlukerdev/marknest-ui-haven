@@ -56,22 +56,18 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
     );
   }
 
-  // Mobile sidebar with drawer
+  // Mobile - only show floating menu button, no top bar
   return (
     <>
-      <div className="md:hidden flex items-center justify-between h-12 px-4 border-b border-border w-full bg-background sticky top-0 z-10">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsOpen(true)}
-          className="mr-2"
-        >
-          <Menu className="h-5 w-5" />
-          <span className="ml-2">Menu</span>
-        </Button>
-        <div className="flex-1 text-center font-medium">{menuItems.find(item => item.id === activeTab)?.label}</div>
-        <div className="w-12"></div> {/* Empty space to balance the layout */}
-      </div>
+      {/* Floating menu button for mobile */}
+      <Button
+        variant="default"
+        size="icon"
+        onClick={() => setIsOpen(true)}
+        className="fixed top-20 left-4 z-50 md:hidden shadow-lg"
+      >
+        <Menu className="h-5 w-5" />
+      </Button>
 
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent className="h-[85vh]">
