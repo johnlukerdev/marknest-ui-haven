@@ -44,10 +44,10 @@ const Settings: React.FC = () => {
       <NavBar onAddBookmark={handleAddBookmark} />
       
       <div className="flex flex-1 w-full">
-        {/* Settings Sidebar */}
+        {/* Settings Sidebar - hidden on mobile */}
         <SettingsSidebar activeTab={activeTab} onTabChange={handleTabChange} />
         
-        {/* Main Content Area - Full screen on mobile */}
+        {/* Main Content Area - Full width on mobile */}
         <div className={`flex-1 w-full ${isMobile ? '' : 'border-l border-border'}`}>
           <ScrollArea className={`h-[calc(100vh-${isMobile ? '72px' : '120px'})] w-full px-4 md:px-8`}>
             <Tabs value={activeTab} className="w-full max-w-full">

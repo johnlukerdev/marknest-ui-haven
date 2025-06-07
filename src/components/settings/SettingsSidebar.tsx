@@ -56,7 +56,7 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
     );
   }
 
-  // Mobile - only show floating menu button, no top bar
+  // Mobile - only floating menu button, no other UI elements
   return (
     <>
       {/* Floating menu button for mobile */}
