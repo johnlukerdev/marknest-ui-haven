@@ -98,19 +98,24 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                           My List <ChevronDown className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="start" className="w-48 animate-scale-in">
-                        <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                          <Link to="/">My List</Link>
+                      <DropdownMenuContent 
+                        align="start" 
+                        className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
+                      >
+                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                          <Link to="/" className="flex items-center w-full text-foreground">
+                            My List
+                          </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                          <Link to="/trash">
-                            <Trash2 className="mr-2 h-4 w-4" />
+                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                          <Link to="/trash" className="flex items-center w-full text-foreground">
+                            <Trash2 className="mr-3 h-4 w-4" />
                             Trash
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                          <Link to="/archive">
-                            <Archive className="mr-2 h-4 w-4" />
+                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                          <Link to="/archive" className="flex items-center w-full text-foreground">
+                            <Archive className="mr-3 h-4 w-4" />
                             Archive
                           </Link>
                         </DropdownMenuItem>
@@ -132,19 +137,24 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                       My List <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-48 animate-scale-in">
-                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                      <Link to="/">My List</Link>
+                  <DropdownMenuContent 
+                    align="start" 
+                    className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
+                  >
+                    <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                      <Link to="/" className="flex items-center w-full text-foreground">
+                        My List
+                      </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                      <Link to="/trash">
-                        <Trash2 className="mr-2 h-4 w-4" />
+                    <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                      <Link to="/trash" className="flex items-center w-full text-foreground">
+                        <Trash2 className="mr-3 h-4 w-4" />
                         Trash
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900">
-                      <Link to="/archive">
-                        <Archive className="mr-2 h-4 w-4" />
+                    <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                      <Link to="/archive" className="flex items-center w-full text-foreground">
+                        <Archive className="mr-3 h-4 w-4" />
                         Archive
                       </Link>
                     </DropdownMenuItem>
@@ -255,19 +265,22 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                               <MoreHorizontal className="h-5 w-5" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-48 animate-scale-in">
+                          <DropdownMenuContent 
+                            align="end" 
+                            className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
+                          >
                             <DropdownMenuItem 
                               onClick={goToSettings} 
-                              className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900"
+                              className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground"
                             >
-                              <Settings className="mr-2 h-4 w-4" />
+                              <Settings className="mr-3 h-4 w-4" />
                               Settings
                             </DropdownMenuItem>
                             <DropdownMenuItem 
                               onClick={handleSignOut} 
-                              className="px-4 py-2 w-full text-left hover:bg-gray-100 hover:text-gray-900"
+                              className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground"
                             >
-                              <LogOut className="mr-2 h-4 w-4" />
+                              <LogOut className="mr-3 h-4 w-4" />
                               Sign Out
                             </DropdownMenuItem>
                           </DropdownMenuContent>
