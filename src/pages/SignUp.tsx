@@ -20,6 +20,10 @@ const SignUp: React.FC = () => {
   const handleGetSecretKey = () => {
     navigate('/secret-key');
   };
+
+  const handleSignIn = () => {
+    navigate('/secret-key', { state: { isSignIn: true } });
+  };
   
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -73,22 +77,26 @@ const SignUp: React.FC = () => {
               >
                 Get Your Secret Key
               </Button>
+
+              <Button 
+                variant="outline"
+                className="w-full py-6 text-lg border-2 border-border/50 hover:border-purple-500/50 transition-all duration-300 focus:ring-0"
+                onClick={handleSignIn}
+              >
+                Sign In
+              </Button>
             </div>
             
             {/* Link to Sign In */}
             <div className="mt-6 text-center">
               <p className="text-muted-foreground">
                 Already have an account?{" "}
-                <a 
-                  href="/signin"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate('/signin');
-                  }}
+                <button
+                  onClick={handleSignIn}
                   className="text-primary hover:underline"
                 >
                   Sign In
-                </a>
+                </button>
               </p>
             </div>
           </div>

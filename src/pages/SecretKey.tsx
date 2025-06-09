@@ -43,6 +43,10 @@ const SecretKey: React.FC = () => {
       setShowError(false);
     }
   };
+
+  const handleSignUp = () => {
+    navigate('/signup');
+  };
   
   // Sign-in layout with redesigned modern style
   if (isSignIn) {
@@ -97,6 +101,15 @@ const SecretKey: React.FC = () => {
                   onClick={handleContinue}
                 >
                   Continue
+                </Button>
+
+                {/* Sign Up Button */}
+                <Button 
+                  variant="outline"
+                  className="w-full h-16 text-xl font-semibold rounded-2xl border-2 border-border/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.02] focus:ring-0"
+                  onClick={handleSignUp}
+                >
+                  Sign Up
                 </Button>
               </div>
               

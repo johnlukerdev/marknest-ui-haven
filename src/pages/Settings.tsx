@@ -41,47 +41,53 @@ const Settings: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <NavBar 
-        onAddBookmark={handleAddBookmark} 
-        onMobileMenuToggle={() => {
-          // This will be handled by the SettingsSidebar floating button
-        }} 
-      />
+      {/* Only show NavBar on desktop, hide on mobile to avoid duplicate menu buttons */}
+      {!isMobile && (
+        <NavBar 
+          onAddBookmark={handleAddBookmark} 
+          onMobileMenuToggle={() => {
+            // This will be handled by the SettingsSidebar floating button
+          }} 
+        />
+      )}
       
       <div className="flex flex-1 w-full">
-        {/* Settings Sidebar - hidden on mobile */}
+        {/* Settings Sidebar - includes mobile floating button */}
         <SettingsSidebar activeTab={activeTab} onTabChange={handleTabChange} />
         
         {/* Main Content Area - Full width on mobile */}
         <div className={`flex-1 w-full ${isMobile ? '' : 'border-l border-border'}`}>
-          <ScrollArea className={`h-[calc(100vh-${isMobile ? '72px' : '120px'})] w-full px-4 md:px-8`}>
-            <Tabs value={activeTab} className="w-full max-w-full">
-              <TabsContent value="about" className="mt-0 w-full">
-                <AboutSettings />
-              </TabsContent>
-              <TabsContent value="subscription" className="mt-0 w-full">
-                <h2 className="text-2xl font-semibold mb-6">Subscription</h2>
-                <p className="text-muted-foreground">Subscription settings will go here.</p>
-              </TabsContent>
-              <TabsContent value="data" className="mt-0 w-full">
-                <h2 className="text-2xl font-semibold mb-6">Data</h2>
-                <p className="text-muted-foreground">Data settings will go here.</p>
-              </TabsContent>
-              <TabsContent value="lists" className="mt-0 w-full">
-                <ListsSettings />
-              </TabsContent>
-              <TabsContent value="tags" className="mt-0 w-full">
-                <h2 className="text-2xl font-semibold mb-6">Tags</h2>
-                <p className="text-muted-foreground">Tags settings will go here.</p>
-              </TabsContent>
-              <TabsContent value="misc" className="mt-0 w-full">
-                <h2 className="text-2xl font-semibold mb-6">Miscellaneous</h2>
-                <p className="text-muted-foreground">Miscellaneous settings will go here.</p>
-              </TabsContent>
-              <TabsContent value="account" className="mt-0 w-full">
-                <AccountSettings />
-              </TabsContent>
-            </Tabs>
+          <ScrollArea className={`h-[calc(100vh-${isMobile ? '0px' : '120px'})] w-full px-4 md:px-8`}>
+            {/* Add top padding on mobile to account for floating button */}
+            <div className={`${isMobile ? 'pt-20' : 'pt-4'}`}>
+              <Tabs value={activeTab} className="w-full max-w-full">
+                <TabsContent value="about" className="mt-0 w-full">
+                  <AboutSettings />
+                </TabsContent>
+                <TabsContent value="subscription" className="mt-0 w-full">
+                  <h2 className="text-2xl font-semibold mb-6">Subscription</h2>
+                  <p className="text-muted-foreground">Subscription settings will go here.</p>
+                </TabsContent>
+                <TabsContent value="data" className="mt-0 w-full">
+                  <h2 className="text-2xl font-semibold mb-6">Data</h2>
+                  <p className="text-muted-foreground">Data settings will go here.</p>
+                </TabsContent>
+                <TabsContent value="lists" className="mt-0 w-full">
+                  <ListsSettings />
+                </TabsContent>
+                <TabsContent value="tags" className="mt-0 w-full">
+                  <h2 className="text-2xl font-semibold mb-6">Tags</h2>
+                  <p className="text-muted-foreground">Tags settings will go here.</p>
+                </TabsContent>
+                <TabsContent value="misc" className="mt-0 w-full">
+                  <h2 className="text-2xl font-semibold mb-6">Miscellaneous</h2>
+                  <p className="text-muted-foreground">Miscellaneous settings will go here.</p>
+                </TabsContent>
+                <TabsContent value="account" className="mt-0 w-full">
+                  <AccountSettings />
+                </TabsContent>
+              </Tabs>
+            </div>
           </ScrollArea>
         </div>
       </div>

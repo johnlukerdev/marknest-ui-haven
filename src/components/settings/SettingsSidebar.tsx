@@ -56,27 +56,25 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
     );
   }
 
-  // Mobile - only floating menu button, no other UI elements
+  // Mobile - purple rounded button with smooth transitions
   return (
     <>
-      {/* Floating menu button for mobile */}
+      {/* Purple rounded sidebar menu button for mobile */}
       <Button
-        variant="default"
-        size="icon"
         onClick={() => setIsOpen(true)}
-        className="fixed top-20 left-4 z-50 md:hidden shadow-lg"
+        className="fixed top-4 left-4 z-50 md:hidden w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
       >
-        <Menu className="h-5 w-5" />
+        <Menu className="h-5 w-5 text-white" />
       </Button>
 
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent className="h-[85vh]">
           <div className="p-4">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-medium text-sm text-muted-foreground">SETTINGS</h3>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-semibold text-lg text-foreground">Settings</h3>
               <DrawerClose asChild>
-                <Button variant="ghost" size="icon">
-                  <X className="h-4 w-4" />
+                <Button variant="ghost" size="icon" className="hover:bg-muted rounded-full">
+                  <X className="h-5 w-5" />
                 </Button>
               </DrawerClose>
             </div>
@@ -85,14 +83,14 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
                 <button
                   key={item.id}
                   onClick={() => handleItemClick(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-3 rounded-md text-sm transition-colors ${
+                  className={`w-full flex items-center space-x-3 px-4 py-4 rounded-xl text-sm transition-all duration-200 ${
                     activeTab === item.id
-                      ? 'bg-primary/10 text-primary font-medium'
-                      : 'text-muted-foreground hover:bg-muted'
+                      ? 'bg-gradient-to-r from-purple-500/10 to-indigo-500/10 text-purple-600 border border-purple-200 font-medium'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                   }`}
                 >
                   {item.icon}
-                  <span>{item.label}</span>
+                  <span className="font-medium">{item.label}</span>
                 </button>
               ))}
             </nav>
