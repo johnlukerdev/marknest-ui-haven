@@ -35,6 +35,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const { theme, setTheme } = useTheme();
   const isMobile = useMobile();
   
+  // Check if we're on the settings page
+  const isSettingsPage = location.pathname === '/settings';
+  
   // Focus search input when it appears
   useEffect(() => {
     if (showSearch && searchInputRef.current) {
@@ -65,8 +68,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
     }
   };
   
-  return (
-    <>
+  // On mobile/tablet settings page, show a simplified navbar
+  if (isMobile && isSettingsPage) {
+    return (
       <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
         <div className="container flex h-16 items-center justify-between py-3 px-4 sm:px-6">
           {/* Left section - Logo */}
@@ -76,9 +80,83 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
             </Link>
           </div>
           
-          {/* Center section - Navigation and controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* My List Dropdown - Always visible */}
+          {/* Right section - My List Dropdown and Theme Toggle */}
+          <div className="flex items-center gap-2">
+            {/* My List Dropdown */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200 text-sm">
+                        My List <ChevronDown className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent 
+                      align="end" 
+                      className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
+                    >
+                      <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                        <Link to="/" className="flex items-center w-full text-foreground">
+                          My List
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                        <Link to="/trash" className="flex items-center w-full text-foreground">
+                          <Trash2 className="mr-3 h-4 w-4" />
+                          Trash
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                        <Link to="/archive" className="flex items-center w-full text-foreground">
+                          <Archive className="mr-3 h-4 w-4" />
+                          Archive
+                        </Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View your collections</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {/* Theme Toggle */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                  >
+                    {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </div>
+      </nav>
+    );
+  }
+  
+  return (
+    <>
+      <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
+        <div className="container flex h-16 items-center justify-between py-3 px-4 sm:px-6">
+          {/* Left section - Logo + My List Dropdown */}
+          <div className="flex items-center gap-3">
+            <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
+              <Logo />
+            </Link>
+            
+            {/* My List Dropdown - Now positioned after logo */}
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -114,25 +192,6 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>View your collections</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
-            {/* Theme Toggle - Always visible */}
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                    className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
-                  >
-                    {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -200,6 +259,25 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                     </Tooltip>
                   </TooltipProvider>
                   
+                  {/* Theme Toggle - Now positioned after Add button */}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                          className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                        >
+                          {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -247,7 +325,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
       </nav>
       
       {/* Mobile Bottom Navigation */}
-      {isMobile && (
+      {isMobile && !isSettingsPage && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
           <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
             <DrawerTrigger asChild>
