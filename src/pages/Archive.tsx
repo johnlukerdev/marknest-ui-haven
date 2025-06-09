@@ -8,7 +8,7 @@ import {
   CardContent, 
   CardFooter 
 } from "@/components/ui/card";
-import { Archive as ArchiveIcon, RotateCcw, CheckSquare, X, Link, Check } from 'lucide-react';
+import { Archive as ArchiveIcon, RotateCcw, CheckSquare, X, Link, Check, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 const Archive: React.FC = () => {
@@ -16,9 +16,15 @@ const Archive: React.FC = () => {
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [copyingId, setCopyingId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRestore = (id: string) => {
     restoreFromArchive(id);
+    toast({
+      title: "Restored!",
+      description: "Bookmark moved back to My List",
+      duration: 2000,
+    });
   };
 
   const handleCopyLink = (url: string, id: string) => {
@@ -49,16 +55,34 @@ const Archive: React.FC = () => {
     }
   };
 
-  const handleBulkRestore = () => {
-    selectedItems.forEach(id => {
-      const bookmark = archiveBookmarks.find(bookmark => bookmark.id === id);
-      if (bookmark) {
-        restoreFromArchive(bookmark.id);
+  const handleBulkRestore = async () => {
+    setIsLoading(true);
+    try {
+      // Process all selected items
+      for (const id of selectedItems) {
+        const bookmark = archiveBookmarks.find(bookmark => bookmark.id === id);
+        if (bookmark) {
+          restoreFromArchive(bookmark.id);
+        }
       }
-    });
-    
-    setIsSelectionMode(false);
-    setSelectedItems([]);
+      
+      toast({
+        title: "Restored successfully!",
+        description: `${selectedItems.length} bookmark(s) moved back to My List`,
+        duration: 3000,
+      });
+      
+      setIsSelectionMode(false);
+      setSelectedItems([]);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to restore some bookmarks",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,9 +104,10 @@ const Archive: React.FC = () => {
                     size="sm" 
                     className="flex items-center gap-2 focus:ring-0"
                     onClick={handleBulkRestore}
+                    disabled={isLoading}
                   >
-                    <RotateCcw className="h-4 w-4" />
-                    Restore
+                    {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
+                    Restore ({selectedItems.length})
                   </Button>
                 )}
                 
@@ -91,6 +116,7 @@ const Archive: React.FC = () => {
                   size="sm"
                   className="flex items-center gap-2 focus:ring-0"
                   onClick={toggleSelectionMode}
+                  disabled={isLoading}
                 >
                   {isSelectionMode ? (
                     <>

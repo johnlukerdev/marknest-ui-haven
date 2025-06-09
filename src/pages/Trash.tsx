@@ -8,8 +8,9 @@ import {
   CardContent, 
   CardFooter 
 } from "@/components/ui/card";
-import { Trash2, RotateCcw, CheckSquare, X, Link, Check, AlertTriangle } from 'lucide-react';
+import { Trash2, RotateCcw, CheckSquare, X, Link, Check, AlertTriangle, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { toast } from '@/hooks/use-toast';
 
 const Trash: React.FC = () => {
   const { trashBookmarks, restoreFromTrash, permanentlyDelete } = useBookmarkContext();
@@ -17,9 +18,15 @@ const Trash: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [bookmarkToDelete, setBookmarkToDelete] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRestore = (id: string) => {
     restoreFromTrash(id);
+    toast({
+      title: "Restored!",
+      description: "Bookmark moved back to My List",
+      duration: 2000,
+    });
   };
 
   const handleInitiateDelete = (id: string) => {
@@ -32,11 +39,21 @@ const Trash: React.FC = () => {
       permanentlyDelete(bookmarkToDelete);
       setShowDeleteWarning(false);
       setBookmarkToDelete(null);
+      toast({
+        title: "Deleted permanently",
+        description: "Bookmark has been permanently deleted",
+        duration: 2000,
+      });
     }
   };
 
   const handleCopyLink = (url: string) => {
     navigator.clipboard.writeText(url);
+    toast({
+      title: "Copied!",
+      description: "Link copied to clipboard",
+      duration: 2000,
+    });
   };
 
   const toggleSelectionMode = () => {
@@ -52,16 +69,34 @@ const Trash: React.FC = () => {
     }
   };
 
-  const handleBulkRestore = () => {
-    selectedItems.forEach(id => {
-      const bookmark = trashBookmarks.find(bookmark => bookmark.id === id);
-      if (bookmark) {
-        restoreFromTrash(bookmark.id);
+  const handleBulkRestore = async () => {
+    setIsLoading(true);
+    try {
+      // Process all selected items
+      for (const id of selectedItems) {
+        const bookmark = trashBookmarks.find(bookmark => bookmark.id === id);
+        if (bookmark) {
+          restoreFromTrash(bookmark.id);
+        }
       }
-    });
-    
-    setIsSelectionMode(false);
-    setSelectedItems([]);
+      
+      toast({
+        title: "Restored successfully!",
+        description: `${selectedItems.length} bookmark(s) moved back to My List`,
+        duration: 3000,
+      });
+      
+      setIsSelectionMode(false);
+      setSelectedItems([]);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to restore some bookmarks",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   const handleBulkDelete = () => {
@@ -69,14 +104,33 @@ const Trash: React.FC = () => {
     setBookmarkToDelete('bulk');
   };
   
-  const confirmBulkDelete = () => {
-    selectedItems.forEach(id => {
-      permanentlyDelete(id);
-    });
-    setShowDeleteWarning(false);
-    setBookmarkToDelete(null);
-    setIsSelectionMode(false);
-    setSelectedItems([]);
+  const confirmBulkDelete = async () => {
+    setIsLoading(true);
+    try {
+      // Process all selected items
+      for (const id of selectedItems) {
+        permanentlyDelete(id);
+      }
+      
+      toast({
+        title: "Deleted permanently",
+        description: `${selectedItems.length} bookmark(s) permanently deleted`,
+        duration: 3000,
+      });
+      
+      setShowDeleteWarning(false);
+      setBookmarkToDelete(null);
+      setIsSelectionMode(false);
+      setSelectedItems([]);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete some bookmarks",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCancelDelete = () => {
@@ -87,9 +141,9 @@ const Trash: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavBar onAddBookmark={() => {}} />
-      <main className="pt-8">
-        <div className="container py-12 px-6 sm:px-8 mx-auto max-w-7xl">
-          <div className="mb-8 flex justify-between items-center">
+      <main className="pt-4 sm:pt-8">
+        <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
+          <div className="mb-6 sm:mb-8 flex justify-between items-center">
             <div>
               <h1 className="text-2xl font-bold mb-2">Trash</h1>
               <p className="text-muted-foreground">Items in the trash will be automatically deleted after 30 days.</p>
@@ -104,18 +158,20 @@ const Trash: React.FC = () => {
                       size="sm" 
                       className="flex items-center gap-2"
                       onClick={handleBulkRestore}
+                      disabled={isLoading}
                     >
-                      <RotateCcw className="h-4 w-4" />
-                      Restore
+                      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
+                      Restore ({selectedItems.length})
                     </Button>
                     <Button 
                       variant="outline" 
                       size="sm" 
                       className="flex items-center gap-2"
                       onClick={handleBulkDelete}
+                      disabled={isLoading}
                     >
-                      <Trash2 className="h-4 w-4" />
-                      Delete
+                      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+                      Delete ({selectedItems.length})
                     </Button>
                   </>
                 )}
@@ -124,6 +180,7 @@ const Trash: React.FC = () => {
                   size="sm"
                   className="flex items-center gap-2 focus:ring-0"
                   onClick={toggleSelectionMode}
+                  disabled={isLoading}
                 >
                   {isSelectionMode ? (
                     <>
@@ -152,6 +209,7 @@ const Trash: React.FC = () => {
                     size="sm" 
                     onClick={handleCancelDelete}
                     className="focus:ring-0"
+                    disabled={isLoading}
                   >
                     Cancel
                   </Button>
@@ -160,7 +218,9 @@ const Trash: React.FC = () => {
                     size="sm"
                     onClick={bookmarkToDelete === 'bulk' ? confirmBulkDelete : handleDeletePermanently}
                     className="focus:ring-0"
+                    disabled={isLoading}
                   >
+                    {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                     Confirm Delete
                   </Button>
                 </div>
@@ -177,7 +237,7 @@ const Trash: React.FC = () => {
               <p className="text-muted-foreground">Items you delete will appear here</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:gap-8 w-full mx-auto sm:grid-cols-2 lg:grid-cols-3">
               {trashBookmarks.map((bookmark) => (
                 <Card 
                   key={bookmark.id} 

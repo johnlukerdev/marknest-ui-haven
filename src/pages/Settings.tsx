@@ -7,6 +7,10 @@ import SettingsSidebar from '@/components/settings/SettingsSidebar';
 import ListsSettings from '@/components/settings/ListsSettings';
 import AccountSettings from '@/components/settings/AccountSettings';
 import AboutSettings from '@/components/settings/AboutSettings';
+import SubscriptionSettings from '@/components/settings/SubscriptionSettings';
+import DataSettings from '@/components/settings/DataSettings';
+import TagsSettings from '@/components/settings/TagsSettings';
+import MiscSettings from '@/components/settings/MiscSettings';
 import NavBar from '@/components/NavBar';
 import { useTheme } from '@/hooks/use-theme';
 import { useMobile } from '@/hooks/use-mobile';
@@ -65,23 +69,19 @@ const Settings: React.FC = () => {
                   <AboutSettings />
                 </TabsContent>
                 <TabsContent value="subscription" className="mt-0 w-full">
-                  <h2 className="text-2xl font-semibold mb-6">Subscription</h2>
-                  <p className="text-muted-foreground">Subscription settings will go here.</p>
+                  <SubscriptionSettings />
                 </TabsContent>
                 <TabsContent value="data" className="mt-0 w-full">
-                  <h2 className="text-2xl font-semibold mb-6">Data</h2>
-                  <p className="text-muted-foreground">Data settings will go here.</p>
+                  <DataSettings />
                 </TabsContent>
                 <TabsContent value="lists" className="mt-0 w-full">
                   <ListsSettings />
                 </TabsContent>
                 <TabsContent value="tags" className="mt-0 w-full">
-                  <h2 className="text-2xl font-semibold mb-6">Tags</h2>
-                  <p className="text-muted-foreground">Tags settings will go here.</p>
+                  <TagsSettings />
                 </TabsContent>
                 <TabsContent value="misc" className="mt-0 w-full">
-                  <h2 className="text-2xl font-semibold mb-6">Miscellaneous</h2>
-                  <p className="text-muted-foreground">Miscellaneous settings will go here.</p>
+                  <MiscSettings />
                 </TabsContent>
                 <TabsContent value="account" className="mt-0 w-full">
                   <AccountSettings />
