@@ -29,21 +29,21 @@ const SignIn: React.FC = () => {
             </div>
             
             <div className="space-y-8">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 font-[Poppins] text-foreground leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-6 font-[Poppins] text-foreground leading-tight">
                 Welcome to MarkNest
               </h1>
               
-              <p className="text-indigo-400 text-xl md:text-2xl mb-8 leading-relaxed">
+              <p className="text-indigo-400 text-lg md:text-xl mb-8 leading-relaxed">
                 Organize, access, and explore your digital world with one click.
               </p>
               
-              <p className="text-muted-foreground text-lg mb-12 leading-relaxed">
+              <p className="text-muted-foreground text-base mb-12 leading-relaxed">
                 MarkNest helps you save, manage, and revisit your favorite content anytime. From videos to articles to tools, keep everything in one nest — beautifully encrypted and always at your fingertips.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
-                  className="text-lg py-7 px-8 rounded-xl gradient-primary w-full sm:w-auto min-w-[140px]"
+                  className="text-base py-6 px-7 rounded-xl gradient-primary w-full sm:w-auto min-w-[140px]"
                   onClick={() => navigate('/signup')}
                 >
                   Get Started
@@ -51,7 +51,7 @@ const SignIn: React.FC = () => {
                 
                 <Button 
                   variant="outline" 
-                  className="text-lg py-7 px-8 rounded-xl border-[1.5px] border-muted-foreground/30 hover:border-indigo-500/50 w-full sm:w-auto min-w-[140px] bg-transparent hover:bg-card/20"
+                  className="text-base py-6 px-7 rounded-xl border-[1.5px] border-muted-foreground/30 hover:border-indigo-500/50 w-full sm:w-auto min-w-[140px] bg-transparent hover:bg-card/20"
                   onClick={() => navigate('/secret-key', { state: { isSignIn: true } })}
                 >
                   Sign In
@@ -106,10 +106,10 @@ const SignIn: React.FC = () => {
       <div className="bg-card/30 py-20">
         <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-20">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
+            <h2 className="text-2xl md:text-3xl font-medium text-foreground mb-4">
               How it works
             </h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-base">
               Simple, secure, and seamless organization
             </p>
           </div>
@@ -119,7 +119,7 @@ const SignIn: React.FC = () => {
               <div className="w-16 h-16 bg-indigo-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Link className="w-8 h-8 text-indigo-400" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-2">Save your favorite links and files</h3>
+              <h3 className="text-base font-medium text-foreground mb-2">Save your favorite links and files</h3>
               <p className="text-muted-foreground text-sm">Quickly bookmark any content with one click</p>
             </div>
             
@@ -127,7 +127,7 @@ const SignIn: React.FC = () => {
               <div className="w-16 h-16 bg-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Monitor className="w-8 h-8 text-purple-400" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-2">Access them anywhere</h3>
+              <h3 className="text-base font-medium text-foreground mb-2">Access them anywhere</h3>
               <p className="text-muted-foreground text-sm">Your bookmarks sync across all devices</p>
             </div>
             
@@ -135,7 +135,7 @@ const SignIn: React.FC = () => {
               <div className="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Shield className="w-8 h-8 text-green-400" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-2">Everything is encrypted</h3>
+              <h3 className="text-base font-medium text-foreground mb-2">Everything is encrypted</h3>
               <p className="text-muted-foreground text-sm">Your data is protected with end-to-end encryption</p>
             </div>
             
@@ -143,7 +143,7 @@ const SignIn: React.FC = () => {
               <div className="w-16 h-16 bg-orange-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Zap className="w-8 h-8 text-orange-400" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-2">One-click smart dashboard</h3>
+              <h3 className="text-base font-medium text-foreground mb-2">One-click smart dashboard</h3>
               <p className="text-muted-foreground text-sm">Intelligent organization at your fingertips</p>
             </div>
           </div>
