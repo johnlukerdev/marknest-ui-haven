@@ -53,24 +53,24 @@ const SecretKey: React.FC = () => {
     return (
       <div className="min-h-screen bg-background flex">
         {/* Left Side - Form */}
-        <div className="flex-1 flex flex-col items-center justify-center px-8 py-12 relative">
+        <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-12 relative">
           {/* Subtle background decoration */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/3 to-purple-500/3"></div>
           
           <div className="w-full max-w-md relative z-10">
             {/* Logo */}
-            <div className="flex justify-center mb-16">
+            <div className="flex justify-center mb-12 sm:mb-16">
               <Logo />
             </div>
             
             {/* Modern Card Container */}
-            <div className="bg-card border border-border/60 rounded-3xl p-10 shadow-2xl shadow-black/5">
+            <div className="bg-card border border-border/60 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-black/5">
               {/* Header */}
               <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold text-foreground mb-3 font-[Poppins]">
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 font-[Poppins]">
                   Access with Your Secret Key
                 </h1>
-                <p className="text-muted-foreground text-lg">
+                <p className="text-muted-foreground text-base sm:text-lg">
                   Enter your secret code to unlock your dashboard.
                 </p>
               </div>
@@ -80,8 +80,8 @@ const SecretKey: React.FC = () => {
                 <div className="space-y-3">
                   <Input
                     type="password"
-                    placeholder="Enter your secret key..."
-                    className="h-16 text-lg rounded-2xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/50 shadow-sm"
+                    placeholder="Enter your secret key…"
+                    className="h-20 sm:h-24 text-lg sm:text-xl rounded-2xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-300 placeholder:text-muted-foreground/50 shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 px-6"
                     value={secretKey}
                     onChange={handleInputChange}
                   />
@@ -128,7 +128,7 @@ const SecretKey: React.FC = () => {
           </div>
         </div>
         
-        {/* Right Side - Modern Illustration */}
+        {/* Right Side - Information Section */}
         <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 items-center justify-center relative overflow-hidden">
           {/* Soft background effects */}
           <div className="absolute inset-0">
@@ -136,30 +136,65 @@ const SecretKey: React.FC = () => {
             <div className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-purple-400/10 rounded-full blur-2xl"></div>
           </div>
           
-          {/* Lock/Access Pass Illustration */}
-          <div className="relative z-10 p-12">
-            <div className="w-80 h-80 bg-gradient-to-br from-white/5 to-white/10 rounded-3xl flex flex-col items-center justify-center backdrop-blur-sm border border-white/10 shadow-2xl">
-              {/* Main Lock Icon */}
-              <div className="mb-8 p-6 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 rounded-2xl backdrop-blur-sm">
+          {/* Content Container */}
+          <div className="relative z-10 p-12 max-w-md">
+            {/* Main Lock Icon */}
+            <div className="mb-12 flex justify-center">
+              <div className="p-6 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 rounded-2xl backdrop-blur-sm">
                 <Lock className="w-20 h-20 text-white/80" />
               </div>
-              
-              {/* Access Lines */}
-              <div className="space-y-4 w-full px-12">
-                <div className="h-2 bg-white/20 rounded-full">
-                  <div className="h-full bg-gradient-to-r from-indigo-400/60 to-purple-400/60 rounded-full w-4/5"></div>
-                </div>
-                <div className="h-2 bg-white/20 rounded-full">
-                  <div className="h-full bg-gradient-to-r from-purple-400/60 to-indigo-400/60 rounded-full w-3/5"></div>
-                </div>
-                <div className="h-2 bg-white/20 rounded-full">
-                  <div className="h-full bg-gradient-to-r from-indigo-400/60 to-purple-400/60 rounded-full w-2/3"></div>
+            </div>
+            
+            {/* Information Blocks */}
+            <div className="space-y-8 animate-fade-in">
+              {/* End-to-end encryption */}
+              <div className="flex items-start gap-4">
+                <div className="text-2xl">🔐</div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2">End-to-end encryption</h3>
+                  <p className="text-white/70 text-base leading-relaxed">Your data is protected by your secret key.</p>
                 </div>
               </div>
               
-              {/* Security Badge */}
-              <div className="mt-8 px-4 py-2 bg-green-400/20 rounded-full border border-green-400/30">
+              {/* Smart organizing */}
+              <div className="flex items-start gap-4">
+                <div className="text-2xl">📁</div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2">Smart organizing</h3>
+                  <p className="text-white/70 text-base leading-relaxed">Organize your digital footprint with ease.</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Security Badge */}
+            <div className="mt-12 flex justify-center">
+              <div className="px-6 py-3 bg-green-400/20 rounded-full border border-green-400/30">
                 <span className="text-green-300 text-sm font-medium">Secured Access</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Mobile Information Section - Below the card */}
+        <div className="lg:hidden absolute bottom-0 left-0 right-0 p-4">
+          <div className="bg-card/90 backdrop-blur-sm border border-border/50 rounded-2xl p-6 animate-fade-in">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* End-to-end encryption */}
+              <div className="flex items-start gap-3">
+                <div className="text-xl">🔐</div>
+                <div>
+                  <h3 className="text-foreground font-bold text-sm mb-1">End-to-end encryption</h3>
+                  <p className="text-muted-foreground text-xs">Your data is protected by your secret key.</p>
+                </div>
+              </div>
+              
+              {/* Smart organizing */}
+              <div className="flex items-start gap-3">
+                <div className="text-xl">📁</div>
+                <div>
+                  <h3 className="text-foreground font-bold text-sm mb-1">Smart organizing</h3>
+                  <p className="text-muted-foreground text-xs">Organize your digital footprint with ease.</p>
+                </div>
               </div>
             </div>
           </div>
