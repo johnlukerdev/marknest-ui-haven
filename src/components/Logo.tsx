@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -6,13 +7,21 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ onClick }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  // Check if we're inside a Router context by trying to use the hooks safely
+  let navigate, location;
+  try {
+    navigate = useNavigate();
+    location = useLocation();
+  } catch (error) {
+    // We're outside Router context, hooks will be undefined
+    navigate = undefined;
+    location = undefined;
+  }
 
   const handleClick = () => {
     if (onClick) {
       onClick();
-    } else {
+    } else if (navigate && location) {
       // If we're already on the main page, just refresh content without changing URL
       if (location.pathname === '/') {
         window.location.reload();
@@ -21,11 +30,12 @@ const Logo: React.FC<LogoProps> = ({ onClick }) => {
         navigate('/');
       }
     }
+    // If no navigate function available, do nothing (loading screen case)
   };
 
   return (
     <div 
-      className="flex items-center gap-2.5 transition-all duration-200 hover:cursor-pointer" 
+      className={`flex items-center gap-2.5 transition-all duration-200 ${navigate ? 'hover:cursor-pointer' : ''}`}
       onClick={handleClick}
     >
       <div className="relative h-10 w-10 overflow-hidden">
