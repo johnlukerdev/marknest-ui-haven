@@ -45,25 +45,23 @@ const Settings: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Only show NavBar on desktop, hide on mobile to avoid duplicate menu buttons */}
-      {!isMobile && (
-        <NavBar 
-          onAddBookmark={handleAddBookmark} 
-          onMobileMenuToggle={() => {
-            // This will be handled by the SettingsSidebar floating button
-          }} 
-        />
-      )}
+      {/* Show NavBar on both desktop and mobile */}
+      <NavBar 
+        onAddBookmark={handleAddBookmark} 
+        onMobileMenuToggle={() => {
+          // This will be handled by the SettingsSidebar floating button
+        }} 
+      />
       
-      <div className="flex flex-1 w-full">
+      <div className={`flex flex-1 w-full ${isMobile ? 'pt-16' : ''}`}>
         {/* Settings Sidebar - includes mobile floating button */}
         <SettingsSidebar activeTab={activeTab} onTabChange={handleTabChange} />
         
         {/* Main Content Area - Full width on mobile */}
         <div className={`flex-1 w-full ${isMobile ? '' : 'border-l border-border'}`}>
-          <ScrollArea className={`h-[calc(100vh-${isMobile ? '0px' : '120px'})] w-full px-4 md:px-8`}>
-            {/* Add top padding on mobile to account for floating button */}
-            <div className={`${isMobile ? 'pt-20' : 'pt-4'}`}>
+          <ScrollArea className={`h-[calc(100vh-${isMobile ? '64px' : '120px'})] w-full px-4 md:px-8`}>
+            {/* Remove extra top padding on mobile since we now have fixed navbar */}
+            <div className="pt-4">
               <Tabs value={activeTab} className="w-full max-w-full">
                 <TabsContent value="about" className="mt-0 w-full">
                   <AboutSettings />
