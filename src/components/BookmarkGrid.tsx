@@ -12,7 +12,9 @@ interface BookmarkGridProps {
 
 const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
   const { 
-    bookmarks, 
+    bookmarks,
+    filteredBookmarks,
+    searchQuery,
     isSelectMode, 
     toggleSelectMode, 
     selectedBookmarks,
@@ -20,11 +22,18 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
     bulkMoveToTrash
   } = useBookmarkContext();
 
+  // Use filteredBookmarks for display, but check original bookmarks length for showing controls
+  const displayBookmarks = filteredBookmarks;
+  const hasBookmarks = bookmarks.length > 0;
+  const hasResults = displayBookmarks.length > 0;
+
   return (
     <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">My Bookmarks</h2>
-        {bookmarks.length > 0 && (
+        <h2 className="text-xl font-semibold">
+          {searchQuery ? `Search Results (${displayBookmarks.length})` : 'My Bookmarks'}
+        </h2>
+        {hasBookmarks && (
           <div className="flex items-center gap-2 flex-wrap justify-end">
             {isSelectMode && selectedBookmarks.length > 0 && (
               <>
@@ -70,9 +79,9 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
         )}
       </div>
       
-      {bookmarks.length > 0 ? (
+      {hasResults ? (
         <div className="grid grid-cols-1 gap-6 sm:gap-8 mx-auto w-full sm:grid-cols-2 lg:grid-cols-3">
-          {bookmarks.map((bookmark) => (
+          {displayBookmarks.map((bookmark) => (
             <BookmarkCard
               key={bookmark.id}
               id={bookmark.id}
@@ -85,8 +94,8 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
       ) : (
         <EmptyState 
           icon={<Archive className="h-16 w-16 text-muted-foreground" />}
-          title="No bookmarks yet"
-          description="Save articles, tools, or anything inspiring. Start collecting the web you love."
+          title={searchQuery ? "No results found" : "No bookmarks yet"}
+          description={searchQuery ? `No bookmarks match "${searchQuery}". Try a different search term.` : "Save articles, tools, or anything inspiring. Start collecting the web you love."}
         />
       )}
     </div>

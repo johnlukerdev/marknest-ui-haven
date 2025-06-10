@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -17,6 +16,7 @@ import Logo from './Logo';
 import AddBookmarkForm from './AddBookmarkForm';
 import { useTheme } from '@/hooks/use-theme';
 import { useMobile } from '@/hooks/use-mobile';
+import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 
 interface NavBarProps {
   onAddBookmark: (url: string) => void;
@@ -30,10 +30,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, setTheme } = useTheme();
   const isMobile = useMobile();
+  const { searchQuery, setSearchQuery } = useBookmarkContext();
   
   // Check if we're on the settings page
   const isSettingsPage = location.pathname === '/settings';
@@ -45,16 +47,25 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
     }
   }, [showSearch]);
 
+  useEffect(() => {
+    if (mobileSearchOpen && mobileSearchInputRef.current) {
+      mobileSearchInputRef.current.focus();
+    }
+  }, [mobileSearchOpen]);
+
   const handleSignOut = () => {
     navigate('/signin');
     setMobileMenuOpen(false);
   };
 
   const handleClearSearch = () => {
-    if (searchInputRef.current) {
-      searchInputRef.current.value = '';
-    }
+    setSearchQuery('');
     setShowSearch(false);
+  };
+
+  const handleMobileClearSearch = () => {
+    setSearchQuery('');
+    setMobileSearchOpen(false);
   };
 
   const goToSettings = () => {
@@ -283,11 +294,15 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                           ref={searchInputRef}
                           className="w-full md:w-[240px] pr-8 md:w-[300px] shadow-sm h-12" 
                           placeholder="Search bookmarks..." 
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
                           autoFocus
                           onBlur={(e) => {
                             // Prevent closing if user clicked within the search box
                             if (!e.relatedTarget || !e.relatedTarget.closest('.search-container')) {
-                              setShowSearch(false);
+                              if (!searchQuery) {
+                                setShowSearch(false);
+                              }
                             }
                           }}
                         />
@@ -434,11 +449,24 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
             <DrawerContent className="p-4">
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-center">Search</h2>
-                <Input 
-                  className="w-full shadow-sm" 
-                  placeholder="Search bookmarks..." 
-                  autoFocus
-                />
+                <div className="relative">
+                  <Input 
+                    ref={mobileSearchInputRef}
+                    className="w-full shadow-sm pr-8" 
+                    placeholder="Search bookmarks..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    autoFocus
+                  />
+                  {searchQuery && (
+                    <button 
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      onClick={handleMobileClearSearch}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
               </div>
             </DrawerContent>
           </Drawer>

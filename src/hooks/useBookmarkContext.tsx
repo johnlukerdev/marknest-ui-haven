@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 
 export interface Bookmark {
   id: string;
@@ -9,10 +9,13 @@ export interface Bookmark {
 
 interface BookmarkContextType {
   bookmarks: Bookmark[];
+  filteredBookmarks: Bookmark[];
   trashBookmarks: Bookmark[];
   archiveBookmarks: Bookmark[];
   selectedBookmarks: string[];
   isSelectMode: boolean;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
   moveToTrash: (id: string) => void;
   restoreFromTrash: (id: string) => void;
   moveToArchive: (id: string) => void;
@@ -81,6 +84,18 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
   const [archiveBookmarks, setArchiveBookmarks] = useState<Bookmark[]>([]);
   const [selectedBookmarks, setSelectedBookmarks] = useState<string[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  // Filter bookmarks based on search query
+  const filteredBookmarks = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return bookmarks;
+    }
+    
+    return bookmarks.filter(bookmark =>
+      bookmark.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [bookmarks, searchQuery]);
   
   const moveToTrash = (id: string) => {
     const bookmarkToTrash = bookmarks.find(b => b.id === id);
@@ -168,10 +183,13 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
   return (
     <BookmarkContext.Provider value={{
       bookmarks,
+      filteredBookmarks,
       trashBookmarks,
       archiveBookmarks,
       selectedBookmarks,
       isSelectMode,
+      searchQuery,
+      setSearchQuery,
       moveToTrash,
       restoreFromTrash,
       moveToArchive,
@@ -195,3 +213,5 @@ export const useBookmarkContext = () => {
   }
   return context;
 };
+
+export default BookmarkProvider;
