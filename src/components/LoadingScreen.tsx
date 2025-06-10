@@ -13,7 +13,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isVisible }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-background via-background/95 to-background/90 backdrop-blur-sm">
       <div className="flex flex-col items-center space-y-6 text-center px-6">
         {/* Animated Logo */}
-        <div className="animate-pulse hover:animate-none">
+        <div className="animate-pulse">
           <Logo />
         </div>
         
@@ -25,8 +25,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isVisible }) => {
         </div>
 
         {/* Loading Text */}
-        <div className="space-y-2 animate-fade-in">
-          <h2 className="text-xl font-semibold text-foreground font-[Poppins]">
+        <div className="space-y-2 opacity-0 animate-pulse">
+          <h2 className="text-xl font-semibold text-foreground">
             Just a sec...
           </h2>
           <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
