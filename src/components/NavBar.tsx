@@ -88,8 +88,8 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
             </Link>
           </div>
           
-          {/* Right section - My List Dropdown and Theme Toggle */}
-          <div className="flex items-center gap-2">
+          {/* Right section - My List Dropdown and Theme Toggle moved slightly right */}
+          <div className="flex items-center gap-2 ml-4">
             {/* My List Dropdown */}
             <TooltipProvider>
               <Tooltip>
@@ -207,9 +207,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
             )}
           </div>
           
-          {/* Mobile Right section - My List + Theme Toggle (only on main pages, not settings) */}
+          {/* Mobile Right section - My List + Theme Toggle moved to right (only on main pages, not settings) */}
           {isMobile && !isSettingsPage && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ml-auto">
               {/* My List Dropdown */}
               <TooltipProvider>
                 <Tooltip>

@@ -56,15 +56,16 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
     );
   }
 
-  // Mobile - purple rounded button with smooth transitions
+  // Mobile - transparent button with bigger size
   return (
     <>
-      {/* Purple rounded sidebar menu button for mobile */}
+      {/* Transparent sidebar menu button for mobile - bigger size */}
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-50 md:hidden w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+        className="fixed top-4 left-4 z-50 md:hidden w-16 h-16 rounded-full bg-transparent hover:bg-muted/20 transition-all duration-300 hover:scale-105"
+        variant="ghost"
       >
-        <Menu className="h-5 w-5 text-white" />
+        <Menu className="h-7 w-7 text-foreground" />
       </Button>
 
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
