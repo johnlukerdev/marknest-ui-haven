@@ -516,5 +516,3 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
 };
 
 export default NavBar;
-
-</edits_to_apply>
