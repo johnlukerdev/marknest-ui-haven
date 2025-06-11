@@ -90,9 +90,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               onClick={handleMobileMenuClick}
               variant="ghost"
               size="icon"
-              className="h-12 w-12 hover:bg-transparent transition-all duration-200"
+              className="h-8 w-8 p-0 hover:bg-transparent text-foreground"
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 w-5" />
             </Button>
             <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
               <Logo />
@@ -516,3 +516,5 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
 };
 
 export default NavBar;
+
+</edits_to_apply>
