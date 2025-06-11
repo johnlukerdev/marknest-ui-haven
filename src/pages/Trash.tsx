@@ -143,59 +143,132 @@ const Trash: React.FC = () => {
       <NavBar onAddBookmark={() => {}} />
       <main className="pt-4 sm:pt-8">
         <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
-          <div className="mb-6 sm:mb-8 flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-bold mb-2">Trash</h1>
-              <p className="text-muted-foreground">Items in the trash will be automatically deleted after 30 days.</p>
-            </div>
-            
-            {trashBookmarks.length > 0 && (
-              <div className="flex items-center gap-2">
-                {isSelectionMode && selectedItems.length > 0 && (
-                  <>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="flex items-center gap-2"
-                      onClick={handleBulkRestore}
-                      disabled={isLoading}
-                    >
-                      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
-                      Restore ({selectedItems.length})
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="flex items-center gap-2"
-                      onClick={handleBulkDelete}
-                      disabled={isLoading}
-                    >
-                      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-                      Delete ({selectedItems.length})
-                    </Button>
-                  </>
-                )}
-                <Button 
-                  variant={isSelectionMode ? "default" : "outline"} 
-                  size="sm"
-                  className="flex items-center gap-2 focus:ring-0"
-                  onClick={toggleSelectionMode}
-                  disabled={isLoading}
-                >
-                  {isSelectionMode ? (
-                    <>
-                      <X className="h-4 w-4" />
-                      <span className="sm:inline">Cancel</span>
-                    </>
-                  ) : (
-                    <>
-                      <CheckSquare className="h-4 w-4" />
-                      <span className="sm:inline">Select</span>
-                    </>
-                  )}
-                </Button>
+          <div className="mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+              <div className="flex-1">
+                <h1 className="text-2xl font-bold mb-2">Trash</h1>
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                  Items in the trash will be automatically deleted after 30 days.
+                </p>
               </div>
-            )}
+              
+              {trashBookmarks.length > 0 && (
+                <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+                  {/* Mobile: Show bulk actions in organized layout when items are selected */}
+                  {isSelectionMode && selectedItems.length > 0 && (
+                    <div className="flex flex-col items-center gap-3 w-full sm:hidden">
+                      {/* First row: Restore and Delete buttons */}
+                      <div className="flex items-center justify-center gap-3 w-full">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex items-center gap-2 flex-1 max-w-[140px]"
+                          onClick={handleBulkRestore}
+                          disabled={isLoading}
+                        >
+                          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
+                          Restore ({selectedItems.length})
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex items-center gap-2 flex-1 max-w-[140px]"
+                          onClick={handleBulkDelete}
+                          disabled={isLoading}
+                        >
+                          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+                          Delete ({selectedItems.length})
+                        </Button>
+                      </div>
+                      
+                      {/* Second row: Cancel button */}
+                      <Button 
+                        variant="default" 
+                        size="sm"
+                        className="flex items-center gap-2 w-full max-w-[200px] justify-center"
+                        onClick={toggleSelectionMode}
+                        disabled={isLoading}
+                      >
+                        <X className="h-4 w-4" />
+                        Cancel
+                      </Button>
+                    </div>
+                  )}
+                  
+                  {/* Desktop: Show bulk actions in horizontal layout */}
+                  <div className="hidden sm:flex items-center gap-2">
+                    {isSelectionMode && selectedItems.length > 0 && (
+                      <>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex items-center gap-2"
+                          onClick={handleBulkRestore}
+                          disabled={isLoading}
+                        >
+                          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
+                          Restore ({selectedItems.length})
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex items-center gap-2"
+                          onClick={handleBulkDelete}
+                          disabled={isLoading}
+                        >
+                          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+                          Delete ({selectedItems.length})
+                        </Button>
+                      </>
+                    )}
+                    <Button 
+                      variant={isSelectionMode ? "default" : "outline"} 
+                      size="sm"
+                      className="flex items-center gap-2 focus:ring-0"
+                      onClick={toggleSelectionMode}
+                      disabled={isLoading}
+                    >
+                      {isSelectionMode ? (
+                        <>
+                          <X className="h-4 w-4" />
+                          <span>Cancel</span>
+                        </>
+                      ) : (
+                        <>
+                          <CheckSquare className="h-4 w-4" />
+                          <span>Select</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  
+                  {/* Mobile: Show only Select/Cancel button when no items selected */}
+                  {(!isSelectionMode || selectedItems.length === 0) && (
+                    <div className="flex sm:hidden w-full justify-center">
+                      <Button 
+                        variant={isSelectionMode ? "default" : "outline"} 
+                        size="sm"
+                        className="flex items-center gap-2 focus:ring-0 w-full max-w-[200px] justify-center"
+                        onClick={toggleSelectionMode}
+                        disabled={isLoading}
+                      >
+                        {isSelectionMode ? (
+                          <>
+                            <X className="h-4 w-4" />
+                            <span>Cancel</span>
+                          </>
+                        ) : (
+                          <>
+                            <CheckSquare className="h-4 w-4" />
+                            <span>Select</span>
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           {showDeleteWarning && (
