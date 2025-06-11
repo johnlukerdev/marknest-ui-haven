@@ -317,6 +317,19 @@
       transition-all duration-200 animate-fade-in;
   }
 
+  /* Modern button styles */
+  .modern-btn-archive {
+    @apply hover:scale-105 active:scale-95;
+  }
+  
+  .modern-btn-delete {
+    @apply hover:scale-105 active:scale-95;
+  }
+  
+  .modern-btn-cancel {
+    @apply hover:scale-105 active:scale-95;
+  }
+
   /* Mobile navigation button */
   .mobile-nav-button {
     @apply flex flex-col items-center justify-center gap-1 text-xs;

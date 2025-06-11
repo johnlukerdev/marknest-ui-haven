@@ -80,7 +80,6 @@ const Trash: React.FC = () => {
   const handleBulkRestore = async () => {
     setIsLoading(true);
     try {
-      // Process all selected items
       for (const id of selectedItems) {
         const bookmark = trashBookmarks.find(bookmark => bookmark.id === id);
         if (bookmark) {
@@ -115,7 +114,6 @@ const Trash: React.FC = () => {
   const confirmBulkDelete = async () => {
     setIsLoading(true);
     try {
-      // Process all selected items
       for (const id of selectedItems) {
         permanentlyDelete(id);
       }
@@ -150,7 +148,7 @@ const Trash: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
               <div className="flex-1">
                 <h1 className="text-2xl font-bold mb-2">Trash</h1>
-                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-[95%]">
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-[95%] break-words">
                   Items in the trash will be automatically deleted after 30 days.
                 </p>
               </div>
@@ -160,11 +158,11 @@ const Trash: React.FC = () => {
                   {/* Mobile: Show bulk actions in organized layout when items are selected */}
                   {isSelectionMode && selectedItems.length > 0 && (
                     <div className="flex flex-col items-center gap-3 w-full sm:hidden">
-                      <div className="flex items-center justify-center gap-3 w-full">
+                      <div className="flex items-center justify-center gap-3 w-full max-w-[300px]">
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex items-center gap-2 flex-1 max-w-[200px]"
+                          className="flex items-center gap-2 flex-1"
                           onClick={handleBulkRestore}
                           disabled={isLoading}
                         >
@@ -174,7 +172,7 @@ const Trash: React.FC = () => {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex items-center gap-2 flex-1 max-w-[200px]"
+                          className="flex items-center gap-2 flex-1"
                           onClick={handleBulkDelete}
                           disabled={isLoading}
                         >
@@ -272,19 +270,19 @@ const Trash: React.FC = () => {
             </div>
           </div>
 
-          {/* Enhanced Delete Confirmation Dialog */}
+          {/* Enhanced Delete Confirmation Dialog - Fixed responsive overflow */}
           <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-            <AlertDialogContent className="bg-slate-900 border-red-500/40 p-6 mx-4 max-w-sm w-[95%] rounded-xl">
+            <AlertDialogContent className="bg-slate-900 border-red-500/40 w-[90%] max-w-sm mx-auto p-4 rounded-xl overflow-hidden box-border">
               <AlertDialogHeader className="flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mb-3">
                   <AlertTriangle className="h-6 w-6 text-red-400" />
                 </div>
                 <AlertDialogTitle className="text-lg font-semibold text-white">Confirm Permanent Deletion</AlertDialogTitle>
-                <AlertDialogDescription className="text-center text-sm text-slate-300 mt-2 mb-4">
+                <AlertDialogDescription className="text-center text-sm text-slate-300 mt-2 mb-4 break-words">
                   Permanent deletion cannot be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter className="flex flex-col sm:flex-row gap-2">
+              <AlertDialogFooter className="flex flex-col gap-2 sm:flex-row">
                 <AlertDialogCancel 
                   className="bg-slate-800 hover:bg-slate-700 text-white border-0 transition-all duration-200"
                   aria-label="Cancel deletion"
