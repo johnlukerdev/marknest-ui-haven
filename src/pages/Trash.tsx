@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -9,14 +8,23 @@ import {
   CardFooter 
 } from "@/components/ui/card";
 import { Trash2, RotateCcw, CheckSquare, X, Link, Check, AlertTriangle, Loader2 } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { 
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction
+} from "@/components/ui/alert-dialog";
 import { toast } from '@/hooks/use-toast';
 
 const Trash: React.FC = () => {
   const { trashBookmarks, restoreFromTrash, permanentlyDelete } = useBookmarkContext();
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [showDeleteWarning, setShowDeleteWarning] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [bookmarkToDelete, setBookmarkToDelete] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,13 +39,13 @@ const Trash: React.FC = () => {
 
   const handleInitiateDelete = (id: string) => {
     setBookmarkToDelete(id);
-    setShowDeleteWarning(true);
+    setShowDeleteDialog(true);
   };
 
   const handleDeletePermanently = () => {
     if (bookmarkToDelete) {
       permanentlyDelete(bookmarkToDelete);
-      setShowDeleteWarning(false);
+      setShowDeleteDialog(false);
       setBookmarkToDelete(null);
       toast({
         title: "Deleted permanently",
@@ -100,7 +108,7 @@ const Trash: React.FC = () => {
   };
   
   const handleBulkDelete = () => {
-    setShowDeleteWarning(true);
+    setShowDeleteDialog(true);
     setBookmarkToDelete('bulk');
   };
   
@@ -118,7 +126,7 @@ const Trash: React.FC = () => {
         duration: 3000,
       });
       
-      setShowDeleteWarning(false);
+      setShowDeleteDialog(false);
       setBookmarkToDelete(null);
       setIsSelectionMode(false);
       setSelectedItems([]);
@@ -133,11 +141,6 @@ const Trash: React.FC = () => {
     }
   };
 
-  const handleCancelDelete = () => {
-    setShowDeleteWarning(false);
-    setBookmarkToDelete(null);
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <NavBar onAddBookmark={() => {}} />
@@ -147,7 +150,7 @@ const Trash: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
               <div className="flex-1">
                 <h1 className="text-2xl font-bold mb-2">Trash</h1>
-                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-[95%]">
                   Items in the trash will be automatically deleted after 30 days.
                 </p>
               </div>
@@ -157,12 +160,11 @@ const Trash: React.FC = () => {
                   {/* Mobile: Show bulk actions in organized layout when items are selected */}
                   {isSelectionMode && selectedItems.length > 0 && (
                     <div className="flex flex-col items-center gap-3 w-full sm:hidden">
-                      {/* First row: Restore and Delete buttons */}
                       <div className="flex items-center justify-center gap-3 w-full">
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex items-center gap-2 flex-1 max-w-[140px]"
+                          className="flex items-center gap-2 flex-1 max-w-[200px]"
                           onClick={handleBulkRestore}
                           disabled={isLoading}
                         >
@@ -172,7 +174,7 @@ const Trash: React.FC = () => {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex items-center gap-2 flex-1 max-w-[140px]"
+                          className="flex items-center gap-2 flex-1 max-w-[200px]"
                           onClick={handleBulkDelete}
                           disabled={isLoading}
                         >
@@ -181,7 +183,6 @@ const Trash: React.FC = () => {
                         </Button>
                       </div>
                       
-                      {/* Second row: Cancel button */}
                       <Button 
                         variant="default" 
                         size="sm"
@@ -271,35 +272,37 @@ const Trash: React.FC = () => {
             </div>
           </div>
 
-          {showDeleteWarning && (
-            <Alert className="mb-6 border-yellow-600/30 bg-yellow-600/10">
-              <AlertTriangle className="h-4 w-4 text-yellow-600" />
-              <AlertDescription className="flex flex-wrap justify-between items-center">
-                <span className="mr-4">Permanent deletion cannot be undone.</span>
-                <div className="flex gap-2 mt-2 sm:mt-0">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={handleCancelDelete}
-                    className="focus:ring-0"
-                    disabled={isLoading}
-                  >
-                    Cancel
-                  </Button>
-                  <Button 
-                    variant="destructive" 
-                    size="sm"
-                    onClick={bookmarkToDelete === 'bulk' ? confirmBulkDelete : handleDeletePermanently}
-                    className="focus:ring-0"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-                    Confirm Delete
-                  </Button>
+          {/* Enhanced Delete Confirmation Dialog */}
+          <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+            <AlertDialogContent className="bg-slate-900 border-red-500/40 p-6 mx-4 max-w-sm w-[95%] rounded-xl">
+              <AlertDialogHeader className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mb-3">
+                  <AlertTriangle className="h-6 w-6 text-red-400" />
                 </div>
-              </AlertDescription>
-            </Alert>
-          )}
+                <AlertDialogTitle className="text-lg font-semibold text-white">Confirm Permanent Deletion</AlertDialogTitle>
+                <AlertDialogDescription className="text-center text-sm text-slate-300 mt-2 mb-4">
+                  Permanent deletion cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="flex flex-col sm:flex-row gap-2">
+                <AlertDialogCancel 
+                  className="bg-slate-800 hover:bg-slate-700 text-white border-0 transition-all duration-200"
+                  aria-label="Cancel deletion"
+                >
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  className="bg-red-600 hover:bg-red-700 text-white border-0 transition-all duration-200"
+                  onClick={bookmarkToDelete === 'bulk' ? confirmBulkDelete : handleDeletePermanently}
+                  aria-label="Confirm permanent deletion"
+                  disabled={isLoading}
+                >
+                  {isLoading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                  Confirm Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
           {trashBookmarks.length === 0 ? (
             <div className="text-center py-16">

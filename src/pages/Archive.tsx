@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -90,46 +89,98 @@ const Archive: React.FC = () => {
       <NavBar onAddBookmark={() => {}} />
       <main className="pt-4 sm:pt-8">
         <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
-          <div className="mb-6 sm:mb-8 flex justify-between items-center">
-            <div>
+          <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div className="mb-4 sm:mb-0">
               <h1 className="text-2xl font-bold mb-2">Archive</h1>
-              <p className="text-muted-foreground">Bookmarks you've archived but might need later.</p>
+              <p className="text-muted-foreground text-sm sm:text-base max-w-[95%]">Bookmarks you've archived but might need later.</p>
             </div>
             
             {archiveBookmarks.length > 0 && (
               <div className="flex items-center gap-2">
-                {isSelectionMode && selectedItems.length > 0 && (
+                {/* Desktop: Standard horizontal layout */}
+                <div className="hidden sm:flex items-center gap-2">
+                  {isSelectionMode && selectedItems.length > 0 && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex items-center gap-2 focus:ring-0"
+                      onClick={handleBulkRestore}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
+                      Restore ({selectedItems.length})
+                    </Button>
+                  )}
+                  
                   <Button 
-                    variant="outline" 
-                    size="sm" 
+                    variant={isSelectionMode ? "default" : "outline"} 
+                    size="sm"
                     className="flex items-center gap-2 focus:ring-0"
-                    onClick={handleBulkRestore}
+                    onClick={toggleSelectionMode}
                     disabled={isLoading}
                   >
-                    {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
-                    Restore ({selectedItems.length})
+                    {isSelectionMode ? (
+                      <>
+                        <X className="h-4 w-4" />
+                        <span className="sm:inline">Cancel</span>
+                      </>
+                    ) : (
+                      <>
+                        <CheckSquare className="h-4 w-4" />
+                        <span className="sm:inline">Select</span>
+                      </>
+                    )}
                   </Button>
-                )}
-                
-                <Button 
-                  variant={isSelectionMode ? "default" : "outline"} 
-                  size="sm"
-                  className="flex items-center gap-2 focus:ring-0"
-                  onClick={toggleSelectionMode}
-                  disabled={isLoading}
-                >
-                  {isSelectionMode ? (
-                    <>
-                      <X className="h-4 w-4" />
-                      <span className="sm:inline">Cancel</span>
-                    </>
+                </div>
+
+                {/* Mobile: Vertical layout for buttons when items are selected */}
+                <div className="flex sm:hidden flex-col items-center w-full">
+                  {isSelectionMode && selectedItems.length > 0 ? (
+                    <div className="flex flex-col items-center w-full gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="flex items-center gap-2 w-full max-w-[200px] justify-center"
+                        onClick={handleBulkRestore}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
+                        Restore ({selectedItems.length})
+                      </Button>
+
+                      <Button 
+                        variant="default" 
+                        size="sm"
+                        className="flex items-center gap-2 w-full max-w-[200px] justify-center"
+                        onClick={toggleSelectionMode}
+                        disabled={isLoading}
+                      >
+                        <X className="h-4 w-4" />
+                        Cancel
+                      </Button>
+                    </div>
                   ) : (
-                    <>
-                      <CheckSquare className="h-4 w-4" />
-                      <span className="sm:inline">Select</span>
-                    </>
+                    <Button 
+                      variant={isSelectionMode ? "default" : "outline"} 
+                      size="sm"
+                      className="flex items-center gap-2 w-full max-w-[200px] justify-center"
+                      onClick={toggleSelectionMode}
+                      disabled={isLoading}
+                    >
+                      {isSelectionMode ? (
+                        <>
+                          <X className="h-4 w-4" />
+                          <span>Cancel</span>
+                        </>
+                      ) : (
+                        <>
+                          <CheckSquare className="h-4 w-4" />
+                          <span>Select</span>
+                        </>
+                      )}
+                    </Button>
                   )}
-                </Button>
+                </div>
               </div>
             )}
           </div>
