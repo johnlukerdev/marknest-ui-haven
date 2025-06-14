@@ -39,41 +39,68 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
             </h2>
           </div>
 
-          {/* Select/Cancel button - positioned on the right */}
-          {hasBookmarks && (
-            <Button 
-              variant={isSelectMode ? "default" : "outline"}
-              size="sm"
-              onClick={toggleSelectMode}
-              className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 ${
-                isSelectMode 
-                  ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
-                  : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
-              }`}
-            >
-              {isSelectMode ? (
-                <>
-                  <X className="h-4 w-4" />
-                  <span className="hidden sm:inline">Cancel</span>
-                </>
-              ) : (
-                <>
-                  <CheckSquare className="h-4 w-4" />
-                  <span className="hidden sm:inline">Select</span>
-                </>
-              )}
-            </Button>
-          )}
+          {/* Right side buttons container */}
+          <div className="flex items-center gap-2">
+            {/* Bulk action buttons - show when items are selected */}
+            {isSelectMode && selectedBookmarks.length > 0 && (
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={bulkMoveToArchive}
+                  className="hidden sm:flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
+                >
+                  <Archive className="h-4 w-4" />
+                  <span>Archive</span>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={bulkMoveToTrash}
+                  className="hidden sm:flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  <span>Delete</span>
+                </Button>
+              </>
+            )}
+
+            {/* Select/Cancel button */}
+            {hasBookmarks && (
+              <Button 
+                variant={isSelectMode ? "default" : "outline"}
+                size="sm"
+                onClick={toggleSelectMode}
+                className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 ${
+                  isSelectMode 
+                    ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
+                    : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
+                }`}
+              >
+                {isSelectMode ? (
+                  <>
+                    <X className="h-4 w-4" />
+                    <span className="hidden sm:inline">Cancel</span>
+                  </>
+                ) : (
+                  <>
+                    <CheckSquare className="h-4 w-4" />
+                    <span className="hidden sm:inline">Select</span>
+                  </>
+                )}
+              </Button>
+            )}
+          </div>
         </div>
 
-        {/* Bulk action buttons - show below header when items are selected */}
+        {/* Mobile bulk action buttons - show below header on mobile when items are selected */}
         {isSelectMode && selectedBookmarks.length > 0 && (
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-end">
+          <div className="flex flex-col items-center gap-3 sm:hidden">
             <Button 
               variant="outline" 
               size="sm" 
               onClick={bulkMoveToArchive}
-              className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm w-full"
             >
               <Archive className="h-4 w-4" />
               <span>Archive</span>
@@ -82,7 +109,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
               variant="outline" 
               size="sm" 
               onClick={bulkMoveToTrash}
-              className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm w-full"
             >
               <Trash2 className="h-4 w-4" />
               <span>Delete</span>
