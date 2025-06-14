@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -33,11 +32,6 @@ const Trash: React.FC = () => {
 
   const handleRestore = (id: string) => {
     restoreFromTrash(id);
-    toast({
-      title: "Restored!",
-      description: "Bookmark moved back to My List",
-      duration: 2000,
-    });
   };
 
   const handleInitiateDelete = (id: string) => {
@@ -50,11 +44,6 @@ const Trash: React.FC = () => {
       permanentlyDelete(bookmarkToDelete);
       setShowDeleteDialog(false);
       setBookmarkToDelete(null);
-      toast({
-        title: "Deleted permanently",
-        description: "Bookmark has been permanently deleted",
-        duration: 2000,
-      });
     }
   };
 
@@ -90,20 +79,9 @@ const Trash: React.FC = () => {
         restoreFromTrash(id);
       });
       
-      toast({
-        title: "Restored successfully!",
-        description: `${selectedItems.length} bookmark(s) moved back to My List`,
-        duration: 3000,
-      });
-      
       setIsSelectionMode(false);
       setSelectedItems([]);
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to restore some bookmarks",
-        duration: 3000,
-      });
     } finally {
       setIsLoading(false);
     }
@@ -125,22 +103,11 @@ const Trash: React.FC = () => {
         permanentlyDelete(id);
       });
       
-      toast({
-        title: "Deleted permanently",
-        description: `${selectedItems.length} bookmark(s) permanently deleted`,
-        duration: 3000,
-      });
-      
       setShowDeleteDialog(false);
       setBookmarkToDelete(null);
       setIsSelectionMode(false);
       setSelectedItems([]);
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to delete some bookmarks",
-        duration: 3000,
-      });
     } finally {
       setIsLoading(false);
     }
