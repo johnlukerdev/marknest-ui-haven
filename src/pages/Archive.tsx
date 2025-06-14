@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -90,7 +91,11 @@ const Archive: React.FC = () => {
     if (selectedItems.length > 0) {
       // Move each selected item to trash individually
       for (const id of selectedItems) {
-        moveToTrash(id);
+        // Find the bookmark in archiveBookmarks since we're on Archive page
+        const bookmarkToMove = archiveBookmarks.find(bookmark => bookmark.id === id);
+        if (bookmarkToMove) {
+          moveToTrash(id);
+        }
       }
       
       toast({
@@ -104,41 +109,11 @@ const Archive: React.FC = () => {
     }
   };
 
-  const handleSingleDelete = () => {
-    // For mobile bottom bar delete button - move all archive items to trash
-    if (archiveBookmarks.length > 0) {
-      for (const bookmark of archiveBookmarks) {
-        moveToTrash(bookmark.id);
-      }
-      
-      toast({
-        title: "Moved to trash!",
-        description: `${archiveBookmarks.length} bookmark(s) moved to trash`,
-        duration: 3000,
-      });
-    }
-  };
-
-  // Custom NavBar props for Archive page
+  // Standard NavBar props for Archive page - no custom bottom bar
   const navBarProps = {
     onAddBookmark: () => {},
     onMobileMenuToggle: () => {},
-    // Archive page specific bottom bar configuration
-    customBottomBar: isMobile ? {
-      leftButton: isSelectionMode ? {
-        icon: RotateCcw,
-        label: "Restore",
-        onClick: handleBulkRestore,
-        disabled: selectedItems.length === 0 || isLoading,
-        loading: isLoading
-      } : undefined,
-      centerButton: {
-        icon: Trash2,
-        label: "Delete",
-        onClick: isSelectionMode ? handleBulkDelete : handleSingleDelete,
-        disabled: isSelectionMode ? selectedItems.length === 0 : archiveBookmarks.length === 0
-      }
-    } : undefined
+    // No custom bottom bar - use standard behavior like Trash page
   };
 
   return (
@@ -299,6 +274,37 @@ const Archive: React.FC = () => {
           )}
         </div>
       </main>
+      
+      {/* Mobile Bottom Bar - only show when in selection mode */}
+      {isMobile && isSelectionMode && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
+          {/* Restore button */}
+          <Button 
+            variant="ghost" 
+            className="h-full w-1/2 flex flex-col items-center justify-center rounded-none gap-1"
+            onClick={handleBulkRestore}
+            disabled={selectedItems.length === 0 || isLoading}
+          >
+            {isLoading ? (
+              <Loader2 className="h-6 w-6 animate-spin text-foreground" />
+            ) : (
+              <RotateCcw className="h-6 w-6 text-foreground" />
+            )}
+            <span className="text-xs text-foreground">Restore</span>
+          </Button>
+          
+          {/* Delete button */}
+          <Button 
+            variant="ghost" 
+            className="h-full w-1/2 flex flex-col items-center justify-center rounded-none gap-1"
+            onClick={handleBulkDelete}
+            disabled={selectedItems.length === 0}
+          >
+            <Trash2 className="h-6 w-6 text-foreground" />
+            <span className="text-xs text-foreground">Delete</span>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
