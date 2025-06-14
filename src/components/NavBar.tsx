@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -98,12 +97,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const handleBottomBarArchive = () => {
     if (selectedBookmarks.length > 0) {
       bulkMoveToArchive();
-      toast({
-        title: "Archived!",
-        description: `${selectedBookmarks.length} bookmark(s) moved to archive`,
-        duration: 2000,
-      });
-      // REMOVED: navigate('/archive');
+      // REMOVED: toast notification
     }
   };
 
@@ -111,12 +105,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const handleBottomBarDelete = () => {
     if (selectedBookmarks.length > 0) {
       bulkMoveToTrash();
-      toast({
-        title: "Moved to trash!",
-        description: `${selectedBookmarks.length} bookmark(s) moved to trash`,
-        duration: 2000,
-      });
-      // REMOVED: navigate('/trash');
+      // REMOVED: toast notification
     }
   };
 
