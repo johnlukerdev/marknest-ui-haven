@@ -94,7 +94,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
     }
   };
 
-  // Handle bottom bar Archive button click
+  // Handle bottom bar Archive button click - REMOVED navigation
   const handleBottomBarArchive = () => {
     if (selectedBookmarks.length > 0) {
       bulkMoveToArchive();
@@ -103,11 +103,11 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
         description: `${selectedBookmarks.length} bookmark(s) moved to archive`,
         duration: 2000,
       });
-      navigate('/archive');
+      // REMOVED: navigate('/archive');
     }
   };
 
-  // Handle bottom bar Delete button click
+  // Handle bottom bar Delete button click - REMOVED navigation
   const handleBottomBarDelete = () => {
     if (selectedBookmarks.length > 0) {
       bulkMoveToTrash();
@@ -116,7 +116,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
         description: `${selectedBookmarks.length} bookmark(s) moved to trash`,
         duration: 2000,
       });
-      navigate('/trash');
+      // REMOVED: navigate('/trash');
     }
   };
 
