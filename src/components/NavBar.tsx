@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -503,18 +502,30 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
               </Sheet>
             </>
           ) : (
-            // Default bottom bar behavior - Updated to match Trash/Archive design
+            // Default bottom bar behavior
             <>
               {/* Left button - Add (normal) or Archive (select mode) */}
               {!isSelectMode ? (
-                <Button 
-                  variant="ghost" 
-                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
-                  onClick={() => setAddDialogOpen(true)}
-                >
-                  <Plus className="h-6 w-6 text-foreground" />
-                  <span className="text-xs text-foreground">Add</span>
-                </Button>
+                <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
+                  <DrawerTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="h-full w-1/3 flex flex-col items-center justify-center rounded-none"
+                    >
+                      <div className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 flex items-center justify-center shadow-md">
+                        <Plus className="h-6 w-6 text-white" />
+                      </div>
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent className="p-4">
+                    <AddBookmarkForm 
+                      open={addDialogOpen} 
+                      onOpenChange={setAddDialogOpen} 
+                      onSubmit={onAddBookmark} 
+                      drawerMode={true}
+                    />
+                  </DrawerContent>
+                </Drawer>
               ) : (
                 <Button 
                   variant="ghost" 
@@ -529,14 +540,39 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
 
               {/* Middle button - Search (normal) or Delete (select mode on bookmark/trash pages) or hidden (select mode on archive page) */}
               {!isSelectMode ? (
-                <Button 
-                  variant="ghost" 
-                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
-                  onClick={() => setMobileSearchOpen(true)}
-                >
-                  <Search className="h-6 w-6 text-foreground" />
-                  <span className="text-xs text-foreground">Search</span>
-                </Button>
+                <Drawer open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
+                  <DrawerTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="h-full w-1/3 flex items-center justify-center rounded-none"
+                    >
+                      <Search className="h-6 w-6" />
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent className="p-4">
+                    <div className="space-y-4">
+                      <h2 className="text-xl font-semibold text-center">Search</h2>
+                      <div className="relative">
+                        <Input 
+                          ref={mobileSearchInputRef}
+                          className="w-full shadow-sm pr-8 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
+                          placeholder="Search bookmarks..." 
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          autoFocus
+                        />
+                        {searchQuery && (
+                          <button 
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            onClick={handleMobileClearSearch}
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </DrawerContent>
+                </Drawer>
               ) : (
                 // In select mode, show Delete button only on bookmark and trash pages, hide on archive page
                 location.pathname !== '/archive' && (
@@ -557,10 +593,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                 <SheetTrigger asChild>
                   <Button 
                     variant="ghost" 
-                    className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                    className="h-full w-1/3 flex items-center justify-center rounded-none"
                   >
-                    <MoreHorizontal className="h-6 w-6 text-foreground" />
-                    <span className="text-xs text-foreground">More</span>
+                    <MoreHorizontal className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="bottom" className="h-auto pb-16 rounded-t-xl">
@@ -587,49 +622,6 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
             </>
           )}
         </div>
-      )}
-      
-      {/* Add Bookmark Form - Mobile Drawer */}
-      {isMobile && (
-        <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
-          <DrawerContent className="p-4">
-            <AddBookmarkForm 
-              open={addDialogOpen} 
-              onOpenChange={setAddDialogOpen} 
-              onSubmit={onAddBookmark} 
-              drawerMode={true}
-            />
-          </DrawerContent>
-        </Drawer>
-      )}
-      
-      {/* Mobile Search Drawer */}
-      {isMobile && (
-        <Drawer open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
-          <DrawerContent className="p-4">
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-center">Search</h2>
-              <div className="relative">
-                <Input 
-                  ref={mobileSearchInputRef}
-                  className="w-full shadow-sm pr-8 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
-                  placeholder="Search bookmarks..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  autoFocus
-                />
-                {searchQuery && (
-                  <button 
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    onClick={handleMobileClearSearch}
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                )}
-              </div>
-            </div>
-          </DrawerContent>
-        </Drawer>
       )}
       
       {!isMobile && (
