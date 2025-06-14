@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -103,7 +102,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
       <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b bg-background/95 backdrop-blur-lg shadow-sm">
         <div className="flex h-16 items-center justify-between py-3 px-4">
           {/* Left section - Sidebar Icon + Logo */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
             <Button
               onClick={handleMobileMenuClick}
               variant="ghost"
@@ -188,7 +187,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
       <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
         <div className="container flex h-16 items-center justify-between py-3 px-4 sm:px-6">
           {/* Left section - Hamburger + Logo + My List Dropdown */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
             {/* White Hamburger Menu Button */}
             <Sheet open={mainMenuOpen} onOpenChange={setMainMenuOpen}>
               <SheetTrigger asChild>
