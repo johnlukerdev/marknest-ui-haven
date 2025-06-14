@@ -31,6 +31,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, setTheme } = useTheme();
@@ -47,6 +48,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
     }
   }, [showSearch]);
 
+  useEffect(() => {
+    if (mobileSearchOpen && mobileSearchInputRef.current) {
+      mobileSearchInputRef.current.focus();
+    }
+  }, [mobileSearchOpen]);
+
   const handleSignOut = () => {
     navigate('/signin');
     setMobileMenuOpen(false);
@@ -55,6 +62,11 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const handleClearSearch = () => {
     setSearchQuery('');
     setShowSearch(false);
+  };
+
+  const handleMobileClearSearch = () => {
+    setSearchQuery('');
+    setMobileSearchOpen(false);
   };
 
   const goToSettings = () => {
@@ -207,138 +219,86 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
             )}
           </div>
           
-          {/* Mobile Right section - Add Button + Search + Theme Toggle + Menu (only on main pages, not settings) */}
+          {/* Mobile Header - Modern redesign */}
           {isMobile && !isSettingsPage && (
-            <div className="relative flex items-center gap-3">
-              {/* Expanded Search Bar - positioned above the buttons */}
-              {showSearch && (
-                <div className="absolute top-[-60px] left-0 right-0 z-50 animate-fade-in">
-                  <div className="relative">
-                    <Input 
-                      ref={searchInputRef}
-                      className="w-full h-12 pl-4 pr-16 rounded-full border-0 bg-background/95 backdrop-blur-lg shadow-lg text-base placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
-                      placeholder="Search bookmarks..." 
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      autoFocus
-                    />
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="absolute right-2 top-1/2 -translate-y-1/2 h-8 px-3 text-sm font-medium text-muted-foreground hover:text-foreground"
-                      onClick={handleClearSearch}
-                    >
-                      Cancel
-                    </Button>
+            <div className="flex items-center gap-3">
+              {/* Search Icon with Expansion */}
+              <div className="relative">
+                {mobileSearchOpen ? (
+                  <div className="flex items-center gap-2 animate-fade-in">
+                    <div className="relative">
+                      <Input 
+                        ref={mobileSearchInputRef}
+                        className="w-48 pl-10 pr-10 h-10 rounded-full border-2 border-primary/20 bg-background/80 backdrop-blur-sm shadow-lg shadow-primary/10 focus:border-primary/40 focus:shadow-xl focus:shadow-primary/20 transition-all duration-300" 
+                        placeholder="Search..." 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        autoFocus
+                      />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <button 
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                        onClick={() => {
+                          setSearchQuery('');
+                          setMobileSearchOpen(false);
+                        }}
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-
-              {/* Add Button */}
-              <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
-                <DrawerTrigger asChild>
+                ) : (
                   <Button 
-                    className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 hover:opacity-90 transition-all duration-200 shadow-lg hover:shadow-xl p-0"
+                    variant="ghost" 
+                    size="icon" 
+                    onClick={() => setMobileSearchOpen(true)}
+                    className="h-10 w-10 rounded-full bg-muted/50 hover:bg-muted transition-all duration-200 hover:scale-105"
                   >
-                    <Plus className="h-5 w-5 text-white" />
+                    <Search className="h-5 w-5" />
                   </Button>
-                </DrawerTrigger>
-                <DrawerContent className="p-4">
-                  <AddBookmarkForm 
-                    open={addDialogOpen} 
-                    onOpenChange={setAddDialogOpen} 
-                    onSubmit={onAddBookmark} 
-                    drawerMode={true}
-                  />
-                </DrawerContent>
-              </Drawer>
-
-              {/* Search Icon */}
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => setShowSearch(!showSearch)}
-                className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200 h-10 w-10"
-              >
-                <Search className="h-5 w-5" />
-              </Button>
-
-              {/* Theme Toggle */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200 h-10 w-10"
-                    >
-                      {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                )}
+              </div>
 
               {/* Three Dots Menu */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200 h-10 w-10"
-                        >
-                          <MoreHorizontal className="h-5 w-5" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent 
-                        align="end" 
-                        className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
-                      >
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/" className="flex items-center w-full text-foreground">
-                            My List
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/trash" className="flex items-center w-full text-foreground">
-                            <Trash2 className="mr-3 h-4 w-4" />
-                            Trash
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/archive" className="flex items-center w-full text-foreground">
-                            <Archive className="mr-3 h-4 w-4" />
-                            Archive
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={goToSettings} 
-                          className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground"
-                        >
-                          <Settings className="mr-3 h-4 w-4" />
-                          Settings
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={handleSignOut} 
-                          className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground"
-                        >
-                          <LogOut className="mr-3 h-4 w-4" />
-                          Sign Out
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>More options</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="h-10 w-10 rounded-full bg-muted/50 hover:bg-muted transition-all duration-200 hover:scale-105"
+                  >
+                    <MoreHorizontal className="h-5 w-5" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-auto pb-16 rounded-t-xl bg-background/95 backdrop-blur-lg border-t border-border/50">
+                  <div className="grid gap-4 py-4">
+                    <Button 
+                      variant="ghost" 
+                      className="flex justify-start" 
+                      onClick={goToSettings}
+                    >
+                      <Settings className="mr-2 h-5 w-5" />
+                      Settings
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      className="flex justify-start" 
+                      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                    >
+                      {theme === 'light' ? <Moon className="mr-2 h-5 w-5" /> : <Sun className="mr-2 h-5 w-5" />}
+                      {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      className="flex justify-start" 
+                      onClick={handleSignOut}
+                    >
+                      <LogOut className="mr-2 h-5 w-5" />
+                      Sign Out
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
           )}
           
@@ -472,6 +432,30 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
           )}
         </div>
       </nav>
+      
+      {/* Mobile Bottom Navigation with Floating Add Button */}
+      {isMobile && !isSettingsPage && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-lg border-t border-border/50 flex justify-center items-center h-20">
+          {/* Floating Add Button */}
+          <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
+            <DrawerTrigger asChild>
+              <Button 
+                className="floating-add-btn h-14 w-14 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 hover:from-indigo-600 hover:via-purple-600 hover:to-indigo-700 shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover:scale-110 active:scale-95"
+              >
+                <Plus className="h-7 w-7 text-white" />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="p-4 bg-background/95 backdrop-blur-lg">
+              <AddBookmarkForm 
+                open={addDialogOpen} 
+                onOpenChange={setAddDialogOpen} 
+                onSubmit={onAddBookmark} 
+                drawerMode={true}
+              />
+            </DrawerContent>
+          </Drawer>
+        </div>
+      )}
       
       {!isMobile && (
         <AddBookmarkForm 
