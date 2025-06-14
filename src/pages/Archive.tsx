@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Archive as ArchiveIcon, RotateCcw, CheckSquare, X, Link, Check, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { useMobile } from '@/hooks/use-mobile';
 
 const Archive: React.FC = () => {
   const { archiveBookmarks, restoreFromArchive } = useBookmarkContext();
@@ -16,6 +18,7 @@ const Archive: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [copyingId, setCopyingId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const isMobile = useMobile();
 
   const handleRestore = (id: string) => {
     restoreFromArchive(id);
@@ -84,9 +87,30 @@ const Archive: React.FC = () => {
     }
   };
 
+  // Custom NavBar props for Archive page
+  const navBarProps = {
+    onAddBookmark: () => {},
+    onMobileMenuToggle: () => {},
+    // Archive page specific bottom bar configuration
+    customBottomBar: isMobile && isSelectionMode ? {
+      leftButton: {
+        icon: RotateCcw,
+        label: "Restore",
+        onClick: handleBulkRestore,
+        disabled: selectedItems.length === 0 || isLoading,
+        loading: isLoading
+      },
+      rightButton: {
+        icon: CheckSquare,
+        label: "Cancel",
+        onClick: toggleSelectionMode
+      }
+    } : undefined
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <NavBar onAddBookmark={() => {}} />
+      <NavBar {...navBarProps} />
       <main className="pt-4 sm:pt-8">
         <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
           <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -140,21 +164,9 @@ const Archive: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile bulk actions - moved to right side above cards */}
+          {/* Mobile bulk actions - moved to right side above cards, hide Restore button on mobile */}
           {archiveBookmarks.length > 0 && (
             <div className="flex sm:hidden justify-end items-center gap-2 mb-4">
-              {isSelectionMode && selectedItems.length > 0 && (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="flex items-center justify-center w-10 h-10 p-0 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
-                  onClick={handleBulkRestore}
-                  disabled={isLoading}
-                >
-                  {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
-                </Button>
-              )}
-              
               <Button 
                 variant={isSelectionMode ? "default" : "outline"} 
                 size="sm"

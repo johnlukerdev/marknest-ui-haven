@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive, X, Menu } from "lucide-react";
+import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive, X, Menu, Loader2 } from "lucide-react";
 import Logo from './Logo';
 import AddBookmarkForm from './AddBookmarkForm';
 import { useTheme } from '@/hooks/use-theme';
@@ -19,12 +19,26 @@ import { useMobile } from '@/hooks/use-mobile';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { toast } from '@/hooks/use-toast';
 
+interface CustomBottomButton {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+interface CustomBottomBar {
+  leftButton?: CustomBottomButton;
+  rightButton?: CustomBottomButton;
+}
+
 interface NavBarProps {
   onAddBookmark: (url: string) => void;
   onMobileMenuToggle?: () => void;
+  customBottomBar?: CustomBottomBar;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) => {
+const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, customBottomBar }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
@@ -416,121 +430,162 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
       {/* Mobile Bottom Navigation */}
       {isMobile && !isSettingsPage && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
-          {/* Left button - Add (normal) or Archive (select mode) */}
-          {!isSelectMode ? (
-            <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
-              <DrawerTrigger asChild>
+          {/* Handle custom bottom bar or default behavior */}
+          {customBottomBar ? (
+            // Custom bottom bar for specific pages (like Archive in selection mode)
+            <>
+              {/* Left button */}
+              {customBottomBar.leftButton && (
                 <Button 
                   variant="ghost" 
-                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none"
+                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                  onClick={customBottomBar.leftButton.onClick}
+                  disabled={customBottomBar.leftButton.disabled}
                 >
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 flex items-center justify-center shadow-md">
-                    <Plus className="h-6 w-6 text-white" />
-                  </div>
+                  {customBottomBar.leftButton.loading ? (
+                    <Loader2 className="h-6 w-6 animate-spin text-foreground" />
+                  ) : (
+                    <customBottomBar.leftButton.icon className="h-6 w-6 text-foreground" />
+                  )}
+                  <span className="text-xs text-foreground">{customBottomBar.leftButton.label}</span>
                 </Button>
-              </DrawerTrigger>
-              <DrawerContent className="p-4">
-                <AddBookmarkForm 
-                  open={addDialogOpen} 
-                  onOpenChange={setAddDialogOpen} 
-                  onSubmit={onAddBookmark} 
-                  drawerMode={true}
-                />
-              </DrawerContent>
-            </Drawer>
+              )}
+              
+              {/* Middle section - empty for custom bottom bar */}
+              <div className="w-1/3"></div>
+              
+              {/* Right button */}
+              {customBottomBar.rightButton && (
+                <Button 
+                  variant="ghost" 
+                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                  onClick={customBottomBar.rightButton.onClick}
+                >
+                  <customBottomBar.rightButton.icon className="h-6 w-6 text-foreground" />
+                  <span className="text-xs text-foreground">{customBottomBar.rightButton.label}</span>
+                </Button>
+              )}
+            </>
           ) : (
-            <Button 
-              variant="ghost" 
-              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
-              onClick={handleBottomBarArchive}
-              disabled={selectedBookmarks.length === 0}
-            >
-              <Archive className="h-6 w-6 text-foreground" />
-              <span className="text-xs text-foreground">Archive</span>
-            </Button>
-          )}
-
-          {/* Middle button - Search (normal) or Delete (select mode on bookmark/trash pages) or hidden (select mode on archive page) */}
-          {!isSelectMode ? (
-            <Drawer open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
-              <DrawerTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  className="h-full w-1/3 flex items-center justify-center rounded-none"
-                >
-                  <Search className="h-6 w-6" />
-                </Button>
-              </DrawerTrigger>
-              <DrawerContent className="p-4">
-                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold text-center">Search</h2>
-                  <div className="relative">
-                    <Input 
-                      ref={mobileSearchInputRef}
-                      className="w-full shadow-sm pr-8 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
-                      placeholder="Search bookmarks..." 
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      autoFocus
+            // Default bottom bar behavior
+            <>
+              {/* Left button - Add (normal) or Archive (select mode) */}
+              {!isSelectMode ? (
+                <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
+                  <DrawerTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="h-full w-1/3 flex flex-col items-center justify-center rounded-none"
+                    >
+                      <div className="h-10 w-10 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 flex items-center justify-center shadow-md">
+                        <Plus className="h-6 w-6 text-white" />
+                      </div>
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent className="p-4">
+                    <AddBookmarkForm 
+                      open={addDialogOpen} 
+                      onOpenChange={setAddDialogOpen} 
+                      onSubmit={onAddBookmark} 
+                      drawerMode={true}
                     />
-                    {searchQuery && (
-                      <button 
-                        className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                        onClick={handleMobileClearSearch}
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </DrawerContent>
-            </Drawer>
-          ) : (
-            // In select mode, show Delete button only on bookmark and trash pages, hide on archive page
-            location.pathname !== '/archive' && (
-              <Button 
-                variant="ghost" 
-                className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
-                onClick={handleBottomBarDelete}
-                disabled={selectedBookmarks.length === 0}
-              >
-                <Trash2 className="h-6 w-6 text-foreground" />
-                <span className="text-xs text-foreground">Delete</span>
-              </Button>
-            )
-          )}
+                  </DrawerContent>
+                </Drawer>
+              ) : (
+                <Button 
+                  variant="ghost" 
+                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                  onClick={handleBottomBarArchive}
+                  disabled={selectedBookmarks.length === 0}
+                >
+                  <Archive className="h-6 w-6 text-foreground" />
+                  <span className="text-xs text-foreground">Archive</span>
+                </Button>
+              )}
 
-          {/* Right button - Three dots menu (always visible) */}
-          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button 
-                variant="ghost" 
-                className="h-full w-1/3 flex items-center justify-center rounded-none"
-              >
-                <MoreHorizontal className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="h-auto pb-16 rounded-t-xl">
-              <div className="grid gap-4 py-4">
-                <Button 
-                  variant="ghost" 
-                  className="flex justify-start" 
-                  onClick={goToSettings}
-                >
-                  <Settings className="mr-2 h-5 w-5" />
-                  Settings
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  className="flex justify-start" 
-                  onClick={handleSignOut}
-                >
-                  <LogOut className="mr-2 h-5 w-5" />
-                  Sign Out
-                </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
+              {/* Middle button - Search (normal) or Delete (select mode on bookmark/trash pages) or hidden (select mode on archive page) */}
+              {!isSelectMode ? (
+                <Drawer open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
+                  <DrawerTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="h-full w-1/3 flex items-center justify-center rounded-none"
+                    >
+                      <Search className="h-6 w-6" />
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent className="p-4">
+                    <div className="space-y-4">
+                      <h2 className="text-xl font-semibold text-center">Search</h2>
+                      <div className="relative">
+                        <Input 
+                          ref={mobileSearchInputRef}
+                          className="w-full shadow-sm pr-8 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
+                          placeholder="Search bookmarks..." 
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          autoFocus
+                        />
+                        {searchQuery && (
+                          <button 
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            onClick={handleMobileClearSearch}
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </DrawerContent>
+                </Drawer>
+              ) : (
+                // In select mode, show Delete button only on bookmark and trash pages, hide on archive page
+                location.pathname !== '/archive' && (
+                  <Button 
+                    variant="ghost" 
+                    className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                    onClick={handleBottomBarDelete}
+                    disabled={selectedBookmarks.length === 0}
+                  >
+                    <Trash2 className="h-6 w-6 text-foreground" />
+                    <span className="text-xs text-foreground">Delete</span>
+                  </Button>
+                )
+              )}
+
+              {/* Right button - Three dots menu (always visible) */}
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="h-full w-1/3 flex items-center justify-center rounded-none"
+                  >
+                    <MoreHorizontal className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-auto pb-16 rounded-t-xl">
+                  <div className="grid gap-4 py-4">
+                    <Button 
+                      variant="ghost" 
+                      className="flex justify-start" 
+                      onClick={goToSettings}
+                    >
+                      <Settings className="mr-2 h-5 w-5" />
+                      Settings
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      className="flex justify-start" 
+                      onClick={handleSignOut}
+                    >
+                      <LogOut className="mr-2 h-5 w-5" />
+                      Sign Out
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </>
+          )}
         </div>
       )}
       
