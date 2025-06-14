@@ -52,6 +52,24 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
   const location = useLocation();
   const { theme, setTheme } = useTheme();
   const isMobile = useMobile();
+  
+  // Safely get bookmark context - handle case where provider might not be ready
+  let bookmarkContext;
+  try {
+    bookmarkContext = useBookmarkContext();
+  } catch (error) {
+    // Context not available yet, use default values
+    bookmarkContext = {
+      searchQuery: '',
+      setSearchQuery: () => {},
+      isSelectMode: false,
+      selectedBookmarks: [],
+      bulkMoveToTrash: () => {},
+      bulkMoveToArchive: () => {},
+      toggleSelectMode: () => {}
+    };
+  }
+  
   const { 
     searchQuery, 
     setSearchQuery, 
@@ -60,7 +78,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
     bulkMoveToTrash, 
     bulkMoveToArchive,
     toggleSelectMode 
-  } = useBookmarkContext();
+  } = bookmarkContext;
   
   // Check if we're on the settings page
   const isSettingsPage = location.pathname === '/settings';
