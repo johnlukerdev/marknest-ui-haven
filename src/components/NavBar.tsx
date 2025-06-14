@@ -390,7 +390,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
       
       {/* Mobile Bottom Navigation */}
       {isMobile && !isSettingsPage && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16 px-4">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
           {/* Left button - Add (normal) or Restore (select mode) */}
           {!isSelectMode ? (
             <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
@@ -414,15 +414,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               </DrawerContent>
             </Drawer>
           ) : (
-            <div className="h-full w-1/3 flex items-center justify-center">
-              <Button 
-                variant="ghost" 
-                size="icon"
-                className="h-12 w-12 rounded-xl bg-gradient-to-r from-blue-400/20 to-blue-500/20 border border-blue-400/30 shadow-lg backdrop-blur-sm hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 text-blue-400 hover:text-blue-300 hover:bg-blue-400/30 focus:ring-0"
-              >
-                <Archive className="h-6 w-6" />
-              </Button>
-            </div>
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex items-center justify-center rounded-none"
+            >
+              <Archive className="h-6 w-6" />
+            </Button>
           )}
 
           {/* Middle button - Search (normal) or Delete (select mode on bookmark/trash pages) or hidden (select mode on archive page) */}
@@ -461,17 +458,14 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               </DrawerContent>
             </Drawer>
           ) : (
-            // In select mode, show Delete button only on bookmark and trash pages, hide completely on archive page
+            // In select mode, show Delete button only on bookmark and trash pages, hide on archive page
             location.pathname !== '/archive' && (
-              <div className="h-full w-1/3 flex items-center justify-center">
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="h-12 w-12 rounded-xl bg-gradient-to-r from-red-400/20 to-red-500/20 border border-red-400/30 shadow-lg backdrop-blur-sm hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 text-red-400 hover:text-red-300 hover:bg-red-400/30 focus:ring-0"
-                >
-                  <Trash2 className="h-6 w-6" />
-                </Button>
-              </div>
+              <Button 
+                variant="ghost" 
+                className="h-full w-1/3 flex items-center justify-center rounded-none"
+              >
+                <Trash2 className="h-6 w-6" />
+              </Button>
             )
           )}
 
