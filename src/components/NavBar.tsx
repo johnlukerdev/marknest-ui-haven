@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -107,7 +108,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               onClick={handleMobileMenuClick}
               variant="ghost"
               size="icon"
-              className="h-10 w-10 p-0 hover:bg-muted/50 text-white transition-all duration-200 rounded-md md:hidden"
+              className={`h-10 w-10 p-0 hover:bg-muted/50 transition-all duration-200 rounded-md md:hidden ${
+                theme === 'light' ? 'text-black' : 'text-white'
+              }`}
             >
               <Menu className="h-6 w-6" />
             </Button>
@@ -154,7 +157,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-10 w-10 p-0 hover:bg-muted/50 text-white transition-all duration-200 rounded-md md:hidden"
+                  className={`h-10 w-10 p-0 hover:bg-muted/50 transition-all duration-200 rounded-md md:hidden ${
+                    theme === 'light' ? 'text-black' : 'text-white'
+                  }`}
                 >
                   <Menu className="h-6 w-6" />
                 </Button>
