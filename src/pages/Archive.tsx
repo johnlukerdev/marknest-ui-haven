@@ -72,10 +72,10 @@ const Archive: React.FC = () => {
   };
 
   const handleBulkDelete = async () => {
-    if (selectedItems.length > 0) {
-      // Move each selected item to trash individually
+    setIsLoading(true);
+    try {
+      // Move each selected item to trash
       for (const id of selectedItems) {
-        // Find the bookmark in archiveBookmarks since we're on Archive page
         const bookmarkToMove = archiveBookmarks.find(bookmark => bookmark.id === id);
         if (bookmarkToMove) {
           moveToTrash(id);
@@ -84,6 +84,9 @@ const Archive: React.FC = () => {
       
       setIsSelectionMode(false);
       setSelectedItems([]);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -99,14 +102,14 @@ const Archive: React.FC = () => {
   const customBottomBar = isMobile && isSelectionMode ? {
     leftButton: {
       icon: RotateCcw,
-      label: `Restore ${selectedItems.length > 0 ? `(${selectedItems.length})` : ''}`,
+      label: 'Restore',
       onClick: handleBulkRestore,
       disabled: selectedItems.length === 0,
       loading: isLoading
     },
     centerButton: {
       icon: Trash2,
-      label: `Delete ${selectedItems.length > 0 ? `(${selectedItems.length})` : ''}`,
+      label: 'Delete',
       onClick: handleBulkDelete,
       disabled: selectedItems.length === 0,
       loading: isLoading

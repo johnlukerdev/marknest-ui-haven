@@ -126,14 +126,14 @@ const Trash: React.FC = () => {
   const customBottomBar = isMobile && isSelectionMode ? {
     leftButton: {
       icon: RotateCcw,
-      label: `Restore ${selectedItems.length > 0 ? `(${selectedItems.length})` : ''}`,
+      label: 'Restore',
       onClick: handleBulkRestore,
       disabled: selectedItems.length === 0,
       loading: isLoading
     },
     centerButton: {
       icon: Trash2,
-      label: `Delete ${selectedItems.length > 0 ? `(${selectedItems.length})` : ''}`,
+      label: 'Delete',
       onClick: handleBulkDelete,
       disabled: selectedItems.length === 0,
       loading: isLoading
