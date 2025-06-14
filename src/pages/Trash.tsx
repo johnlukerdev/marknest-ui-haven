@@ -113,17 +113,9 @@ const Trash: React.FC = () => {
     }
   };
 
-  // Function to handle add bookmark action - matches bookmark page behavior
-  const handleAddBookmark = (url: string) => {
-    toast({
-      title: "Bookmark added",
-      description: `Added bookmark: ${url}`
-    });
-  };
-
   return (
     <div className="min-h-screen bg-background">
-      <NavBar onAddBookmark={handleAddBookmark} />
+      <NavBar onAddBookmark={() => {}} />
       <main className="pt-4 sm:pt-8">
         <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
           <div className="mb-6 sm:mb-8">
@@ -339,11 +331,65 @@ const Trash: React.FC = () => {
         </div>
       </main>
 
-      {/* Mobile Bottom Navigation - Updated to work like bookmark page */}
+      {/* Mobile Bottom Navigation - Custom for Trash page */}
       {isMobile && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
-          {/* Use NavBar component for consistent bottom bar behavior */}
-          <NavBar onAddBookmark={handleAddBookmark} />
+          {/* Left button - Add (normal) or Restore (select mode) */}
+          {!isSelectionMode ? (
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+              onClick={() => {}} // Empty since this is trash page
+              disabled
+            >
+              <Plus className="h-6 w-6 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">Add</span>
+            </Button>
+          ) : (
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+              onClick={handleBulkRestore}
+              disabled={selectedItems.length === 0 || isLoading}
+            >
+              <RotateCcw className="h-6 w-6 text-foreground" />
+              <span className="text-xs text-foreground">Restore</span>
+            </Button>
+          )}
+
+          {/* Middle button - Search (normal) or Delete (select mode) */}
+          {!isSelectionMode ? (
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+              onClick={() => {}} // Empty since this is trash page
+              disabled
+            >
+              <Search className="h-6 w-6 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">Search</span>
+            </Button>
+          ) : (
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+              onClick={handleBulkDelete}
+              disabled={selectedItems.length === 0 || isLoading}
+            >
+              <Trash2 className="h-6 w-6 text-foreground" />
+              <span className="text-xs text-foreground">Delete</span>
+            </Button>
+          )}
+
+          {/* Right button - Three dots menu (always visible) */}
+          <Button 
+            variant="ghost" 
+            className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+            onClick={() => {}} // Empty since this is handled by NavBar
+            disabled
+          >
+            <MoreHorizontal className="h-6 w-6 text-muted-foreground" />
+            <span className="text-xs text-muted-foreground">More</span>
+          </Button>
         </div>
       )}
     </div>
