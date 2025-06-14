@@ -86,17 +86,9 @@ const Archive: React.FC = () => {
     }
   };
 
-  // Function to handle add bookmark action - matches bookmark page behavior
-  const handleAddBookmark = (url: string) => {
-    toast({
-      title: "Bookmark added",
-      description: `Added bookmark: ${url}`
-    });
-  };
-
   return (
     <div className="min-h-screen bg-background">
-      <NavBar onAddBookmark={handleAddBookmark} />
+      <NavBar onAddBookmark={() => {}} />
       <main className="pt-4 sm:pt-8">
         <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
           <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -231,8 +223,7 @@ const Archive: React.FC = () => {
                       )}
                     </Button>
                     
-                    {/* Only show restore button if card is not selected OR if not in selection mode on mobile */}
-                    {(!selectedItems.includes(bookmark.id) && !(isSelectionMode && isMobile)) && (
+                    {!selectedItems.includes(bookmark.id) && (
                       <Button 
                         variant="outline" 
                         onClick={(e) => {
@@ -254,11 +245,76 @@ const Archive: React.FC = () => {
         </div>
       </main>
       
-      {/* Mobile Bottom Navigation - Updated to work like bookmark page */}
+      {/* Mobile Bottom Navigation - Same design as Trash page */}
       {isMobile && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
-          {/* Use NavBar component for consistent bottom bar behavior */}
-          <NavBar onAddBookmark={handleAddBookmark} />
+          {/* Handle custom bottom bar or default behavior */}
+          {isSelectionMode ? (
+            // Selection mode - show Restore and Delete buttons
+            <>
+              {/* Restore button */}
+              <Button 
+                variant="ghost" 
+                className="h-full w-1/2 flex flex-col items-center justify-center rounded-none gap-1"
+                onClick={handleBulkRestore}
+                disabled={selectedItems.length === 0 || isLoading}
+              >
+                {isLoading ? (
+                  <Loader2 className="h-6 w-6 animate-spin text-foreground" />
+                ) : (
+                  <RotateCcw className="h-6 w-6 text-foreground" />
+                )}
+                <span className="text-xs text-foreground">Restore</span>
+              </Button>
+              
+              {/* Delete button */}
+              <Button 
+                variant="ghost" 
+                className="h-full w-1/2 flex flex-col items-center justify-center rounded-none gap-1"
+                onClick={handleBulkDelete}
+                disabled={selectedItems.length === 0}
+              >
+                <Trash2 className="h-6 w-6 text-foreground" />
+                <span className="text-xs text-foreground">Delete</span>
+              </Button>
+            </>
+          ) : (
+            // Default bottom bar behavior - same as Trash page
+            <>
+              {/* Add button - disabled since this is archive page */}
+              <Button 
+                variant="ghost" 
+                className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                onClick={() => {}} // Empty since this is archive page
+                disabled
+              >
+                <Plus className="h-6 w-6 text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">Add</span>
+              </Button>
+
+              {/* Search button - disabled since this is archive page */}
+              <Button 
+                variant="ghost" 
+                className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                onClick={() => {}} // Empty since this is archive page
+                disabled
+              >
+                <Search className="h-6 w-6 text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">Search</span>
+              </Button>
+
+              {/* More button - disabled since this is handled by NavBar */}
+              <Button 
+                variant="ghost" 
+                className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                onClick={() => {}} // Empty since this is handled by NavBar
+                disabled
+              >
+                <MoreHorizontal className="h-6 w-6 text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">More</span>
+              </Button>
+            </>
+          )}
         </div>
       )}
     </div>
