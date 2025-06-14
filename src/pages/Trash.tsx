@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -7,7 +8,7 @@ import {
   CardContent, 
   CardFooter 
 } from "@/components/ui/card";
-import { Trash2, RotateCcw, CheckSquare, X, Link, Check, AlertTriangle, Loader2 } from 'lucide-react';
+import { Trash2, RotateCcw, CheckSquare, X, Link, Check, AlertTriangle, Loader2, Plus, Search, MoreHorizontal } from 'lucide-react';
 import { 
   AlertDialog,
   AlertDialogContent,
@@ -19,6 +20,7 @@ import {
   AlertDialogAction
 } from "@/components/ui/alert-dialog";
 import { toast } from '@/hooks/use-toast';
+import { useMobile } from '@/hooks/use-mobile';
 
 const Trash: React.FC = () => {
   const { trashBookmarks, restoreFromTrash, permanentlyDelete } = useBookmarkContext();
@@ -27,6 +29,7 @@ const Trash: React.FC = () => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [bookmarkToDelete, setBookmarkToDelete] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const isMobile = useMobile();
 
   const handleRestore = (id: string) => {
     restoreFromTrash(id);
@@ -157,9 +160,9 @@ const Trash: React.FC = () => {
                 </p>
               </div>
               
-              {/* Desktop bulk actions - keep existing desktop layout */}
-              {trashBookmarks.length > 0 && (
-                <div className="hidden sm:flex items-center gap-2">
+              {/* Desktop bulk actions - only show on desktop */}
+              {trashBookmarks.length > 0 && !isMobile && (
+                <div className="flex items-center gap-2">
                   {isSelectionMode && selectedItems.length > 0 && (
                     <>
                       <Button 
@@ -209,54 +212,31 @@ const Trash: React.FC = () => {
                   </Button>
                 </div>
               )}
+
+              {/* Mobile select button - only show on mobile */}
+              {trashBookmarks.length > 0 && isMobile && (
+                <div className="flex justify-end items-center">
+                  <Button 
+                    variant={isSelectionMode ? "default" : "outline"} 
+                    size="sm"
+                    className={`flex items-center justify-center w-10 h-10 p-0 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 focus:ring-0 ${
+                      isSelectionMode 
+                        ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
+                        : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
+                    }`}
+                    onClick={toggleSelectionMode}
+                    disabled={isLoading}
+                  >
+                    {isSelectionMode ? (
+                      <X className="h-4 w-4" />
+                    ) : (
+                      <CheckSquare className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
-
-          {/* Mobile bulk actions - moved to right side above cards */}
-          {trashBookmarks.length > 0 && (
-            <div className="flex sm:hidden justify-end items-center gap-2 mb-4">
-              {isSelectionMode && selectedItems.length > 0 && (
-                <>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="flex items-center justify-center w-10 h-10 p-0 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
-                    onClick={handleBulkRestore}
-                    disabled={isLoading || selectedItems.length === 0}
-                  >
-                    {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="flex items-center justify-center w-10 h-10 p-0 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
-                    onClick={handleBulkDelete}
-                    disabled={isLoading || selectedItems.length === 0}
-                  >
-                    {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-                  </Button>
-                </>
-              )}
-              
-              <Button 
-                variant={isSelectionMode ? "default" : "outline"} 
-                size="sm"
-                className={`flex items-center justify-center w-10 h-10 p-0 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 focus:ring-0 ${
-                  isSelectionMode 
-                    ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
-                    : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
-                }`}
-                onClick={toggleSelectionMode}
-                disabled={isLoading}
-              >
-                {isSelectionMode ? (
-                  <X className="h-4 w-4" />
-                ) : (
-                  <CheckSquare className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          )}
 
           {/* Enhanced Delete Confirmation Dialog - Fixed responsive overflow */}
           <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
@@ -383,6 +363,68 @@ const Trash: React.FC = () => {
           )}
         </div>
       </main>
+
+      {/* Mobile Bottom Navigation - Custom for Trash page */}
+      {isMobile && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
+          {/* Left button - Add (normal) or Restore (select mode) */}
+          {!isSelectionMode ? (
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+              onClick={() => {}} // Empty since this is trash page
+              disabled
+            >
+              <Plus className="h-6 w-6 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">Add</span>
+            </Button>
+          ) : (
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+              onClick={handleBulkRestore}
+              disabled={selectedItems.length === 0 || isLoading}
+            >
+              <RotateCcw className="h-6 w-6 text-foreground" />
+              <span className="text-xs text-foreground">Restore</span>
+            </Button>
+          )}
+
+          {/* Middle button - Search (normal) or Delete (select mode) */}
+          {!isSelectionMode ? (
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+              onClick={() => {}} // Empty since this is trash page
+              disabled
+            >
+              <Search className="h-6 w-6 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">Search</span>
+            </Button>
+          ) : (
+            <Button 
+              variant="ghost" 
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+              onClick={handleBulkDelete}
+              disabled={selectedItems.length === 0 || isLoading}
+            >
+              <Trash2 className="h-6 w-6 text-foreground" />
+              <span className="text-xs text-foreground">Delete</span>
+            </Button>
+          )}
+
+          {/* Right button - Three dots menu (always visible) */}
+          <Button 
+            variant="ghost" 
+            className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+            onClick={() => {}} // Empty since this is handled by NavBar
+            disabled
+          >
+            <MoreHorizontal className="h-6 w-6 text-muted-foreground" />
+            <span className="text-xs text-muted-foreground">More</span>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
