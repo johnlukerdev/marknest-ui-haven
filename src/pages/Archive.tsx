@@ -256,18 +256,21 @@ const Archive: React.FC = () => {
                       )}
                     </Button>
                     
-                    <Button 
-                      variant="outline" 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleRestore(bookmark.id);
-                      }}
-                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
-                      size="sm"
-                    >
-                      <RotateCcw className="h-4 w-4" />
-                      Restore
-                    </Button>
+                    {/* Only show restore button if card is not selected */}
+                    {!selectedItems.includes(bookmark.id) && (
+                      <Button 
+                        variant="outline" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRestore(bookmark.id);
+                        }}
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
+                        size="sm"
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                        Restore
+                      </Button>
+                    )}
                   </CardFooter>
                 </Card>
               ))}
