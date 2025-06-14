@@ -94,7 +94,7 @@ const Archive: React.FC = () => {
             <div className="mb-4 sm:mb-0">
               <h1 className="text-2xl font-bold mb-2">Archive</h1>
               <p className="text-muted-foreground text-sm sm:text-base max-w-[95%] break-words leading-relaxed">
-                Bookmarks you've archived but might need later.
+                Archived bookmarks you might need later.
               </p>
             </div>
             
