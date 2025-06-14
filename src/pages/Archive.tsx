@@ -12,7 +12,7 @@ import { toast } from '@/hooks/use-toast';
 import { useMobile } from '@/hooks/use-mobile';
 
 const Archive: React.FC = () => {
-  const { archiveBookmarks, restoreFromArchive, bulkMoveToTrash } = useBookmarkContext();
+  const { archiveBookmarks, restoreFromArchive, moveToTrash } = useBookmarkContext();
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [copyingId, setCopyingId] = useState<string | null>(null);
@@ -88,9 +88,10 @@ const Archive: React.FC = () => {
 
   const handleBulkDelete = async () => {
     if (selectedItems.length > 0) {
-      // Convert selectedItems to the format expected by bulkMoveToTrash
-      const selectedBookmarks = archiveBookmarks.filter(bookmark => selectedItems.includes(bookmark.id));
-      bulkMoveToTrash(selectedBookmarks);
+      // Move each selected item to trash individually
+      for (const id of selectedItems) {
+        moveToTrash(id);
+      }
       
       toast({
         title: "Moved to trash!",
@@ -103,33 +104,41 @@ const Archive: React.FC = () => {
     }
   };
 
+  const handleSingleDelete = () => {
+    // For mobile bottom bar delete button - move all archive items to trash
+    if (archiveBookmarks.length > 0) {
+      for (const bookmark of archiveBookmarks) {
+        moveToTrash(bookmark.id);
+      }
+      
+      toast({
+        title: "Moved to trash!",
+        description: `${archiveBookmarks.length} bookmark(s) moved to trash`,
+        duration: 3000,
+      });
+    }
+  };
+
   // Custom NavBar props for Archive page
   const navBarProps = {
     onAddBookmark: () => {},
     onMobileMenuToggle: () => {},
     // Archive page specific bottom bar configuration
-    customBottomBar: isMobile && isSelectionMode ? {
-      leftButton: {
+    customBottomBar: isMobile ? {
+      leftButton: isSelectionMode ? {
         icon: RotateCcw,
         label: "Restore",
         onClick: handleBulkRestore,
         disabled: selectedItems.length === 0 || isLoading,
         loading: isLoading
-      },
+      } : undefined,
       centerButton: {
         icon: Trash2,
         label: "Delete",
-        onClick: handleBulkDelete,
-        disabled: selectedItems.length === 0
+        onClick: isSelectionMode ? handleBulkDelete : handleSingleDelete,
+        disabled: isSelectionMode ? selectedItems.length === 0 : archiveBookmarks.length === 0
       }
-    } : (isMobile ? {
-      centerButton: {
-        icon: Trash2,
-        label: "Delete",
-        onClick: () => {}, // No-op when not in selection mode
-        disabled: true
-      }
-    } : undefined)
+    } : undefined
   };
 
   return (
