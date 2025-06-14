@@ -41,7 +41,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
 
           {/* Right side buttons container */}
           <div className="flex items-center gap-2">
-            {/* Bulk action buttons - show when items are selected */}
+            {/* Bulk action buttons - show when items are selected - DESKTOP ONLY */}
             {isSelectMode && selectedBookmarks.length > 0 && (
               <>
                 <Button 
@@ -93,29 +93,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
           </div>
         </div>
 
-        {/* Mobile bulk action buttons - show below header on mobile when items are selected */}
-        {isSelectMode && selectedBookmarks.length > 0 && (
-          <div className="flex flex-col items-center gap-3 sm:hidden">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={bulkMoveToArchive}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm w-full"
-            >
-              <Archive className="h-4 w-4" />
-              <span>Archive</span>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={bulkMoveToTrash}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm w-full"
-            >
-              <Trash2 className="h-4 w-4" />
-              <span>Delete</span>
-            </Button>
-          </div>
-        )}
+        {/* REMOVED: Mobile bulk action buttons section */}
       </div>
       
       {hasResults ? (

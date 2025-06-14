@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ import AddBookmarkForm from './AddBookmarkForm';
 import { useTheme } from '@/hooks/use-theme';
 import { useMobile } from '@/hooks/use-mobile';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
+import { toast } from '@/hooks/use-toast';
 
 interface NavBarProps {
   onAddBookmark: (url: string) => void;
@@ -36,7 +38,15 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const location = useLocation();
   const { theme, setTheme } = useTheme();
   const isMobile = useMobile();
-  const { searchQuery, setSearchQuery, isSelectMode } = useBookmarkContext();
+  const { 
+    searchQuery, 
+    setSearchQuery, 
+    isSelectMode, 
+    selectedBookmarks, 
+    bulkMoveToTrash, 
+    bulkMoveToArchive,
+    toggleSelectMode 
+  } = useBookmarkContext();
   
   // Check if we're on the settings page
   const isSettingsPage = location.pathname === '/settings';
@@ -81,6 +91,32 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
       onMobileMenuToggle();
     } else {
       setMainMenuOpen(true);
+    }
+  };
+
+  // Handle bottom bar Archive button click
+  const handleBottomBarArchive = () => {
+    if (selectedBookmarks.length > 0) {
+      bulkMoveToArchive();
+      toast({
+        title: "Archived!",
+        description: `${selectedBookmarks.length} bookmark(s) moved to archive`,
+        duration: 2000,
+      });
+      navigate('/archive');
+    }
+  };
+
+  // Handle bottom bar Delete button click
+  const handleBottomBarDelete = () => {
+    if (selectedBookmarks.length > 0) {
+      bulkMoveToTrash();
+      toast({
+        title: "Moved to trash!",
+        description: `${selectedBookmarks.length} bookmark(s) moved to trash`,
+        duration: 2000,
+      });
+      navigate('/trash');
     }
   };
 
@@ -391,7 +427,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
       {/* Mobile Bottom Navigation */}
       {isMobile && !isSettingsPage && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
-          {/* Left button - Add (normal) or Restore (select mode) */}
+          {/* Left button - Add (normal) or Archive (select mode) */}
           {!isSelectMode ? (
             <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
               <DrawerTrigger asChild>
@@ -417,8 +453,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
             <Button 
               variant="ghost" 
               className="h-full w-1/3 flex items-center justify-center rounded-none"
+              onClick={handleBottomBarArchive}
+              disabled={selectedBookmarks.length === 0}
             >
-              <Archive className="h-6 w-6" />
+              <div className="h-12 w-12 rounded-full bg-blue-500/20 border-2 border-blue-500/40 flex items-center justify-center shadow-lg hover:bg-blue-500/30 hover:shadow-xl transition-all duration-200">
+                <Archive className="h-6 w-6 text-blue-400" />
+              </div>
             </Button>
           )}
 
@@ -463,8 +503,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               <Button 
                 variant="ghost" 
                 className="h-full w-1/3 flex items-center justify-center rounded-none"
+                onClick={handleBottomBarDelete}
+                disabled={selectedBookmarks.length === 0}
               >
-                <Trash2 className="h-6 w-6" />
+                <div className="h-12 w-12 rounded-full bg-red-500/20 border-2 border-red-500/40 flex items-center justify-center shadow-lg hover:bg-red-500/30 hover:shadow-xl transition-all duration-200">
+                  <Trash2 className="h-6 w-6 text-red-400" />
+                </div>
               </Button>
             )
           )}
