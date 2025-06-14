@@ -1,3 +1,4 @@
+
 import React from 'react';
 import BookmarkCard from './BookmarkCard';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -67,7 +68,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
 
         {/* Bulk action buttons - show below header when items are selected */}
         {isSelectMode && selectedBookmarks.length > 0 && (
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-end">
             <Button 
               variant="outline" 
               size="sm" 
