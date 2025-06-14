@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -370,33 +371,36 @@ const Trash: React.FC = () => {
                       <Link className="h-4 w-4" />
                     </Button>
                     
-                    <div className="flex gap-2 flex-1 justify-end">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleRestore(bookmark.id);
-                        }}
-                      >
-                        <RotateCcw className="h-4 w-4" />
-                        Restore
-                      </Button>
-                      
-                      <Button 
-                        variant="destructive" 
-                        size="sm"
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleInitiateDelete(bookmark.id);
-                        }}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                        Delete
-                      </Button>
-                    </div>
+                    {/* Only show restore and delete buttons if card is not selected */}
+                    {!selectedItems.includes(bookmark.id) && (
+                      <div className="flex gap-2 flex-1 justify-end">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRestore(bookmark.id);
+                          }}
+                        >
+                          <RotateCcw className="h-4 w-4" />
+                          Restore
+                        </Button>
+                        
+                        <Button 
+                          variant="destructive" 
+                          size="sm"
+                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleInitiateDelete(bookmark.id);
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                          Delete
+                        </Button>
+                      </div>
+                    )}
                   </CardFooter>
                 </Card>
               ))}
