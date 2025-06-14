@@ -441,13 +441,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
           ) : (
             <Button 
               variant="ghost" 
-              className="h-full w-1/3 flex items-center justify-center rounded-none"
+              className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
               onClick={handleBottomBarArchive}
               disabled={selectedBookmarks.length === 0}
             >
-              <div className="h-12 w-12 rounded-full bg-blue-500/20 border-2 border-blue-500/40 flex items-center justify-center shadow-lg hover:bg-blue-500/30 hover:shadow-xl transition-all duration-200">
-                <Archive className="h-6 w-6 text-blue-400" />
-              </div>
+              <Archive className="h-6 w-6 text-foreground" />
+              <span className="text-xs text-foreground">Archive</span>
             </Button>
           )}
 
@@ -491,13 +490,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
             location.pathname !== '/archive' && (
               <Button 
                 variant="ghost" 
-                className="h-full w-1/3 flex items-center justify-center rounded-none"
+                className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
                 onClick={handleBottomBarDelete}
                 disabled={selectedBookmarks.length === 0}
               >
-                <div className="h-12 w-12 rounded-full bg-red-500/20 border-2 border-red-500/40 flex items-center justify-center shadow-lg hover:bg-red-500/30 hover:shadow-xl transition-all duration-200">
-                  <Trash2 className="h-6 w-6 text-red-400" />
-                </div>
+                <Trash2 className="h-6 w-6 text-foreground" />
+                <span className="text-xs text-foreground">Delete</span>
               </Button>
             )
           )}
