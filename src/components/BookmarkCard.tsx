@@ -17,8 +17,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
+  Checkbox
 } from "@/components/ui";
-import { MoreHorizontal, Trash2, Link, Archive, Check, ExternalLink } from "lucide-react";
+import { MoreHorizontal, Trash2, Link, Archive, Check } from "lucide-react";
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { toast } from '@/hooks/use-toast';
 
@@ -31,7 +32,7 @@ interface BookmarkCardProps {
 
 const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl }) => {
   // Extract domain for display
-  const displayUrl = new URL(url).hostname.replace('www.', '');
+  const displayUrl = new URL(url).hostname;
   const { 
     moveToTrash, 
     moveToArchive, 
@@ -95,10 +96,6 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
       toggleSelectBookmark(id);
     }
   };
-
-  const handleVisitSite = () => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
   
   return (
     <Card 
@@ -129,25 +126,30 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
       </div>
       <CardContent className="p-4 flex-grow">
         <div className="flex flex-col flex-grow">
-          <h3 className="mb-2 line-clamp-2 font-semibold text-foreground leading-tight">
+          <a 
+            href={url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="mb-1 line-clamp-2 font-medium transition-colors hover:text-primary cursor-pointer"
+            onClick={(e) => isSelectMode && e.preventDefault()}
+          >
             {title}
-          </h3>
-          <p className="text-sm text-muted-foreground mt-auto">
+          </a>
+          <p className="text-sm text-muted-foreground mt-1 truncate">
             {displayUrl}
           </p>
         </div>
       </CardContent>
-      <CardFooter className="border-t p-4 pt-3 flex justify-between items-center gap-2">
-        <Button
-          onClick={handleVisitSite}
-          variant="outline"
-          size="sm"
-          className="flex items-center gap-2 text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+      <CardFooter className="border-t p-4 pt-3 flex justify-between items-center">
+        <a 
+          href={url} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-sm text-muted-foreground hover:text-primary transition-colors hover:cursor-pointer"
+          onClick={(e) => isSelectMode && e.preventDefault()}
         >
-          <ExternalLink className="h-4 w-4" />
-          Visit Site
-        </Button>
-        
+          Visit site
+        </a>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
