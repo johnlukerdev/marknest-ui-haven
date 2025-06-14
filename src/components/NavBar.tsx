@@ -147,9 +147,9 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   return (
     <>
       <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
-        <div className="w-full flex h-16 items-center justify-between py-3 px-4 sm:px-6 lg:px-0 xl:px-0">
+        <div className="w-full flex h-16 items-center justify-between py-3 px-4 sm:px-6 lg:px-8 xl:px-12">
           {/* Left section - Hamburger + Logo + My List Dropdown */}
-          <div className="flex items-center gap-1 lg:pl-8 xl:pl-12">
+          <div className="flex items-center gap-1">
             {/* White Hamburger Menu Button - Only show on mobile/tablet */}
             <Sheet open={mainMenuOpen} onOpenChange={setMainMenuOpen}>
               <SheetTrigger asChild>
@@ -259,7 +259,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
           
           {/* Right section - Desktop controls */}
           {!isMobile && (
-            <div className="flex items-center gap-3 lg:pr-8 xl:pr-12">
+            <div className="flex items-center gap-3">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
