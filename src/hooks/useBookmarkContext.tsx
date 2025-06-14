@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import { fetchWebMetadata } from '@/utils/webMetadata';
 
 export interface Bookmark {
   id: string;
@@ -16,6 +17,7 @@ interface BookmarkContextType {
   isSelectMode: boolean;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  addBookmark: (url: string) => Promise<void>;
   moveToTrash: (id: string) => void;
   restoreFromTrash: (id: string) => void;
   moveToArchive: (id: string) => void;
@@ -96,6 +98,34 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
       bookmark.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [bookmarks, searchQuery]);
+
+  const addBookmark = async (url: string) => {
+    try {
+      const metadata = await fetchWebMetadata(url);
+      const newBookmark: Bookmark = {
+        id: Date.now().toString(),
+        title: metadata.title,
+        url: url.startsWith('http') ? url : `https://${url}`,
+        imageUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1000'
+      };
+      
+      setBookmarks(prev => [newBookmark, ...prev]);
+    } catch (error) {
+      console.error('Error adding bookmark:', error);
+      // Fallback if metadata fetch fails
+      const fallbackUrl = url.startsWith('http') ? url : `https://${url}`;
+      const domain = new URL(fallbackUrl).hostname.replace('www.', '');
+      
+      const newBookmark: Bookmark = {
+        id: Date.now().toString(),
+        title: domain,
+        url: fallbackUrl,
+        imageUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1000'
+      };
+      
+      setBookmarks(prev => [newBookmark, ...prev]);
+    }
+  };
   
   const moveToTrash = (id: string) => {
     const bookmarkToTrash = bookmarks.find(b => b.id === id);
@@ -190,6 +220,7 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
       isSelectMode,
       searchQuery,
       setSearchQuery,
+      addBookmark,
       moveToTrash,
       restoreFromTrash,
       moveToArchive,

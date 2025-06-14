@@ -3,18 +3,28 @@ import React from 'react';
 import NavBar from '@/components/NavBar';
 import BookmarkGrid from '@/components/BookmarkGrid';
 import BulkActionsBar from '@/components/BulkActionsBar';
+import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { toast } from '@/hooks/use-toast';
 import { useMobile } from '@/hooks/use-mobile';
 
 const Index: React.FC = () => {
   const isMobile = useMobile();
+  const { addBookmark } = useBookmarkContext();
   
-  const handleAddBookmark = (url: string) => {
-    // In a real application, this would call an API to save the bookmark
-    toast({
-      title: "Bookmark added",
-      description: `Added bookmark: ${url}`
-    });
+  const handleAddBookmark = async (url: string) => {
+    try {
+      await addBookmark(url);
+      toast({
+        title: "Bookmark added",
+        description: `Successfully bookmarked: ${url}`
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add bookmark. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
