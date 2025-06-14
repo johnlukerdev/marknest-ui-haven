@@ -107,7 +107,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               onClick={handleMobileMenuClick}
               variant="ghost"
               size="icon"
-              className="h-10 w-10 p-0 hover:bg-muted/50 text-white transition-all duration-200 rounded-md"
+              className="h-10 w-10 p-0 hover:bg-muted/50 text-white transition-all duration-200 rounded-md md:hidden"
             >
               <Menu className="h-6 w-6" />
             </Button>
@@ -116,48 +116,8 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
             </Link>
           </div>
           
-          {/* Right section - My List Dropdown and Theme Toggle */}
+          {/* Right section - Theme Toggle only on mobile settings */}
           <div className="flex items-center gap-2">
-            {/* My List Dropdown */}
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200 text-sm">
-                        My List <ChevronDown className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent 
-                      align="end" 
-                      className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
-                    >
-                      <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                        <Link to="/" className="flex items-center w-full text-foreground">
-                          My List
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                        <Link to="/trash" className="flex items-center w-full text-foreground">
-                          <Trash2 className="mr-3 h-4 w-4" />
-                          Trash
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                        <Link to="/archive" className="flex items-center w-full text-foreground">
-                          <Archive className="mr-3 h-4 w-4" />
-                          Archive
-                        </Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>View your collections</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
             {/* Theme Toggle */}
             <TooltipProvider>
               <Tooltip>
@@ -226,8 +186,8 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               <Logo />
             </Link>
             
-            {/* My List Dropdown - Desktop only, hidden on mobile */}
-            {!isMobile && (
+            {/* My List Dropdown - Hidden on mobile, visible on tablet and desktop */}
+            <div className="hidden md:block">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -266,52 +226,12 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-            )}
+            </div>
           </div>
           
-          {/* Mobile Right section - My List + Theme Toggle (only on main pages, not settings) */}
+          {/* Mobile Right section - Theme Toggle only (removed My List dropdown) */}
           {isMobile && !isSettingsPage && (
             <div className="flex items-center gap-2">
-              {/* My List Dropdown */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200 text-sm">
-                          My List <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent 
-                        align="end" 
-                        className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
-                      >
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/" className="flex items-center w-full text-foreground">
-                            My List
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/trash" className="flex items-center w-full text-foreground">
-                            <Trash2 className="mr-3 h-4 w-4" />
-                            Trash
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/archive" className="flex items-center w-full text-foreground">
-                            <Archive className="mr-3 h-4 w-4" />
-                            Archive
-                          </Link>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>View your collections</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
               {/* Theme Toggle */}
               <TooltipProvider>
                 <Tooltip>
