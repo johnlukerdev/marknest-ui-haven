@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -92,7 +93,9 @@ const Archive: React.FC = () => {
           <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div className="mb-4 sm:mb-0">
               <h1 className="text-2xl font-bold mb-2">Archive</h1>
-              <p className="text-muted-foreground text-sm sm:text-base max-w-[95%]">Bookmarks you've archived but might need later.</p>
+              <p className="text-muted-foreground text-sm sm:text-base max-w-[95%] break-words leading-relaxed">
+                Bookmarks you've archived but might need later.
+              </p>
             </div>
             
             {archiveBookmarks.length > 0 && (
@@ -103,7 +106,7 @@ const Archive: React.FC = () => {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="flex items-center gap-2 focus:ring-0"
+                      className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                       onClick={handleBulkRestore}
                       disabled={isLoading}
                     >
@@ -115,7 +118,11 @@ const Archive: React.FC = () => {
                   <Button 
                     variant={isSelectionMode ? "default" : "outline"} 
                     size="sm"
-                    className="flex items-center gap-2 focus:ring-0"
+                    className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 ${
+                      isSelectionMode 
+                        ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
+                        : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
+                    }`}
                     onClick={toggleSelectionMode}
                     disabled={isLoading}
                   >
@@ -136,11 +143,11 @@ const Archive: React.FC = () => {
                 {/* Mobile: Vertical layout for buttons when items are selected */}
                 <div className="flex sm:hidden flex-col items-center w-full">
                   {isSelectionMode && selectedItems.length > 0 ? (
-                    <div className="flex flex-col items-center w-full gap-2">
+                    <div className="flex flex-col items-center w-full gap-3">
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="flex items-center gap-2 w-full max-w-[200px] justify-center"
+                        className="flex items-center justify-center gap-2 w-full max-w-[280px] px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                         onClick={handleBulkRestore}
                         disabled={isLoading}
                       >
@@ -151,7 +158,7 @@ const Archive: React.FC = () => {
                       <Button 
                         variant="default" 
                         size="sm"
-                        className="flex items-center gap-2 w-full max-w-[200px] justify-center"
+                        className="flex items-center justify-center gap-2 w-full max-w-[280px] px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                         onClick={toggleSelectionMode}
                         disabled={isLoading}
                       >
@@ -163,7 +170,11 @@ const Archive: React.FC = () => {
                     <Button 
                       variant={isSelectionMode ? "default" : "outline"} 
                       size="sm"
-                      className="flex items-center gap-2 w-full max-w-[200px] justify-center"
+                      className={`flex items-center justify-center gap-2 w-full max-w-[280px] px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 ${
+                        isSelectionMode 
+                          ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
+                          : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
+                      }`}
                       onClick={toggleSelectionMode}
                       disabled={isLoading}
                     >
@@ -251,10 +262,10 @@ const Archive: React.FC = () => {
                         e.stopPropagation();
                         handleRestore(bookmark.id);
                       }}
-                      className="transition-all duration-200 focus:ring-0"
+                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
                       size="sm"
                     >
-                      <RotateCcw className="mr-2 h-4 w-4" />
+                      <RotateCcw className="h-4 w-4" />
                       Restore
                     </Button>
                   </CardFooter>

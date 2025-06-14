@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -162,7 +163,7 @@ const Trash: React.FC = () => {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex items-center gap-2 flex-1"
+                          className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                           onClick={handleBulkRestore}
                           disabled={isLoading}
                         >
@@ -172,7 +173,7 @@ const Trash: React.FC = () => {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex items-center gap-2 flex-1"
+                          className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                           onClick={handleBulkDelete}
                           disabled={isLoading}
                         >
@@ -184,7 +185,7 @@ const Trash: React.FC = () => {
                       <Button 
                         variant="default" 
                         size="sm"
-                        className="flex items-center gap-2 w-full max-w-[200px] justify-center"
+                        className="flex items-center justify-center gap-2 w-full max-w-[280px] px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                         onClick={toggleSelectionMode}
                         disabled={isLoading}
                       >
@@ -201,7 +202,7 @@ const Trash: React.FC = () => {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex items-center gap-2"
+                          className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                           onClick={handleBulkRestore}
                           disabled={isLoading}
                         >
@@ -211,7 +212,7 @@ const Trash: React.FC = () => {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="flex items-center gap-2"
+                          className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                           onClick={handleBulkDelete}
                           disabled={isLoading}
                         >
@@ -223,7 +224,11 @@ const Trash: React.FC = () => {
                     <Button 
                       variant={isSelectionMode ? "default" : "outline"} 
                       size="sm"
-                      className="flex items-center gap-2 focus:ring-0"
+                      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 focus:ring-0 ${
+                        isSelectionMode 
+                          ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
+                          : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
+                      }`}
                       onClick={toggleSelectionMode}
                       disabled={isLoading}
                     >
@@ -247,7 +252,11 @@ const Trash: React.FC = () => {
                       <Button 
                         variant={isSelectionMode ? "default" : "outline"} 
                         size="sm"
-                        className="flex items-center gap-2 focus:ring-0 w-full max-w-[200px] justify-center"
+                        className={`flex items-center justify-center gap-2 focus:ring-0 w-full max-w-[280px] px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 ${
+                          isSelectionMode 
+                            ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
+                            : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
+                        }`}
                         onClick={toggleSelectionMode}
                         disabled={isLoading}
                       >
@@ -284,13 +293,13 @@ const Trash: React.FC = () => {
               </AlertDialogHeader>
               <AlertDialogFooter className="flex flex-col gap-2 sm:flex-row">
                 <AlertDialogCancel 
-                  className="bg-slate-800 hover:bg-slate-700 text-white border-0 transition-all duration-200"
+                  className="px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md hover:scale-105 active:scale-95 backdrop-blur-sm border-0"
                   aria-label="Cancel deletion"
                 >
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
-                  className="bg-red-600 hover:bg-red-700 text-white border-0 transition-all duration-200"
+                  className="px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm border-0"
                   onClick={bookmarkToDelete === 'bulk' ? confirmBulkDelete : handleDeletePermanently}
                   aria-label="Confirm permanent deletion"
                   disabled={isLoading}
@@ -362,26 +371,26 @@ const Trash: React.FC = () => {
                       <Button 
                         variant="outline" 
                         size="sm"
-                        className="transition-all duration-200 focus:ring-0"
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleRestore(bookmark.id);
                         }}
                       >
-                        <RotateCcw className="mr-2 h-4 w-4" />
+                        <RotateCcw className="h-4 w-4" />
                         Restore
                       </Button>
                       
                       <Button 
                         variant="destructive" 
                         size="sm"
-                        className="transition-all duration-200 focus:ring-0"
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleInitiateDelete(bookmark.id);
                         }}
                       >
-                        <Trash2 className="mr-2 h-4 w-4" />
+                        <Trash2 className="h-4 w-4" />
                         Delete
                       </Button>
                     </div>
