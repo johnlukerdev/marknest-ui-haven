@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -22,11 +21,6 @@ const Archive: React.FC = () => {
 
   const handleRestore = (id: string) => {
     restoreFromArchive(id);
-    toast({
-      title: "Restored!",
-      description: "Bookmark moved back to My List",
-      duration: 2000,
-    });
   };
 
   const handleCopyLink = (url: string, id: string) => {
@@ -68,20 +62,9 @@ const Archive: React.FC = () => {
         }
       }
       
-      toast({
-        title: "Restored successfully!",
-        description: `${selectedItems.length} bookmark(s) moved back to My List`,
-        duration: 3000,
-      });
-      
       setIsSelectionMode(false);
       setSelectedItems([]);
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to restore some bookmarks",
-        duration: 3000,
-      });
     } finally {
       setIsLoading(false);
     }
@@ -97,12 +80,6 @@ const Archive: React.FC = () => {
           moveToTrash(id);
         }
       }
-      
-      toast({
-        title: "Moved to trash!",
-        description: `${selectedItems.length} bookmark(s) moved to trash`,
-        duration: 3000,
-      });
       
       setIsSelectionMode(false);
       setSelectedItems([]);
