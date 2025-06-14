@@ -56,21 +56,9 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
     );
   }
 
-  // Mobile - 3-bar hamburger icon button
+  // Mobile - no hamburger button, just the drawer
   return (
     <>
-      {/* 3-bar hamburger menu button for mobile */}
-      <Button
-        onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-50 md:hidden w-12 h-12 rounded-full bg-transparent hover:bg-transparent"
-      >
-        <div className="flex flex-col gap-1">
-          <div className="w-5 h-0.5 bg-white"></div>
-          <div className="w-5 h-0.5 bg-white"></div>
-          <div className="w-5 h-0.5 bg-white"></div>
-        </div>
-      </Button>
-
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent className="h-[85vh]">
           <div className="p-4">
