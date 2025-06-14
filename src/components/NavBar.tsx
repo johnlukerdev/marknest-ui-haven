@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -148,7 +147,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   return (
     <>
       <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
-        <div className="container flex h-16 items-center justify-between py-3 px-4 sm:px-6">
+        <div className="w-full flex h-16 items-center justify-between py-3 px-4 sm:px-6 lg:px-8 xl:px-12">
           {/* Left section - Hamburger + Logo + My List Dropdown */}
           <div className="flex items-center gap-1">
             {/* White Hamburger Menu Button - Only show on mobile/tablet */}
