@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -99,11 +98,6 @@ const Archive: React.FC = () => {
         onClick: handleBulkRestore,
         disabled: selectedItems.length === 0 || isLoading,
         loading: isLoading
-      },
-      rightButton: {
-        icon: CheckSquare,
-        label: "Cancel",
-        onClick: toggleSelectionMode
       }
     } : undefined
   };
@@ -121,7 +115,6 @@ const Archive: React.FC = () => {
               </p>
             </div>
             
-            {/* Desktop bulk actions - keep existing desktop layout */}
             {archiveBookmarks.length > 0 && (
               <div className="hidden sm:flex items-center gap-2">
                 {isSelectionMode && selectedItems.length > 0 && (
@@ -164,7 +157,6 @@ const Archive: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile bulk actions - moved to right side above cards, hide Restore button on mobile */}
           {archiveBookmarks.length > 0 && (
             <div className="flex sm:hidden justify-end items-center gap-2 mb-4">
               <Button 
@@ -247,7 +239,6 @@ const Archive: React.FC = () => {
                       )}
                     </Button>
                     
-                    {/* Only show restore button if card is not selected */}
                     {!selectedItems.includes(bookmark.id) && (
                       <Button 
                         variant="outline" 

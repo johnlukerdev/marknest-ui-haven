@@ -451,20 +451,76 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                 </Button>
               )}
               
-              {/* Middle section - empty for custom bottom bar */}
-              <div className="w-1/3"></div>
-              
-              {/* Right button */}
-              {customBottomBar.rightButton && (
-                <Button 
-                  variant="ghost" 
-                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
-                  onClick={customBottomBar.rightButton.onClick}
-                >
-                  <customBottomBar.rightButton.icon className="h-6 w-6 text-foreground" />
-                  <span className="text-xs text-foreground">{customBottomBar.rightButton.label}</span>
-                </Button>
+              {/* Middle section - Search (normal) or empty (custom bottom bar) */}
+              {!isSelectMode ? (
+                <Drawer open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
+                  <DrawerTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="h-full w-1/3 flex items-center justify-center rounded-none"
+                    >
+                      <Search className="h-6 w-6" />
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent className="p-4">
+                    <div className="space-y-4">
+                      <h2 className="text-xl font-semibold text-center">Search</h2>
+                      <div className="relative">
+                        <Input 
+                          ref={mobileSearchInputRef}
+                          className="w-full shadow-sm pr-8 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
+                          placeholder="Search bookmarks..." 
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          autoFocus
+                        />
+                        {searchQuery && (
+                          <button 
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            onClick={handleMobileClearSearch}
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </DrawerContent>
+                </Drawer>
+              ) : (
+                <div className="w-1/3"></div>
               )}
+              
+              {/* Right button - Always show 3 dots menu */}
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="h-full w-1/3 flex items-center justify-center rounded-none"
+                  >
+                    <MoreHorizontal className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-auto pb-16 rounded-t-xl">
+                  <div className="grid gap-4 py-4">
+                    <Button 
+                      variant="ghost" 
+                      className="flex justify-start" 
+                      onClick={goToSettings}
+                    >
+                      <Settings className="mr-2 h-5 w-5" />
+                      Settings
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      className="flex justify-start" 
+                      onClick={handleSignOut}
+                    >
+                      <LogOut className="mr-2 h-5 w-5" />
+                      Sign Out
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </>
           ) : (
             // Default bottom bar behavior
