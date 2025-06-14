@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { User, CreditCard, Database, Tags, Settings, Info, List, X, Menu } from 'lucide-react';
+import { User, CreditCard, Database, Tags, Settings, Info, List, X } from 'lucide-react';
 import { useMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerClose } from '@/components/ui/drawer';
@@ -56,15 +56,19 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
     );
   }
 
-  // Mobile - transparent rounded button with smooth transitions
+  // Mobile - 3-bar hamburger icon button
   return (
     <>
-      {/* Transparent rounded sidebar menu button for mobile */}
+      {/* 3-bar hamburger menu button for mobile */}
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-50 md:hidden w-12 h-12 rounded-full bg-transparent hover:bg-muted shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+        className="fixed top-4 left-4 z-50 md:hidden w-12 h-12 rounded-full bg-transparent hover:bg-transparent"
       >
-        <Menu className="h-5 w-5" />
+        <div className="flex flex-col gap-1">
+          <div className="w-5 h-0.5 bg-current"></div>
+          <div className="w-5 h-0.5 bg-current"></div>
+          <div className="w-5 h-0.5 bg-current"></div>
+        </div>
       </Button>
 
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
