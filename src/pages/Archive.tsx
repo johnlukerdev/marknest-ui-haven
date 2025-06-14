@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -94,9 +95,27 @@ const Archive: React.FC = () => {
     });
   };
 
+  // Custom bottom bar for mobile selection mode
+  const customBottomBar = isMobile && isSelectionMode ? {
+    leftButton: {
+      icon: RotateCcw,
+      label: `Restore ${selectedItems.length > 0 ? `(${selectedItems.length})` : ''}`,
+      onClick: handleBulkRestore,
+      disabled: selectedItems.length === 0,
+      loading: isLoading
+    },
+    centerButton: {
+      icon: Trash2,
+      label: `Delete ${selectedItems.length > 0 ? `(${selectedItems.length})` : ''}`,
+      onClick: handleBulkDelete,
+      disabled: selectedItems.length === 0,
+      loading: isLoading
+    }
+  } : undefined;
+
   return (
     <div className="min-h-screen bg-background">
-      <NavBar onAddBookmark={handleAddBookmark} />
+      <NavBar onAddBookmark={handleAddBookmark} customBottomBar={customBottomBar} />
       <main className="pt-4 sm:pt-8">
         <div className="container py-8 sm:py-12 px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
           <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -252,14 +271,6 @@ const Archive: React.FC = () => {
           )}
         </div>
       </main>
-      
-      {/* Mobile Bottom Navigation - Updated to work like bookmark page */}
-      {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t flex justify-around items-center h-16">
-          {/* Use NavBar component for consistent bottom bar behavior */}
-          <NavBar onAddBookmark={handleAddBookmark} />
-        </div>
-      )}
     </div>
   );
 };
