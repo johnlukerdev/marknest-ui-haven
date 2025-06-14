@@ -188,13 +188,13 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
         <div className="container flex h-16 items-center justify-between py-3 px-4 sm:px-6">
           {/* Left section - Hamburger + Logo + My List Dropdown */}
           <div className="flex items-center gap-1">
-            {/* White Hamburger Menu Button */}
+            {/* White Hamburger Menu Button - Only show on mobile/tablet */}
             <Sheet open={mainMenuOpen} onOpenChange={setMainMenuOpen}>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-10 w-10 p-0 hover:bg-muted/50 text-white transition-all duration-200 rounded-md"
+                  className="h-10 w-10 p-0 hover:bg-muted/50 text-white transition-all duration-200 rounded-md md:hidden"
                 >
                   <Menu className="h-6 w-6" />
                 </Button>
