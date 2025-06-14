@@ -268,7 +268,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                       <div className="relative animate-fade-in w-full max-w-[280px] md:max-w-none">
                         <Input 
                           ref={searchInputRef}
-                          className="w-full md:w-[240px] pr-8 md:w-[300px] shadow-sm h-12 focus:ring-0" 
+                          className="w-full md:w-[240px] pr-8 md:w-[300px] shadow-sm h-12 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
                           placeholder="Search bookmarks..." 
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
@@ -428,7 +428,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
                 <div className="relative">
                   <Input 
                     ref={mobileSearchInputRef}
-                    className="w-full shadow-sm pr-8 focus:ring-0" 
+                    className="w-full shadow-sm pr-8 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
                     placeholder="Search bookmarks..." 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
