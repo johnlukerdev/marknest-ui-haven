@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mainMenuOpen, setMainMenuOpen] = useState(false);
   
   const searchInputRef = useRef<HTMLInputElement>(null);
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
@@ -56,6 +58,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const handleSignOut = () => {
     navigate('/signin');
     setMobileMenuOpen(false);
+    setMainMenuOpen(false);
   };
 
   const handleClearSearch = () => {
@@ -71,12 +74,27 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
   const goToSettings = () => {
     navigate('/settings');
     setMobileMenuOpen(false);
+    setMainMenuOpen(false);
   };
 
   const handleMobileMenuClick = () => {
     if (onMobileMenuToggle) {
       onMobileMenuToggle();
+    } else {
+      setMainMenuOpen(true);
     }
+  };
+
+  const mainMenuItems = [
+    { id: 'home', label: 'My List', path: '/' },
+    { id: 'trash', label: 'Trash', path: '/trash' },
+    { id: 'archive', label: 'Archive', path: '/archive' },
+    { id: 'settings', label: 'Settings', path: '/settings' },
+  ];
+
+  const handleMainMenuNavigation = (path: string) => {
+    navigate(path);
+    setMainMenuOpen(false);
   };
   
   // On mobile/tablet settings page, show a fixed navbar with sidebar icon, logo, and right controls
@@ -169,8 +187,42 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
     <>
       <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
         <div className="container flex h-16 items-center justify-between py-3 px-4 sm:px-6">
-          {/* Left section - Logo + My List Dropdown */}
+          {/* Left section - Hamburger + Logo + My List Dropdown */}
           <div className="flex items-center gap-3">
+            {/* White Hamburger Menu Button */}
+            <Sheet open={mainMenuOpen} onOpenChange={setMainMenuOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 p-0 hover:bg-muted/50 text-white transition-all duration-200 rounded-md"
+                >
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-64 p-0">
+                <div className="p-6">
+                  <h2 className="text-lg font-semibold mb-6">MENU</h2>
+                  <nav className="space-y-2">
+                    {mainMenuItems.map((item) => (
+                      <Button
+                        key={item.id}
+                        onClick={() => handleMainMenuNavigation(item.path)}
+                        variant="ghost"
+                        className={`w-full justify-start text-left p-3 h-auto ${
+                          location.pathname === item.path
+                            ? 'bg-primary/10 text-primary font-medium'
+                            : 'hover:bg-muted'
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                      </Button>
+                    ))}
+                  </nav>
+                </div>
+              </SheetContent>
+            </Sheet>
+
             <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
               <Logo />
             </Link>
