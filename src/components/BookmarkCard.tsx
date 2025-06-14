@@ -163,34 +163,39 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-[#2E2E2E] p-1.5 rounded-lg shadow-md border-0 animate-scale-in">
-                  <div className="flex flex-col gap-1">
+                <DropdownMenuContent 
+                  align="end" 
+                  side="bottom"
+                  sideOffset={8}
+                  className="w-48 p-2 bg-popover border border-border rounded-xl shadow-lg animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200"
+                >
+                  <div className="space-y-1">
                     <DropdownMenuItem 
                       onClick={handleDelete}
-                      className="flex items-center gap-2 py-2.5 px-3 rounded-md cursor-pointer transition-all duration-200 hover:bg-[#1F1F1F] hover:scale-[1.03] active:scale-[0.97] text-[#E0E0E0] hover:text-white"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground group"
                     >
-                      <Trash2 className="h-4 w-4" />
-                      <span className="font-medium">Delete</span>
+                      <Trash2 className="h-4 w-4 text-muted-foreground group-hover:text-destructive transition-colors" />
+                      <span className="font-medium text-sm">Delete</span>
                     </DropdownMenuItem>
                     
                     <DropdownMenuItem 
                       onClick={handleCopyLink}
-                      className="flex items-center gap-2 py-2.5 px-3 rounded-md cursor-pointer transition-all duration-200 hover:bg-[#1F1F1F] hover:scale-[1.03] active:scale-[0.97] text-[#E0E0E0] hover:text-white"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground group"
                     >
                       {isCopying ? (
-                        <Check className="h-4 w-4" />
+                        <Check className="h-4 w-4 text-green-500" />
                       ) : (
-                        <Link className="h-4 w-4" />
+                        <Link className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
                       )}
-                      <span className="font-medium">{isCopying ? "Copied!" : "Copy Link"}</span>
+                      <span className="font-medium text-sm">{isCopying ? "Copied!" : "Copy Link"}</span>
                     </DropdownMenuItem>
                     
                     <DropdownMenuItem 
                       onClick={handleArchive}
-                      className="flex items-center gap-2 py-2.5 px-3 rounded-md cursor-pointer transition-all duration-200 hover:bg-[#1F1F1F] hover:scale-[1.03] active:scale-[0.97] text-[#E0E0E0] hover:text-white"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground group"
                     >
-                      <Archive className="h-4 w-4" />
-                      <span className="font-medium">Archive</span>
+                      <Archive className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                      <span className="font-medium text-sm">Archive</span>
                     </DropdownMenuItem>
                   </div>
                 </DropdownMenuContent>
