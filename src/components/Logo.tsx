@@ -35,7 +35,7 @@ const Logo: React.FC<LogoProps> = ({ onClick }) => {
 
   return (
     <div 
-      className={`flex items-center gap-1.5 transition-all duration-200 ${navigate ? 'hover:cursor-pointer' : ''}`}
+      className={`flex items-center gap-1 transition-all duration-200 ${navigate ? 'hover:cursor-pointer' : ''}`}
       onClick={handleClick}
     >
       <div className="relative h-8 w-8 overflow-hidden">
