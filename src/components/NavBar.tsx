@@ -108,7 +108,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle }) =>
               onClick={handleMobileMenuClick}
               variant="ghost"
               size="icon"
-              className="h-10 w-10 p-0 hover:bg-muted/50 text-foreground transition-all duration-200 rounded-md"
+              className="h-10 w-10 p-0 hover:bg-muted/50 text-white transition-all duration-200 rounded-md"
             >
               <Menu className="h-6 w-6" />
             </Button>

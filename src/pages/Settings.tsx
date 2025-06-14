@@ -50,6 +50,10 @@ const Settings: React.FC = () => {
     // Functionality remains but toast removed
   };
 
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen(true);
+  };
+
   // Update URL when tab changes
   useEffect(() => {
     const tabFromUrl = location.hash.replace('#', '');
@@ -63,21 +67,12 @@ const Settings: React.FC = () => {
       {/* Show NavBar on both desktop and mobile */}
       <NavBar 
         onAddBookmark={handleAddBookmark} 
-        onMobileMenuToggle={() => setMobileMenuOpen(true)} 
+        onMobileMenuToggle={handleMobileMenuToggle} 
       />
       
-      {/* Mobile/Tablet Floating Hamburger Button */}
+      {/* Mobile/Tablet Settings Menu Sheet */}
       {isMobile && (
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="fixed top-4 left-4 z-50 h-12 w-12 bg-transparent hover:bg-muted/20 text-white transition-all duration-200 rounded-md md:hidden"
-            >
-              <Menu className="h-7 w-7" />
-            </Button>
-          </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
             <div className="p-6">
               <h2 className="text-lg font-semibold mb-6">SETTINGS</h2>
