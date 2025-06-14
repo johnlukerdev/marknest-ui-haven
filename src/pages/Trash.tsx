@@ -156,29 +156,29 @@ const Trash: React.FC = () => {
               
               {trashBookmarks.length > 0 && (
                 <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
-                  {/* Mobile: Show bulk actions in organized layout when items are selected */}
-                  {isSelectionMode && selectedItems.length > 0 && (
+                  {/* Mobile: Show bulk actions in organized layout when in selection mode */}
+                  {isSelectionMode && (
                     <div className="flex flex-col items-center gap-3 w-full sm:hidden">
                       <div className="flex items-center justify-center gap-3 w-full max-w-[300px]">
                         <Button 
                           variant="outline" 
                           size="sm" 
                           className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
-                          onClick={handleBulkRestore}
-                          disabled={isLoading}
+                          onClick={selectedItems.length > 0 ? handleBulkRestore : () => {}}
+                          disabled={isLoading || selectedItems.length === 0}
                         >
                           {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
-                          Restore ({selectedItems.length})
+                          Restore {selectedItems.length > 0 && `(${selectedItems.length})`}
                         </Button>
                         <Button 
                           variant="outline" 
                           size="sm" 
                           className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
-                          onClick={handleBulkDelete}
-                          disabled={isLoading}
+                          onClick={selectedItems.length > 0 ? handleBulkDelete : () => {}}
+                          disabled={isLoading || selectedItems.length === 0}
                         >
                           {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-                          Delete ({selectedItems.length})
+                          Delete {selectedItems.length > 0 && `(${selectedItems.length})`}
                         </Button>
                       </div>
                       
@@ -197,27 +197,27 @@ const Trash: React.FC = () => {
                   
                   {/* Desktop: Show bulk actions in horizontal layout */}
                   <div className="hidden sm:flex items-center gap-2">
-                    {isSelectionMode && selectedItems.length > 0 && (
+                    {isSelectionMode && (
                       <>
                         <Button 
                           variant="outline" 
                           size="sm" 
                           className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
-                          onClick={handleBulkRestore}
-                          disabled={isLoading}
+                          onClick={selectedItems.length > 0 ? handleBulkRestore : () => {}}
+                          disabled={isLoading || selectedItems.length === 0}
                         >
                           {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
-                          Restore ({selectedItems.length})
+                          Restore {selectedItems.length > 0 && `(${selectedItems.length})`}
                         </Button>
                         <Button 
                           variant="outline" 
                           size="sm" 
                           className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
-                          onClick={handleBulkDelete}
-                          disabled={isLoading}
+                          onClick={selectedItems.length > 0 ? handleBulkDelete : () => {}}
+                          disabled={isLoading || selectedItems.length === 0}
                         >
                           {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-                          Delete ({selectedItems.length})
+                          Delete {selectedItems.length > 0 && `(${selectedItems.length})`}
                         </Button>
                       </>
                     )}
@@ -246,31 +246,18 @@ const Trash: React.FC = () => {
                     </Button>
                   </div>
                   
-                  {/* Mobile: Show only Select/Cancel button when no items selected */}
-                  {(!isSelectionMode || selectedItems.length === 0) && (
+                  {/* Mobile: Show only Select/Cancel button when not in selection mode */}
+                  {!isSelectionMode && (
                     <div className="flex sm:hidden w-full justify-center">
                       <Button 
-                        variant={isSelectionMode ? "default" : "outline"} 
+                        variant="outline" 
                         size="sm"
-                        className={`flex items-center justify-center gap-2 focus:ring-0 w-full max-w-[280px] px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 ${
-                          isSelectionMode 
-                            ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
-                            : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
-                        }`}
+                        className="flex items-center justify-center gap-2 focus:ring-0 w-full max-w-[280px] px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md"
                         onClick={toggleSelectionMode}
                         disabled={isLoading}
                       >
-                        {isSelectionMode ? (
-                          <>
-                            <X className="h-4 w-4" />
-                            <span>Cancel</span>
-                          </>
-                        ) : (
-                          <>
-                            <CheckSquare className="h-4 w-4" />
-                            <span>Select</span>
-                          </>
-                        )}
+                        <CheckSquare className="h-4 w-4" />
+                        <span>Select</span>
                       </Button>
                     </div>
                   )}
