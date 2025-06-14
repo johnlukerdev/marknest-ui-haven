@@ -301,8 +301,8 @@ const Trash: React.FC = () => {
                       <Link className="h-4 w-4" />
                     </Button>
                     
-                    {/* Only show restore and delete buttons if card is not selected */}
-                    {!selectedItems.includes(bookmark.id) && (
+                    {/* Only show restore and delete buttons if card is not selected OR if not in selection mode on mobile */}
+                    {(!selectedItems.includes(bookmark.id) && !(isSelectionMode && isMobile)) && (
                       <div className="flex gap-2 flex-1 justify-end">
                         <Button 
                           variant="outline" 

@@ -231,7 +231,8 @@ const Archive: React.FC = () => {
                       )}
                     </Button>
                     
-                    {!selectedItems.includes(bookmark.id) && (
+                    {/* Only show restore button if card is not selected OR if not in selection mode on mobile */}
+                    {(!selectedItems.includes(bookmark.id) && !(isSelectionMode && isMobile)) && (
                       <Button 
                         variant="outline" 
                         onClick={(e) => {
