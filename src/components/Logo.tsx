@@ -35,17 +35,17 @@ const Logo: React.FC<LogoProps> = ({ onClick }) => {
 
   return (
     <div 
-      className={`flex items-center gap-2.5 transition-all duration-200 ${navigate ? 'hover:cursor-pointer' : ''}`}
+      className={`flex items-center gap-2 transition-all duration-200 ${navigate ? 'hover:cursor-pointer' : ''}`}
       onClick={handleClick}
     >
-      <div className="relative h-10 w-10 overflow-hidden">
+      <div className="relative h-8 w-8 overflow-hidden">
         <div className="absolute inset-0 gradient-primary rounded-full"></div>
-        <div className="absolute inset-[3px] bg-background rounded-full"></div>
+        <div className="absolute inset-[2px] bg-background rounded-full"></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-3.5 w-3.5 gradient-primary rounded-sm rotate-45"></div>
+          <div className="h-2.5 w-2.5 gradient-primary rounded-sm rotate-45"></div>
         </div>
       </div>
-      <span className="text-xl font-bold tracking-tight font-[Poppins]">MarkNest</span>
+      <span className="text-lg font-bold tracking-tight font-[Poppins]">MarkNest</span>
     </div>
   );
 };
