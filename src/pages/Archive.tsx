@@ -7,12 +7,12 @@ import {
   CardContent, 
   CardFooter 
 } from "@/components/ui/card";
-import { Archive as ArchiveIcon, RotateCcw, CheckSquare, X, Link, Check, Loader2 } from 'lucide-react';
+import { Archive as ArchiveIcon, RotateCcw, CheckSquare, X, Link, Check, Loader2, Trash2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useMobile } from '@/hooks/use-mobile';
 
 const Archive: React.FC = () => {
-  const { archiveBookmarks, restoreFromArchive } = useBookmarkContext();
+  const { archiveBookmarks, restoreFromArchive, bulkMoveToTrash } = useBookmarkContext();
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [copyingId, setCopyingId] = useState<string | null>(null);
@@ -86,6 +86,23 @@ const Archive: React.FC = () => {
     }
   };
 
+  const handleBulkDelete = async () => {
+    if (selectedItems.length > 0) {
+      // Convert selectedItems to the format expected by bulkMoveToTrash
+      const selectedBookmarks = archiveBookmarks.filter(bookmark => selectedItems.includes(bookmark.id));
+      bulkMoveToTrash(selectedBookmarks);
+      
+      toast({
+        title: "Moved to trash!",
+        description: `${selectedItems.length} bookmark(s) moved to trash`,
+        duration: 3000,
+      });
+      
+      setIsSelectionMode(false);
+      setSelectedItems([]);
+    }
+  };
+
   // Custom NavBar props for Archive page
   const navBarProps = {
     onAddBookmark: () => {},
@@ -98,8 +115,21 @@ const Archive: React.FC = () => {
         onClick: handleBulkRestore,
         disabled: selectedItems.length === 0 || isLoading,
         loading: isLoading
+      },
+      centerButton: {
+        icon: Trash2,
+        label: "Delete",
+        onClick: handleBulkDelete,
+        disabled: selectedItems.length === 0
       }
-    } : undefined
+    } : (isMobile ? {
+      centerButton: {
+        icon: Trash2,
+        label: "Delete",
+        onClick: () => {}, // No-op when not in selection mode
+        disabled: true
+      }
+    } : undefined)
   };
 
   return (

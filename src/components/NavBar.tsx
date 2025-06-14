@@ -29,6 +29,7 @@ interface CustomBottomButton {
 
 interface CustomBottomBar {
   leftButton?: CustomBottomButton;
+  centerButton?: CustomBottomButton;
   rightButton?: CustomBottomButton;
 }
 
@@ -451,43 +452,21 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                 </Button>
               )}
               
-              {/* Middle section - Search (normal) or empty (custom bottom bar) */}
-              {!isSelectMode ? (
-                <Drawer open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
-                  <DrawerTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      className="h-full w-1/3 flex items-center justify-center rounded-none"
-                    >
-                      <Search className="h-6 w-6" />
-                    </Button>
-                  </DrawerTrigger>
-                  <DrawerContent className="p-4">
-                    <div className="space-y-4">
-                      <h2 className="text-xl font-semibold text-center">Search</h2>
-                      <div className="relative">
-                        <Input 
-                          ref={mobileSearchInputRef}
-                          className="w-full shadow-sm pr-8 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
-                          placeholder="Search bookmarks..." 
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          autoFocus
-                        />
-                        {searchQuery && (
-                          <button 
-                            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                            onClick={handleMobileClearSearch}
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </DrawerContent>
-                </Drawer>
-              ) : (
-                <div className="w-1/3"></div>
+              {/* Center button */}
+              {customBottomBar.centerButton && (
+                <Button 
+                  variant="ghost" 
+                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                  onClick={customBottomBar.centerButton.onClick}
+                  disabled={customBottomBar.centerButton.disabled}
+                >
+                  {customBottomBar.centerButton.loading ? (
+                    <Loader2 className="h-6 w-6 animate-spin text-foreground" />
+                  ) : (
+                    <customBottomBar.centerButton.icon className="h-6 w-6 text-foreground" />
+                  )}
+                  <span className="text-xs text-foreground">{customBottomBar.centerButton.label}</span>
+                </Button>
               )}
               
               {/* Right button - Always show 3 dots menu */}
