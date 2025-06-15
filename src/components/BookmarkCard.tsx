@@ -19,7 +19,7 @@ import {
   TooltipTrigger,
   Checkbox
 } from "@/components/ui";
-import { MoreHorizontal, Trash2, Link, Archive, Check } from "lucide-react";
+import { EllipsisVertical, Trash2, Link, Archive, Check } from "lucide-react";
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { toast } from '@/hooks/use-toast';
 
@@ -160,7 +160,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
                     size="icon" 
                     className="h-8 w-8 rounded-full hover:bg-muted transition-all duration-200 focus:ring-0"
                   >
-                    <MoreHorizontal className="h-4 w-4" />
+                    <EllipsisVertical className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent 
