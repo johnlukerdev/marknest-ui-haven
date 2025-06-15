@@ -494,7 +494,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                     variant="ghost" 
                     className="h-full w-1/3 flex items-center justify-center rounded-none"
                   >
-                    <MoreHorizontal className="h-6 w-6" />
+                    <MoreHorizontal className="h-8 w-8" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="bottom" className="h-auto pb-16 rounded-t-xl">
@@ -614,7 +614,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                     variant="ghost" 
                     className="h-full w-1/3 flex items-center justify-center rounded-none"
                   >
-                    <MoreHorizontal className="h-6 w-6" />
+                    <MoreHorizontal className={`${isSelectMode ? 'h-8 w-8' : 'h-6 w-6'}`} />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="bottom" className="h-auto pb-16 rounded-t-xl">
