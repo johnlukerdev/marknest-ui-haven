@@ -46,10 +46,6 @@ const SecretKey: React.FC = () => {
   const handleSignUp = () => {
     navigate('/signup');
   };
-
-  const handleSignIn = () => {
-    navigate('/signin');
-  };
   
   // Sign-in layout with redesigned modern style
   if (isSignIn) {
@@ -347,14 +343,6 @@ const SecretKey: React.FC = () => {
                 onClick={handleSaved}
               >
                 I've Saved It
-              </Button>
-
-              <Button 
-                variant="outline"
-                className="w-full py-6 text-xl font-semibold rounded-xl border-2 border-border/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.02] focus:ring-0"
-                onClick={handleSignIn}
-              >
-                Sign In
               </Button>
             </div>
             
