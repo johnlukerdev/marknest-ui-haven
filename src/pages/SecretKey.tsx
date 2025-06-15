@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -143,7 +142,7 @@ const SecretKey: React.FC = () => {
                 
                 {/* Continue Button */}
                 <Button 
-                  className="w-full h-16 text-xl font-semibold gradient-primary rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] focus:ring-0" 
+                  className="w-full h-12 text-lg font-semibold gradient-primary rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] focus:ring-0" 
                   onClick={handleContinue}
                 >
                   Continue
