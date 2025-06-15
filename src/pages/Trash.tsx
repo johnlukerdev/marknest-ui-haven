@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -8,6 +7,11 @@ import {
   CardContent, 
   CardFooter 
 } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Trash2, RotateCcw, CheckSquare, X, Link, Check, AlertTriangle, Loader2, Plus, Search, MoreHorizontal } from 'lucide-react';
 import { 
   AlertDialog,
@@ -320,35 +324,83 @@ const Trash: React.FC = () => {
                       <Link className="h-4 w-4" />
                     </Button>
                     
-                    {/* Only show restore and delete buttons if card is not selected */}
-                    {!selectedItems.includes(bookmark.id) && (
-                      <div className="flex gap-2 flex-1 justify-end">
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleRestore(bookmark.id);
-                          }}
+                    {/* Show 3-dot menu only for selected cards in selection mode on mobile */}
+                    {isSelectionMode && selectedItems.includes(bookmark.id) && isMobile ? (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            className="p-2 focus:ring-0 text-muted-foreground hover:text-foreground"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MoreHorizontal className="h-5 w-5" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent 
+                          className="w-40 p-2 bg-popover border border-border rounded-xl shadow-lg" 
+                          align="end"
+                          sideOffset={8}
                         >
-                          <RotateCcw className="h-4 w-4" />
-                          Restore
-                        </Button>
-                        
-                        <Button 
-                          variant="destructive" 
-                          size="sm"
-                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleInitiateDelete(bookmark.id);
-                          }}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          Delete
-                        </Button>
-                      </div>
+                          <div className="space-y-1">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="w-full justify-start gap-2 px-3 py-2 text-sm font-medium"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRestore(bookmark.id);
+                              }}
+                            >
+                              <RotateCcw className="h-4 w-4" />
+                              Restore
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="w-full justify-start gap-2 px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleInitiateDelete(bookmark.id);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                              Delete
+                            </Button>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    ) : (
+                      /* Show normal restore and delete buttons when not in selection mode or on desktop */
+                      !selectedItems.includes(bookmark.id) && (
+                        <div className="flex gap-2 flex-1 justify-end">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRestore(bookmark.id);
+                            }}
+                          >
+                            <RotateCcw className="h-4 w-4" />
+                            Restore
+                          </Button>
+                          
+                          <Button 
+                            variant="destructive" 
+                            size="sm"
+                            className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleInitiateDelete(bookmark.id);
+                            }}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            Delete
+                          </Button>
+                        </div>
+                      )
                     )}
                   </CardFooter>
                 </Card>
