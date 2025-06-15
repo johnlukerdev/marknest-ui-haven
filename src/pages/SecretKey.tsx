@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Copy, Check, HelpCircle, Key, Shield, Lock, AlertCircle, RefreshCw } from 'lucide-react';
+import { Copy, Check, HelpCircle, Key, Shield, Lock, AlertCircle, RefreshCw, Trash2 } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
@@ -9,6 +10,7 @@ import confetti from 'canvas-confetti';
 import { Input } from '@/components/ui/input';
 import Logo from '@/components/Logo';
 import { useRandomWords } from '@/hooks/useRandomWords';
+import { saveSecretKey, clearStoredSecretKey, hasStoredSecretKey, getStoredSecretKey } from '@/utils/secretKeyStorage';
 
 const SecretKey: React.FC = () => {
   const navigate = useNavigate();
@@ -19,10 +21,23 @@ const SecretKey: React.FC = () => {
   const [secretKey, setSecretKey] = useState('');
   const [showError, setShowError] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [hasSavedKey, setHasSavedKey] = useState(hasStoredSecretKey());
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
   const secretKeyRef = useRef<HTMLDivElement>(null);
 
   // Check if we're coming from sign-in button
   const isSignIn = location.state?.isSignIn || false;
+
+  // Load stored secret key on component mount for autocomplete
+  useEffect(() => {
+    if (isSignIn) {
+      const storedKey = getStoredSecretKey();
+      if (storedKey) {
+        setHasSavedKey(true);
+      }
+    }
+  }, [isSignIn]);
+
   const handleContinue = () => {
     if (!secretKey.trim()) {
       setShowError(true);
@@ -34,15 +49,52 @@ const SecretKey: React.FC = () => {
     // Navigate to main app
     navigate('/');
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSecretKey(e.target.value);
     if (showError && e.target.value.trim()) {
       setShowError(false);
     }
   };
+
+  const handleInputFocus = () => {
+    // Show autocomplete suggestion if there's a stored key
+    if (hasSavedKey && !secretKey) {
+      setShowAutocomplete(true);
+    }
+  };
+
+  const handleInputBlur = () => {
+    // Hide autocomplete after a short delay to allow clicking on it
+    setTimeout(() => setShowAutocomplete(false), 200);
+  };
+
+  const handleUseStoredKey = () => {
+    const storedKey = getStoredSecretKey();
+    if (storedKey) {
+      setSecretKey(storedKey);
+      setShowAutocomplete(false);
+      toast({
+        title: "Key Loaded",
+        description: "Your saved secret key has been loaded"
+      });
+    }
+  };
+
+  const handleClearStoredKeyFromSignIn = () => {
+    clearStoredSecretKey();
+    setHasSavedKey(false);
+    setShowAutocomplete(false);
+    toast({
+      title: "Saved Key Cleared",
+      description: "Your saved secret key has been removed from this browser"
+    });
+  };
+
   const handleSignUp = () => {
     navigate('/signup');
   };
+
   const handleSignIn = () => {
     navigate('/secret-key', {
       state: {
@@ -114,15 +166,50 @@ const SecretKey: React.FC = () => {
               
               {/* Input Section */}
               <div className="space-y-6">
-                <div className="space-y-3">
+                <div className="space-y-3 relative">
                   <Input 
                     id="secret-key-input" 
                     type="text" 
                     placeholder="Enter your secret key…" 
                     value={secretKey} 
-                    onChange={handleInputChange} 
+                    onChange={handleInputChange}
+                    onFocus={handleInputFocus}
+                    onBlur={handleInputBlur}
                     autoComplete="off"
                     className="w-full aspect-square min-h-[200px] sm:min-h-[240px] md:min-h-[260px] text-lg sm:text-xl font-['Inter'] font-normal leading-relaxed rounded-2xl border-2 border-border/40 bg-background/90 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md resize-none placeholder:text-lg sm:placeholder:text-xl placeholder:font-['Inter'] placeholder:text-muted-foreground/50 placeholder:font-normal focus:outline-none focus:ring-0 focus:ring-offset-0 focus:border-border/60 dark:bg-card/50 dark:border-border/30 dark:hover:border-border/50 light:border-gray-200 light:hover:border-gray-300 p-6 sm:p-8" />
+                  
+                  {/* Autocomplete Suggestion */}
+                  {showAutocomplete && hasSavedKey && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border/60 rounded-xl shadow-lg z-50">
+                      <div className="p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-foreground">Saved Key Available</span>
+                          <Shield className="w-4 h-4 text-green-500" />
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          Use your previously saved secret key from this browser
+                        </p>
+                        <div className="flex gap-2">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={handleUseStoredKey}
+                            className="flex-1"
+                          >
+                            Use Saved Key
+                          </Button>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={handleClearStoredKeyFromSignIn}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Error Message */}
                   {showError && <div className="flex items-center gap-2 text-red-500 text-sm animate-fade-in">
