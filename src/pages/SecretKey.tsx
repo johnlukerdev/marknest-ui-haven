@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -126,7 +125,7 @@ const SecretKey: React.FC = () => {
                   <Input 
                     type="text" 
                     placeholder="Enter your secret key…" 
-                    className="h-20 sm:h-24 text-lg sm:text-xl rounded-2xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/50 shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 px-6 focus:ring-0 focus:ring-offset-0" 
+                    className="h-20 sm:h-24 text-lg sm:text-xl rounded-2xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/50 shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 px-6 focus:ring-0 focus:ring-offset-0 font-sans font-medium tracking-wide" 
                     value={secretKey} 
                     onChange={handleInputChange} 
                   />
