@@ -1,17 +1,19 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Copy, Check, HelpCircle, Key, Shield, Lock, AlertCircle } from 'lucide-react';
+import { Copy, Check, HelpCircle, Key, Shield, Lock, AlertCircle, RefreshCw } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 import confetti from 'canvas-confetti';
 import { Input } from '@/components/ui/input';
 import Logo from '@/components/Logo';
+import { useRandomWords } from '@/hooks/useRandomWords';
 
 const SecretKey: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { words: secretKeyWords, isLoading: wordsLoading, regenerateWords } = useRandomWords();
 
   // ALL HOOKS MUST BE AT THE TOP - BEFORE ANY CONDITIONAL LOGIC
   const [secretKey, setSecretKey] = useState('');
@@ -50,7 +52,6 @@ const SecretKey: React.FC = () => {
   };
 
   // Sample secret key words
-  const secretKeyWords = ['lesson', 'stick', 'edit', 'clarify', 'ugly', 'outdoor', 'peanut', 'hotel', 'stand', 'enhance', 'ignore', 'favorite', 'push', 'title', 'rare', 'afford', 'cycle', 'mind', 'length', 'surprise', 'derive', 'dream', 'evoke', 'roast'];
   const formatKeyWords = () => {
     const rows = [];
     for (let i = 0; i < secretKeyWords.length; i += 6) {
@@ -285,33 +286,69 @@ const SecretKey: React.FC = () => {
             {/* Secret Key Card */}
             <div className="my-8">
               <div ref={secretKeyRef} className="relative p-1 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600">
-                <Card className="p-6 select-none animate-pulse rounded-xl bg-card/90 backdrop-blur-sm" style={{
-                animationDuration: '3s'
-              }}>
-                  <div className="grid grid-cols-6 gap-x-3 gap-y-4 sm:text-sm text-xs text-center">
-                    {formatKeyWords().map((row, rowIndex) => <React.Fragment key={`row-${rowIndex}`}>
-                        {row.map((word, wordIndex) => <div key={`word-${rowIndex}-${wordIndex}`} className="font-mono">
-                            {word}
-                          </div>)}
-                      </React.Fragment>)}
-                  </div>
+                <Card className="p-6 select-none rounded-xl bg-card/90 backdrop-blur-sm" style={{
+                  animation: wordsLoading ? 'pulse 1.5s ease-in-out infinite' : 'none'
+                }}>
+                  {wordsLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <RefreshCw className="w-6 h-6 animate-spin text-muted-foreground" />
+                      <span className="ml-2 text-muted-foreground">Generating words...</span>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-6 gap-x-3 gap-y-4 sm:text-sm text-xs text-center">
+                      {formatKeyWords().map((row, rowIndex) => (
+                        <React.Fragment key={`row-${rowIndex}`}>
+                          {row.map((word, wordIndex) => (
+                            <div key={`word-${rowIndex}-${wordIndex}`} className="font-mono">
+                              {word}
+                            </div>
+                          ))}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  )}
                 </Card>
               </div>
             </div>
             
             {/* Buttons */}
             <div className="space-y-4 mt-8">
-              <Button variant="outline" className="w-full py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300" onClick={handleCopyToClipboard}>
-                {copied ? <>
-                    <Check className="h-5 w-5" />
-                    Copied!
-                  </> : <>
-                    <Copy className="h-5 w-5" />
-                    Copy to Clipboard
-                  </>}
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  className="flex-1 py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300" 
+                  onClick={handleCopyToClipboard}
+                  disabled={wordsLoading}
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-5 w-5" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-5 w-5" />
+                      Copy to Clipboard
+                    </>
+                  )}
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="px-6 py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300" 
+                  onClick={regenerateWords}
+                  disabled={wordsLoading}
+                  title="Generate new words"
+                >
+                  <RefreshCw className={`h-5 w-5 ${wordsLoading ? 'animate-spin' : ''}`} />
+                </Button>
+              </div>
               
-              <Button className="w-full py-6 text-xl gradient-primary focus:ring-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" onClick={handleSaved}>
+              <Button 
+                className="w-full py-6 text-xl gradient-primary focus:ring-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
+                onClick={handleSaved}
+                disabled={wordsLoading}
+              >
                 I've Saved It
               </Button>
             </div>
@@ -320,7 +357,7 @@ const SecretKey: React.FC = () => {
             <div className="mt-6 text-center">
               <p className="text-muted-foreground">
                 Already have an account?{" "}
-                <button onClick={handleSignIn} className="text-primary hover:underline">
+                <button onClick={() => navigate('/signin')} className="text-primary hover:underline">
                   Sign In
                 </button>
               </p>
