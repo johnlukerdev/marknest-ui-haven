@@ -130,7 +130,7 @@ const SecretKey: React.FC = () => {
                       text-sm sm:text-base font-['Inter'] font-normal leading-relaxed
                       rounded-2xl border-2 border-border/40 bg-background/90 backdrop-blur-sm 
                       transition-all duration-200 shadow-sm hover:shadow-md
-                      p-4 sm:p-6 resize-none
+                      resize-none
                       placeholder:text-sm sm:placeholder:text-base placeholder:font-['Inter'] 
                       placeholder:text-muted-foreground/50 placeholder:font-normal
                       focus:outline-none focus:ring-0 focus:ring-offset-0 focus:border-border/60
@@ -138,13 +138,6 @@ const SecretKey: React.FC = () => {
                       light:bg-white/80 light:border-gray-200 light:hover:border-gray-300" 
                     value={secretKey} 
                     onChange={handleInputChange}
-                    style={{
-                      textAlign: 'left',
-                      verticalAlign: 'top',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      justifyContent: 'flex-start'
-                    }}
                   />
                   
                   {/* Error Message */}

@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
@@ -349,19 +350,29 @@
   /* Custom input text alignment for secret key input */
   #secret-key-input {
     display: flex !important;
+    flex-direction: column !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
     text-align: left !important;
     vertical-align: top !important;
+    padding-top: 1rem !important;
+    padding-left: 1rem !important;
+    line-height: 1.5 !important;
   }
 
   #secret-key-input::placeholder {
     position: absolute !important;
     top: 1rem !important;
     left: 1rem !important;
+    line-height: 1.5 !important;
   }
 
   @media (min-width: 640px) {
+    #secret-key-input {
+      padding-top: 1.5rem !important;
+      padding-left: 1.5rem !important;
+    }
+    
     #secret-key-input::placeholder {
       top: 1.5rem !important;
       left: 1.5rem !important;
