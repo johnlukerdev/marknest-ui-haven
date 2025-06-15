@@ -13,6 +13,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useMobile } from '@/hooks/use-mobile';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { toast } from '@/hooks/use-toast';
+
 interface CustomBottomButton {
   icon: React.ComponentType<{
     className?: string;
@@ -366,13 +367,13 @@ const NavBar: React.FC<NavBarProps> = ({
       // Custom bottom bar for specific pages (like Archive in selection mode)
       <>
               {/* Left button */}
-              {customBottomBar.leftButton && <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1" onClick={customBottomBar.leftButton.onClick} disabled={customBottomBar.leftButton.disabled}>
+              {customBottomBar.leftButton && <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1 hover:bg-muted/50 transition-all duration-200" onClick={customBottomBar.leftButton.onClick} disabled={customBottomBar.leftButton.disabled}>
                   {customBottomBar.leftButton.loading ? <Loader2 className="h-6 w-6 animate-spin text-foreground" /> : <customBottomBar.leftButton.icon className="h-6 w-6 text-foreground" />}
                   <span className="text-xs text-foreground">{customBottomBar.leftButton.label}</span>
                 </Button>}
               
               {/* Center button */}
-              {customBottomBar.centerButton && <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1" onClick={customBottomBar.centerButton.onClick} disabled={customBottomBar.centerButton.disabled}>
+              {customBottomBar.centerButton && <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1 hover:bg-muted/50 transition-all duration-200" onClick={customBottomBar.centerButton.onClick} disabled={customBottomBar.centerButton.disabled}>
                   {customBottomBar.centerButton.loading ? <Loader2 className="h-6 w-6 animate-spin text-foreground" /> : <customBottomBar.centerButton.icon className="h-6 w-6 text-foreground" />}
                   <span className="text-xs text-foreground">{customBottomBar.centerButton.label}</span>
                 </Button>}
@@ -380,7 +381,7 @@ const NavBar: React.FC<NavBarProps> = ({
               {/* Right button - Always show 3 dots menu */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" className="h-full w-1/3 flex items-center justify-center rounded-none my-0 px-0 mx-[5px] font-extralight text-slate-50 text-lg">
+                  <Button variant="ghost" className="h-full w-1/3 flex items-center justify-center rounded-none my-0 px-0 mx-[5px] font-extralight text-slate-50 text-lg hover:bg-muted/50 transition-all duration-200">
                     <MoreHorizontal className="h-8 w-8" />
                   </Button>
                 </SheetTrigger>
@@ -403,7 +404,7 @@ const NavBar: React.FC<NavBarProps> = ({
               {/* Left button - Add (normal) or Archive (select mode) */}
               {!isSelectMode ? <Drawer open={addDialogOpen} onOpenChange={setAddDialogOpen}>
                   <DrawerTrigger asChild>
-                    <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none">
+                    <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none hover:bg-muted/50 transition-all duration-200">
                       <Plus className="h-18 w-18 text-foreground" />
                     </Button>
                   </DrawerTrigger>
@@ -412,7 +413,7 @@ const NavBar: React.FC<NavBarProps> = ({
                   </DrawerContent>
                 </Drawer> :
         // In select mode, show Archive button only on bookmark and trash pages, hide on archive page
-        location.pathname !== '/archive' && <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1" onClick={handleBottomBarArchive} disabled={selectedBookmarks.length === 0}>
+        location.pathname !== '/archive' && <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1 hover:bg-muted/50 transition-all duration-200" onClick={handleBottomBarArchive} disabled={selectedBookmarks.length === 0}>
                     <Archive className="h-6 w-6 text-foreground" />
                     <span className="text-xs text-foreground">Archive</span>
                   </Button>}
@@ -420,7 +421,7 @@ const NavBar: React.FC<NavBarProps> = ({
               {/* Middle button - Search (normal) or Delete (select mode on bookmark/trash pages) or hidden (select mode on archive page) */}
               {!isSelectMode ? <Drawer open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
                   <DrawerTrigger asChild>
-                    <Button variant="ghost" className="h-full w-1/3 flex items-center justify-center rounded-none">
+                    <Button variant="ghost" className="h-full w-1/3 flex items-center justify-center rounded-none hover:bg-muted/50 transition-all duration-200">
                       <Search className="h-6 w-6" />
                     </Button>
                   </DrawerTrigger>
@@ -437,7 +438,7 @@ const NavBar: React.FC<NavBarProps> = ({
                   </DrawerContent>
                 </Drawer> :
         // In select mode, show Delete button only on bookmark and trash pages, hide on archive page
-        location.pathname !== '/archive' && <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1" onClick={handleBottomBarDelete} disabled={selectedBookmarks.length === 0}>
+        location.pathname !== '/archive' && <Button variant="ghost" className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1 hover:bg-muted/50 transition-all duration-200" onClick={handleBottomBarDelete} disabled={selectedBookmarks.length === 0}>
                     <Trash2 className="h-6 w-6 text-foreground" />
                     <span className="text-xs text-foreground">Delete</span>
                   </Button>}
@@ -445,7 +446,7 @@ const NavBar: React.FC<NavBarProps> = ({
               {/* Right button - Three dots menu (always visible) */}
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" className="h-full w-1/3 flex items-center justify-center rounded-none">
+                  <Button variant="ghost" className="h-full w-1/3 flex items-center justify-center rounded-none hover:bg-muted/50 transition-all duration-200">
                     <MoreHorizontal className={`${isSelectMode ? 'h-8 w-8' : 'h-6 w-6'}`} />
                   </Button>
                 </SheetTrigger>
