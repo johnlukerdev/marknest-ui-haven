@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,6 @@ import Logo from './Logo';
 import AddBookmarkForm from './AddBookmarkForm';
 import { useTheme } from '@/hooks/use-theme';
 import { useMobile } from '@/hooks/use-mobile';
-import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { toast } from '@/hooks/use-toast';
 
 interface CustomBottomButton {
@@ -48,6 +48,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
   
   const searchInputRef = useRef<HTMLInputElement>(null);
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
+  const mobileExpandedSearchRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, setTheme } = useTheme();
@@ -56,6 +57,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
   // Safely get bookmark context - handle case where provider might not be ready
   let bookmarkContext;
   try {
+    const { useBookmarkContext } = require('@/hooks/useBookmarkContext');
     bookmarkContext = useBookmarkContext();
   } catch (error) {
     // Context not available yet, use default values
@@ -96,6 +98,28 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
     }
   }, [mobileSearchOpen]);
 
+  // Focus mobile expanded search when it opens
+  useEffect(() => {
+    if (showSearch && isMobile && mobileExpandedSearchRef.current) {
+      mobileExpandedSearchRef.current.focus();
+    }
+  }, [showSearch, isMobile]);
+
+  // Handle clicks outside mobile search to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMobile && showSearch && mobileExpandedSearchRef.current && 
+          !mobileExpandedSearchRef.current.contains(event.target as Node)) {
+        setShowSearch(false);
+      }
+    };
+
+    if (isMobile && showSearch) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isMobile, showSearch]);
+
   const handleSignOut = () => {
     navigate('/signin');
     setMobileMenuOpen(false);
@@ -110,6 +134,11 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
   const handleMobileClearSearch = () => {
     setSearchQuery('');
     setMobileSearchOpen(false);
+  };
+
+  const handleMobileExpandedClearSearch = () => {
+    setSearchQuery('');
+    setShowSearch(false);
   };
 
   const goToSettings = () => {
@@ -206,243 +235,295 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
     <>
       <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
         <div className="w-full flex h-16 items-center justify-between py-3 px-4 sm:px-6 lg:px-8 xl:px-12">
-          {/* Left section - Hamburger + Logo + My List Dropdown */}
-          <div className="flex items-center gap-1">
-            {/* White Hamburger Menu Button - Only show on mobile/tablet */}
-            <Sheet open={mainMenuOpen} onOpenChange={setMainMenuOpen}>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`h-10 w-10 p-0 hover:bg-muted/50 transition-all duration-200 rounded-md md:hidden ${
-                    theme === 'light' ? 'text-black' : 'text-white'
-                  }`}
-                >
-                  <Menu className="h-6 w-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-64 p-0">
-                <div className="p-6">
-                  <h2 className="text-lg font-semibold mb-6">MENU</h2>
-                  <nav className="space-y-2">
-                    {mainMenuItems.map((item) => (
-                      <Button
-                        key={item.id}
-                        onClick={() => handleMainMenuNavigation(item.path)}
-                        variant="ghost"
-                        className={`w-full justify-start text-left p-3 h-auto ${
-                          location.pathname === item.path
-                            ? 'bg-primary/10 text-primary font-medium'
-                            : 'hover:bg-muted'
-                        }`}
-                      >
-                        <span>{item.label}</span>
-                      </Button>
-                    ))}
-                  </nav>
+          {/* Mobile Modern Search Overlay */}
+          {isMobile && showSearch && (
+            <div className="absolute inset-0 z-50 bg-background/98 backdrop-blur-xl flex items-center px-4 animate-slide-in-up">
+              <div ref={mobileExpandedSearchRef} className="relative w-full max-w-none mx-2">
+                <div className="relative group">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/60 group-focus-within:text-primary transition-colors duration-200" />
+                  <Input 
+                    className="w-full h-14 text-lg bg-muted/30 border-0 rounded-2xl shadow-sm focus:shadow-md focus:bg-muted/50 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 pl-12 pr-12 placeholder:text-muted-foreground/50 transition-all duration-300 font-medium" 
+                    placeholder="Search your bookmarks..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    autoFocus
+                  />
+                  <button 
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 hover:text-foreground hover:bg-muted/50 transition-all duration-200 p-2 rounded-full"
+                    onClick={handleMobileExpandedClearSearch}
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
                 </div>
-              </SheetContent>
-            </Sheet>
-
-            <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
-              <Logo />
-            </Link>
-            
-            {/* My List Dropdown - Hidden on mobile, visible on tablet and desktop */}
-            <div className="hidden md:block">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200 text-sm sm:text-base">
-                          My List <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent 
-                        align="start" 
-                        className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
-                      >
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/" className="flex items-center w-full text-foreground">
-                            My List
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/trash" className="flex items-center w-full text-foreground">
-                            <Trash2 className="mr-3 h-4 w-4" />
-                            Trash
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
-                          <Link to="/archive" className="flex items-center w-full text-foreground">
-                            <Archive className="mr-3 h-4 w-4" />
-                            Archive
-                          </Link>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>View your collections</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-          </div>
-          
-          {/* Mobile Right section - Theme Toggle only (removed My List dropdown) */}
-          {isMobile && !isSettingsPage && (
-            <div className="flex items-center gap-2">
-              {/* Theme Toggle */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
-                    >
-                      {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                {/* Search hint */}
+                <div className="mt-3 text-center">
+                  <p className="text-sm text-muted-foreground/70">
+                    {searchQuery ? `Searching for "${searchQuery}"` : 'Start typing to search...'}
+                  </p>
+                </div>
+              </div>
             </div>
           )}
-          
-          {/* Right section - Desktop controls */}
-          {!isMobile && (
-            <div className="flex items-center gap-3">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    {showSearch ? (
-                      <div className="relative animate-fade-in w-full max-w-[280px] md:max-w-none">
-                        <Input 
-                          ref={searchInputRef}
-                          className="w-full md:w-[240px] pr-8 md:w-[300px] shadow-sm h-12 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
-                          placeholder="Search bookmarks..." 
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          autoFocus
-                          onBlur={(e) => {
-                            // Prevent closing if user clicked within the search box
-                            if (!e.relatedTarget || !e.relatedTarget.closest('.search-container')) {
-                              if (!searchQuery) {
-                                setShowSearch(false);
-                              }
-                            }
-                          }}
-                        />
-                        <button 
-                          className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                          onClick={handleClearSearch}
+
+          {/* Regular Navbar Content - Hidden when mobile search is expanded */}
+          <div className={`w-full flex items-center justify-between transition-opacity duration-300 ${isMobile && showSearch ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            {/* Left section - Hamburger + Logo + My List Dropdown */}
+            <div className="flex items-center gap-1">
+              {/* White Hamburger Menu Button - Only show on mobile/tablet */}
+              <Sheet open={mainMenuOpen} onOpenChange={setMainMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className={`h-10 w-10 p-0 hover:bg-muted/50 transition-all duration-200 rounded-md md:hidden ${
+                      theme === 'light' ? 'text-black' : 'text-white'
+                    }`}
+                  >
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-64 p-0">
+                  <div className="p-6">
+                    <h2 className="text-lg font-semibold mb-6">MENU</h2>
+                    <nav className="space-y-2">
+                      {mainMenuItems.map((item) => (
+                        <Button
+                          key={item.id}
+                          onClick={() => handleMainMenuNavigation(item.path)}
+                          variant="ghost"
+                          className={`w-full justify-start text-left p-3 h-auto ${
+                            location.pathname === item.path
+                              ? 'bg-primary/10 text-primary font-medium'
+                              : 'hover:bg-muted'
+                          }`}
                         >
-                          <X className="h-4 w-4" />
-                        </button>
-                      </div>
-                    ) : (
+                          <span>{item.label}</span>
+                        </Button>
+                      ))}
+                    </nav>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              <Link to="/" className="group hover:bg-background/10 rounded-full p-2 transition-all duration-200">
+                <Logo />
+              </Link>
+              
+              {/* My List Dropdown - Hidden on mobile, visible on tablet and desktop */}
+              <div className="hidden md:block">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="flex items-center gap-1 hover:bg-muted transition-all duration-200 text-sm sm:text-base">
+                            My List <ChevronDown className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent 
+                          align="start" 
+                          className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
+                        >
+                          <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                            <Link to="/" className="flex items-center w-full text-foreground">
+                              My List
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                            <Link to="/trash" className="flex items-center w-full text-foreground">
+                              <Trash2 className="mr-3 h-4 w-4" />
+                              Trash
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem asChild className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors">
+                            <Link to="/archive" className="flex items-center w-full text-foreground">
+                              <Archive className="mr-3 h-4 w-4" />
+                              Archive
+                            </Link>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>View your collections</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </div>
+            
+            {/* Mobile Right section - Modern Search + Theme Toggle */}
+            {isMobile && !isSettingsPage && (
+              <div className="flex items-center gap-2">
+                {/* Modern Mobile Search Button */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
                       <Button 
                         variant="ghost" 
                         size="icon" 
                         onClick={() => setShowSearch(true)}
-                        className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                        className="text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 rounded-xl p-2.5"
                       >
                         <Search className="h-5 w-5" />
                       </Button>
-                    )}
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Search bookmarks</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              
-              {(!showSearch || window.innerWidth > 768) && (
-                <>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button 
-                          onClick={() => setAddDialogOpen(true)} 
-                          className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-all duration-200 hover:shadow-md px-5 py-6"
-                        >
-                          <Plus className="h-4 w-4" /> Add
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Add new bookmark</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  
-                  {/* Theme Toggle - Now positioned after Add button */}
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Search bookmarks</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* Theme Toggle */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                        className="text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 rounded-xl p-2.5"
+                      >
+                        {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            )}
+            
+            {/* Right section - Desktop controls */}
+            {!isMobile && (
+              <div className="flex items-center gap-3">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      {showSearch ? (
+                        <div className="relative animate-fade-in w-full max-w-[280px] md:max-w-none">
+                          <Input 
+                            ref={searchInputRef}
+                            className="w-full md:w-[240px] pr-8 md:w-[300px] shadow-sm h-12 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" 
+                            placeholder="Search bookmarks..." 
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            autoFocus
+                            onBlur={(e) => {
+                              // Prevent closing if user clicked within the search box
+                              if (!e.relatedTarget || !e.relatedTarget.closest('.search-container')) {
+                                if (!searchQuery) {
+                                  setShowSearch(false);
+                                }
+                              }
+                            }}
+                          />
+                          <button 
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            onClick={handleClearSearch}
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      ) : (
                         <Button 
                           variant="ghost" 
                           size="icon" 
-                          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                          onClick={() => setShowSearch(true)}
                           className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
                         >
-                          {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                          <Search className="h-5 w-5" />
                         </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
-                            >
-                              <MoreHorizontal className="h-5 w-5" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent 
-                            align="end" 
-                            className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
+                      )}
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Search bookmarks</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                
+                {(!showSearch || window.innerWidth > 768) && (
+                  <>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button 
+                            onClick={() => setAddDialogOpen(true)} 
+                            className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-all duration-200 hover:shadow-md px-5 py-6"
                           >
-                            <DropdownMenuItem 
-                              onClick={goToSettings} 
-                              className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground"
+                            <Plus className="h-4 w-4" /> Add
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Add new bookmark</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    
+                    {/* Theme Toggle - Now positioned after Add button */}
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                            className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                          >
+                            {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Toggle {theme === 'light' ? 'dark' : 'light'} mode</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                              >
+                                <MoreHorizontal className="h-5 w-5" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent 
+                              align="end" 
+                              className="w-48 bg-background border border-border rounded-lg shadow-lg p-1"
                             >
-                              <Settings className="mr-3 h-4 w-4" />
-                              Settings
-                            </DropdownMenuItem>
-                            <DropdownMenuItem 
-                              onClick={handleSignOut} 
-                              className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground"
-                            >
-                              <LogOut className="mr-3 h-4 w-4" />
-                              Sign Out
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>More options</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </>
-              )}
-            </div>
-          )}
+                              <DropdownMenuItem 
+                                onClick={goToSettings} 
+                                className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground"
+                              >
+                                <Settings className="mr-3 h-4 w-4" />
+                                Settings
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={handleSignOut} 
+                                className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground"
+                              >
+                                <LogOut className="mr-3 h-4 w-4" />
+                                Sign Out
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>More options</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </nav>
       
