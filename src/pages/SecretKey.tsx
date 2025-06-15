@@ -2,59 +2,48 @@ import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Copy, Check, HelpCircle, Key, Shield, Lock, AlertCircle } from 'lucide-react';
-import { 
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 import confetti from 'canvas-confetti';
 import { Input } from '@/components/ui/input';
 import Logo from '@/components/Logo';
-
 const SecretKey: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [secretKey, setSecretKey] = useState('');
   const [showError, setShowError] = useState(false);
-  
+
   // Check if we're coming from sign-in button
   const isSignIn = location.state?.isSignIn || false;
-  
   const handleContinue = () => {
     if (!secretKey.trim()) {
       setShowError(true);
       return;
     }
-    
     setShowError(false);
     // In a real app, you would validate the secret key here
-    
+
     // Navigate to main app
     navigate('/');
   };
-  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSecretKey(e.target.value);
     if (showError && e.target.value.trim()) {
       setShowError(false);
     }
   };
-
   const handleSignUp = () => {
     navigate('/signup');
   };
-  
+
   // Sign-in layout with redesigned modern style
   if (isSignIn) {
-    return (
-      <div className="min-h-screen bg-background flex">
+    return <div className="min-h-screen bg-background flex">
         {/* Left Side - Form */}
         <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-12 relative">
           {/* Subtle background decoration */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/3 to-purple-500/3"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/3 to-purple-500/3 rounded-none"></div>
           
           <div className="w-full max-w-md relative z-10">
             {/* Logo */}
@@ -77,28 +66,17 @@ const SecretKey: React.FC = () => {
               {/* Input Section */}
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <Input
-                    type="password"
-                    placeholder="Enter your secret key…"
-                    className="h-20 sm:h-24 text-lg sm:text-xl rounded-2xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/50 shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 px-6 focus:ring-0 focus:ring-offset-0"
-                    value={secretKey}
-                    onChange={handleInputChange}
-                  />
+                  <Input type="password" placeholder="Enter your secret key…" className="h-20 sm:h-24 text-lg sm:text-xl rounded-2xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/50 shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 px-6 focus:ring-0 focus:ring-offset-0" value={secretKey} onChange={handleInputChange} />
                   
                   {/* Error Message */}
-                  {showError && (
-                    <div className="flex items-center gap-2 text-red-500 text-sm animate-fade-in">
+                  {showError && <div className="flex items-center gap-2 text-red-500 text-sm animate-fade-in">
                       <AlertCircle className="w-4 h-4" />
                       <span>Please fill in the box</span>
-                    </div>
-                  )}
+                    </div>}
                 </div>
                 
                 {/* Continue Button */}
-                <Button 
-                  className="w-full h-16 text-xl font-semibold gradient-primary rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] focus:ring-0"
-                  onClick={handleContinue}
-                >
+                <Button className="w-full h-16 text-xl font-semibold gradient-primary rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] focus:ring-0" onClick={handleContinue}>
                   Continue
                 </Button>
 
@@ -107,12 +85,7 @@ const SecretKey: React.FC = () => {
                   <p className="text-muted-foreground text-sm mb-3">
                     Don't have an account? Create one to get started.
                   </p>
-                  <Button 
-                    variant="outline"
-                    size="sm"
-                    className="px-6 py-2 text-sm font-medium rounded-lg border border-border/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 focus:ring-0"
-                    onClick={handleSignUp}
-                  >
+                  <Button variant="outline" size="sm" onClick={handleSignUp} className="px-6 py-2 rounded-lg border border-border/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 focus:ring-0 text-base font-medium text-gray-50">
                     Sign Up
                   </Button>
                 </div>
@@ -204,22 +177,15 @@ const SecretKey: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
-  
+
   // Original secret key generation page when coming from sign-up flow
   const [copied, setCopied] = useState(false);
   const secretKeyRef = useRef<HTMLDivElement>(null);
-  
+
   // Sample secret key words
-  const secretKeyWords = [
-    'lesson', 'stick', 'edit', 'clarify', 'ugly', 'outdoor',
-    'peanut', 'hotel', 'stand', 'enhance', 'ignore', 'favorite',
-    'push', 'title', 'rare', 'afford', 'cycle', 'mind',
-    'length', 'surprise', 'derive', 'dream', 'evoke', 'roast'
-  ];
-  
+  const secretKeyWords = ['lesson', 'stick', 'edit', 'clarify', 'ugly', 'outdoor', 'peanut', 'hotel', 'stand', 'enhance', 'ignore', 'favorite', 'push', 'title', 'rare', 'afford', 'cycle', 'mind', 'length', 'surprise', 'derive', 'dream', 'evoke', 'roast'];
   const formatKeyWords = () => {
     const rows = [];
     for (let i = 0; i < secretKeyWords.length; i += 6) {
@@ -227,36 +193,33 @@ const SecretKey: React.FC = () => {
     }
     return rows;
   };
-  
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(secretKeyWords.join(' '));
     setCopied(true);
     toast({
       title: "Copied to clipboard",
-      description: "Your secret key has been copied to your clipboard",
+      description: "Your secret key has been copied to your clipboard"
     });
-    
     setTimeout(() => {
       setCopied(false);
     }, 2000);
   };
-  
   const handleSaved = () => {
     // Trigger confetti effect
     confetti({
       particleCount: 100,
       spread: 70,
-      origin: { y: 0.6 }
+      origin: {
+        y: 0.6
+      }
     });
-    
+
     // Navigate to main app
     setTimeout(() => {
       navigate('/');
     }, 1000);
   };
-  
-  return (
-    <div className="min-h-screen bg-background flex flex-col relative">
+  return <div className="min-h-screen bg-background flex flex-col relative">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5"></div>
       <div className="absolute top-20 left-20 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl"></div>
@@ -304,21 +267,16 @@ const SecretKey: React.FC = () => {
             
             {/* Secret Key Card */}
             <div className="my-8">
-              <div 
-                ref={secretKeyRef} 
-                className="relative p-1 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600"
-              >
-                <Card className="p-6 select-none animate-pulse rounded-xl bg-card/90 backdrop-blur-sm" style={{animationDuration: '3s'}}>
+              <div ref={secretKeyRef} className="relative p-1 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600">
+                <Card className="p-6 select-none animate-pulse rounded-xl bg-card/90 backdrop-blur-sm" style={{
+                animationDuration: '3s'
+              }}>
                   <div className="grid grid-cols-6 gap-x-3 gap-y-4 sm:text-sm text-xs text-center">
-                    {formatKeyWords().map((row, rowIndex) => (
-                      <React.Fragment key={`row-${rowIndex}`}>
-                        {row.map((word, wordIndex) => (
-                          <div key={`word-${rowIndex}-${wordIndex}`} className="font-mono">
+                    {formatKeyWords().map((row, rowIndex) => <React.Fragment key={`row-${rowIndex}`}>
+                        {row.map((word, wordIndex) => <div key={`word-${rowIndex}-${wordIndex}`} className="font-mono">
                             {word}
-                          </div>
-                        ))}
-                      </React.Fragment>
-                    ))}
+                          </div>)}
+                      </React.Fragment>)}
                   </div>
                 </Card>
               </div>
@@ -326,28 +284,17 @@ const SecretKey: React.FC = () => {
             
             {/* Buttons */}
             <div className="space-y-4 mt-8">
-              <Button 
-                variant="outline" 
-                className="w-full py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300"
-                onClick={handleCopyToClipboard}
-              >
-                {copied ? (
-                  <>
+              <Button variant="outline" className="w-full py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300" onClick={handleCopyToClipboard}>
+                {copied ? <>
                     <Check className="h-5 w-5" />
                     Copied!
-                  </>
-                ) : (
-                  <>
+                  </> : <>
                     <Copy className="h-5 w-5" />
                     Copy to Clipboard
-                  </>
-                )}
+                  </>}
               </Button>
               
-              <Button 
-                className="w-full py-6 text-xl gradient-primary focus:ring-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
-                onClick={handleSaved}
-              >
+              <Button className="w-full py-6 text-xl gradient-primary focus:ring-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" onClick={handleSaved}>
                 I've Saved It
               </Button>
             </div>
@@ -373,8 +320,6 @@ const SecretKey: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default SecretKey;
