@@ -102,14 +102,20 @@ const SecretKey: React.FC = () => {
                   Continue
                 </Button>
 
-                {/* Sign Up Button */}
-                <Button 
-                  variant="outline"
-                  className="w-full h-16 text-xl font-semibold rounded-2xl border-2 border-border/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.02] focus:ring-0"
-                  onClick={handleSignUp}
-                >
-                  Sign Up
-                </Button>
+                {/* Don't have account text with Sign Up button */}
+                <div className="text-center">
+                  <p className="text-muted-foreground text-sm mb-3">
+                    Don't have an account? Create one to get started.
+                  </p>
+                  <Button 
+                    variant="outline"
+                    size="sm"
+                    className="px-6 py-2 text-sm font-medium rounded-lg border border-border/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 focus:ring-0"
+                    onClick={handleSignUp}
+                  >
+                    Sign Up
+                  </Button>
+                </div>
               </div>
               
               {/* Security Indicators */}
