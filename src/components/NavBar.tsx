@@ -372,7 +372,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                           onClick={() => setAddDialogOpen(true)} 
                           className="flex items-center gap-1 gradient-primary hover:opacity-95 transition-all duration-200 hover:shadow-md px-5 py-6"
                         >
-                          <Plus className="h-4 w-4" /> Add
+                          <Plus className="h-12 w-12 text-foreground" /> Add
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
