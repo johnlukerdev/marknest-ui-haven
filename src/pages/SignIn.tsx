@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Logo from '@/components/Logo';
-import { Monitor, Shield, Zap, Link, Circle, Square, Triangle, Star } from 'lucide-react';
+import { Monitor, Shield, Zap, Link } from 'lucide-react';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -61,95 +61,43 @@ const SignIn: React.FC = () => {
           </div>
         </div>
         
-        {/* Right Section - Modern Dashboard Design */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 to-violet-900 items-center justify-center relative overflow-hidden">
-          {/* Background Elements */}
-          <div className="absolute inset-0">
-            <div className="absolute top-20 left-20 w-32 h-32 bg-indigo-400/10 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-400/10 rounded-full blur-3xl"></div>
-          </div>
-          
-          {/* Modern Dashboard Container */}
-          <div className="w-[360px] h-[360px] bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
-            {/* Top Bar */}
-            <div className="h-16 bg-white/5 border-b border-white/10 flex items-center px-6">
+        {/* Right Section - Clean Modern Design */}
+        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 to-violet-900 items-center justify-center relative">
+          {/* Flat Dashboard Illustration */}
+          <div className="w-[320px] h-[320px] bg-slate-800/20 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center border border-white/10">
+            {/* Dashboard Header */}
+            <div className="w-full px-8 py-4 border-b border-white/10 mb-6">
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-red-400/60 rounded-full"></div>
-                <div className="w-3 h-3 bg-yellow-400/60 rounded-full"></div>
-                <div className="w-3 h-3 bg-green-400/60 rounded-full"></div>
-              </div>
-              <div className="ml-auto flex items-center gap-2">
-                <Monitor className="w-4 h-4 text-white/60" />
-                <span className="text-white/70 text-sm font-medium">Dashboard</span>
+                <Monitor className="w-6 h-6 text-white/80" />
+                <span className="text-white/80 text-lg font-medium">Dashboard</span>
               </div>
             </div>
             
-            {/* Main Content Area */}
-            <div className="p-6 space-y-6">
-              {/* Stats Cards */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-xl p-4 border border-white/10">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Link className="w-4 h-4 text-indigo-300" />
-                    <span className="text-white/80 text-xs">Links</span>
-                  </div>
-                  <div className="text-white text-lg font-semibold">847</div>
-                </div>
-                
-                <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-4 border border-white/10">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Shield className="w-4 h-4 text-green-300" />
-                    <span className="text-white/80 text-xs">Secure</span>
-                  </div>
-                  <div className="text-white text-lg font-semibold">100%</div>
-                </div>
+            {/* Clean grid layout */}
+            <div className="grid grid-cols-2 gap-6 mb-8">
+              <div className="w-20 h-20 bg-white/10 rounded-lg border border-white/20 flex items-center justify-center">
+                <Link className="w-8 h-8 text-white/70" />
               </div>
-              
-              {/* Activity Grid */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-white/70 text-sm">Recent Activity</span>
-                  <Zap className="w-4 h-4 text-orange-400" />
-                </div>
-                
-                <div className="grid grid-cols-4 gap-3">
-                  <div className="aspect-square bg-white/10 rounded-lg border border-white/10 flex items-center justify-center group hover:bg-white/20 transition-all duration-300">
-                    <Circle className="w-5 h-5 text-white/60 group-hover:text-white/80" />
-                  </div>
-                  <div className="aspect-square bg-white/10 rounded-lg border border-white/10 flex items-center justify-center group hover:bg-white/20 transition-all duration-300">
-                    <Square className="w-5 h-5 text-white/60 group-hover:text-white/80" />
-                  </div>
-                  <div className="aspect-square bg-white/10 rounded-lg border border-white/10 flex items-center justify-center group hover:bg-white/20 transition-all duration-300">
-                    <Triangle className="w-5 h-5 text-white/60 group-hover:text-white/80" />
-                  </div>
-                  <div className="aspect-square bg-white/10 rounded-lg border border-white/10 flex items-center justify-center group hover:bg-white/20 transition-all duration-300">
-                    <Star className="w-5 h-5 text-white/60 group-hover:text-white/80" />
-                  </div>
-                </div>
+              <div className="w-20 h-20 bg-white/10 rounded-lg border border-white/20 flex items-center justify-center">
+                <Shield className="w-8 h-8 text-white/70" />
               </div>
-              
-              {/* Progress Indicators */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-white/70 text-sm">Storage</span>
-                  <span className="text-white/50 text-xs">75%</span>
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full w-3/4 transition-all duration-700"></div>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-white/70 text-sm">Sync</span>
-                  <span className="text-white/50 text-xs">92%</span>
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-green-400 to-emerald-400 rounded-full w-[92%] transition-all duration-700"></div>
-                </div>
+              <div className="w-20 h-20 bg-white/10 rounded-lg border border-white/20 flex items-center justify-center">
+                <Zap className="w-8 h-8 text-white/70" />
+              </div>
+              <div className="w-20 h-20 bg-white/10 rounded-lg border border-white/20 flex items-center justify-center">
+                <Monitor className="w-8 h-8 text-white/70" />
               </div>
             </div>
             
-            {/* Bottom Glow Effect */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-indigo-500/10 to-transparent"></div>
+            {/* Status bars */}
+            <div className="space-y-3 w-full px-8">
+              <div className="h-2 bg-white/20 rounded-full">
+                <div className="h-full bg-white/40 rounded-full w-3/4"></div>
+              </div>
+              <div className="h-2 bg-white/20 rounded-full">
+                <div className="h-full bg-white/30 rounded-full w-1/2"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
