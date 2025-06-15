@@ -347,7 +347,7 @@
     @apply transition-all duration-300 ease-in-out;
   }
 
-  /* Custom input text alignment for secret key input */
+  /* Custom input styling for secret key input */
   #secret-key-input {
     display: flex !important;
     flex-direction: column !important;
@@ -355,34 +355,47 @@
     justify-content: flex-start !important;
     text-align: left !important;
     vertical-align: top !important;
-    padding-top: 1rem !important;
-    padding-left: 1rem !important;
-    padding-bottom: 1rem !important;
-    padding-right: 1rem !important;
+    padding: 1.5rem !important;
     line-height: 1.5 !important;
     overflow-wrap: break-word !important;
     white-space: pre-wrap !important;
+    background: hsl(217 33% 17%) !important;
+    color: hsl(210 40% 98%) !important;
+    border: 2px solid hsl(217 33% 17%) !important;
+    autocomplete: off !important;
+    transition: all 0.2s ease !important;
+  }
+
+  #secret-key-input:hover {
+    border-color: hsl(217 33% 25%) !important;
+    background: hsl(217 33% 19%) !important;
+  }
+
+  #secret-key-input:focus {
+    outline: none !important;
+    ring: 0 !important;
+    ring-offset: 0 !important;
+    border-color: hsl(217 33% 30%) !important;
+    background: hsl(217 33% 17%) !important;
   }
 
   #secret-key-input::placeholder {
     position: absolute !important;
-    top: 1rem !important;
-    left: 1rem !important;
+    top: 1.5rem !important;
+    left: 1.5rem !important;
     line-height: 1.5 !important;
     white-space: pre-wrap !important;
+    color: hsl(215 20% 65%) !important;
   }
 
   @media (min-width: 640px) {
     #secret-key-input {
-      padding-top: 1.5rem !important;
-      padding-left: 1.5rem !important;
-      padding-bottom: 1.5rem !important;
-      padding-right: 1.5rem !important;
+      padding: 2rem !important;
     }
     
     #secret-key-input::placeholder {
-      top: 1.5rem !important;
-      left: 1.5rem !important;
+      top: 2rem !important;
+      left: 2rem !important;
     }
   }
 }
