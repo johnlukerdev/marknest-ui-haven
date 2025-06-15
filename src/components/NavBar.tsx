@@ -530,7 +530,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                       variant="ghost" 
                       className="h-full w-1/3 flex flex-col items-center justify-center rounded-none"
                     >
-                      <Plus className="h-8 w-8 text-foreground" />
+                      <Plus className="h-10 w-10 text-foreground" />
                     </Button>
                   </DrawerTrigger>
                   <DrawerContent className="p-4">
@@ -543,15 +543,18 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                   </DrawerContent>
                 </Drawer>
               ) : (
-                <Button 
-                  variant="ghost" 
-                  className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
-                  onClick={handleBottomBarArchive}
-                  disabled={selectedBookmarks.length === 0}
-                >
-                  <Archive className="h-6 w-6 text-foreground" />
-                  <span className="text-xs text-foreground">Archive</span>
-                </Button>
+                // In select mode, show Archive button only on bookmark and trash pages, hide on archive page
+                location.pathname !== '/archive' && (
+                  <Button 
+                    variant="ghost" 
+                    className="h-full w-1/3 flex flex-col items-center justify-center rounded-none gap-1"
+                    onClick={handleBottomBarArchive}
+                    disabled={selectedBookmarks.length === 0}
+                  >
+                    <Archive className="h-6 w-6 text-foreground" />
+                    <span className="text-xs text-foreground">Archive</span>
+                  </Button>
+                )
               )}
 
               {/* Middle button - Search (normal) or Delete (select mode on bookmark/trash pages) or hidden (select mode on archive page) */}
