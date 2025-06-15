@@ -350,7 +350,6 @@
   /* Custom input text alignment for secret key input */
   #secret-key-input {
     display: flex !important;
-    flex-direction: column !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
     text-align: left !important;
@@ -358,6 +357,8 @@
     padding-top: 1rem !important;
     padding-left: 1rem !important;
     line-height: 1.5 !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
   }
 
   #secret-key-input::placeholder {
@@ -365,6 +366,8 @@
     top: 1rem !important;
     left: 1rem !important;
     line-height: 1.5 !important;
+    text-align: left !important;
+    vertical-align: top !important;
   }
 
   @media (min-width: 640px) {
