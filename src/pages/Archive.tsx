@@ -279,7 +279,7 @@ const Archive: React.FC = () => {
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="w-full justify-start gap-2 px-3 py-2 text-sm font-medium"
+                              className="w-full justify-start gap-2 px-3 py-2 text-sm font-medium hover:bg-blue-500/20 text-blue-400 hover:text-blue-300"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleRestore(bookmark.id);
