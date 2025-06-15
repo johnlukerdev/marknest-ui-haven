@@ -77,14 +77,6 @@ const SignUp: React.FC = () => {
               >
                 Get Your Secret Key
               </Button>
-
-              <Button 
-                variant="outline"
-                className="w-full py-6 text-lg border-2 border-border/50 hover:border-purple-500/50 transition-all duration-300 focus:ring-0"
-                onClick={handleSignIn}
-              >
-                Sign In
-              </Button>
             </div>
             
             {/* Link to Sign In */}
