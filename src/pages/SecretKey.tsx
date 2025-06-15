@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -126,7 +127,7 @@ const SecretKey: React.FC = () => {
                     id="secret-key-input"
                     type="text" 
                     placeholder="Enter your secret key…" 
-                    className="w-full aspect-square min-h-[180px] sm:min-h-[220px] md:min-h-[240px] text-lg sm:text-xl md:text-2xl rounded-3xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 p-6 sm:p-8 focus:ring-0 focus:ring-offset-0 font-['Poppins'] font-medium tracking-wide text-left flex items-start justify-start resize-none placeholder:absolute placeholder:top-6 placeholder:left-6 sm:placeholder:top-8 sm:placeholder:left-8 placeholder:text-sm sm:placeholder:text-base placeholder:font-['Inter'] placeholder:text-muted-foreground/60 placeholder:pointer-events-none" 
+                    className="w-full aspect-square min-h-[180px] sm:min-h-[220px] md:min-h-[240px] text-lg sm:text-xl md:text-2xl rounded-3xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 p-6 sm:p-8 focus:ring-0 focus:ring-offset-0 font-['Poppins'] font-medium tracking-wide text-left flex items-start justify-start resize-none placeholder:absolute placeholder:top-6 placeholder:left-6 sm:placeholder:top-8 sm:placeholder:left-8 placeholder:text-base sm:placeholder:text-lg placeholder:font-['Inter'] placeholder:text-muted-foreground/60 placeholder:pointer-events-none" 
                     value={secretKey} 
                     onChange={handleInputChange} 
                   />
