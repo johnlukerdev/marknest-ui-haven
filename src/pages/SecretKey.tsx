@@ -147,19 +147,17 @@ const SecretKey: React.FC = () => {
                   Continue
                 </Button>
 
-                {/* Don't have account text with Sign Up button */}
-                <div className="text-center">
-                  <p className="text-muted-foreground text-sm mb-3">
-                    Don't have an account? Create one to get started.
+                {/* Don't have account text with Sign Up button - matching SignUp page style */}
+                <div className="mt-6 text-center">
+                  <p className="text-muted-foreground">
+                    Don't have an account?{" "}
+                    <button
+                      onClick={handleSignUp}
+                      className="text-primary hover:underline"
+                    >
+                      Sign up now
+                    </button>
                   </p>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={handleSignUp} 
-                    className="px-6 py-2 rounded-lg border border-border/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 focus:ring-0 text-base font-medium text-gray-50"
-                  >
-                    Sign Up
-                  </Button>
                 </div>
               </div>
               
@@ -352,7 +350,7 @@ const SecretKey: React.FC = () => {
 
             {/* Already have account link */}
             <div className="mt-6 text-center">
-              <p className="mx-0 px-0 font-normal text-gray-50 text-sm text-center">
+              <p className="text-muted-foreground">
                 Already have an account?{" "}
                 <button onClick={handleSignIn} className="text-primary hover:underline">
                   Sign In
