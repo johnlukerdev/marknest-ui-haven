@@ -1,5 +1,4 @@
-
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Copy, Check, HelpCircle, Key, Shield, Lock, AlertCircle } from 'lucide-react';
@@ -18,31 +17,10 @@ const SecretKey: React.FC = () => {
   const [secretKey, setSecretKey] = useState('');
   const [showError, setShowError] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [secretKeyWords, setSecretKeyWords] = useState<string[]>([]);
   const secretKeyRef = useRef<HTMLDivElement>(null);
 
   // Check if we're coming from sign-in button
   const isSignIn = location.state?.isSignIn || false;
-
-  // Word bank for random generation
-  const wordBank = [
-    'cat', 'dog', 'sun', 'moon', 'tree', 'lake', 'fire', 'wind', 'bird', 'fish',
-    'cloud', 'star', 'rock', 'leaf', 'snow', 'rain', 'ocean', 'wave', 'beach', 'hill',
-    'grass', 'flower', 'book', 'pen', 'light', 'dark', 'hand', 'eye', 'heart', 'mind',
-    'path', 'door', 'window', 'table', 'chair', 'wall', 'floor', 'roof', 'bridge', 'tower',
-    'coin', 'key', 'lock', 'box', 'bag', 'rope', 'chain', 'wheel', 'bell', 'clock',
-    'music', 'dance', 'song', 'voice', 'sound', 'color', 'paint', 'brush', 'canvas', 'art'
-  ];
-
-  // Generate random words on component mount
-  useEffect(() => {
-    const generateRandomWords = () => {
-      const shuffled = [...wordBank].sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, 15); // 3x5 = 15 words
-    };
-    setSecretKeyWords(generateRandomWords());
-  }, []);
-
   const handleContinue = () => {
     if (!secretKey.trim()) {
       setShowError(true);
@@ -54,18 +32,15 @@ const SecretKey: React.FC = () => {
     // Navigate to main app
     navigate('/');
   };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSecretKey(e.target.value);
     if (showError && e.target.value.trim()) {
       setShowError(false);
     }
   };
-
   const handleSignUp = () => {
     navigate('/signup');
   };
-
   const handleSignIn = () => {
     navigate('/secret-key', {
       state: {
@@ -74,14 +49,15 @@ const SecretKey: React.FC = () => {
     });
   };
 
+  // Sample secret key words
+  const secretKeyWords = ['lesson', 'stick', 'edit', 'clarify', 'ugly', 'outdoor', 'peanut', 'hotel', 'stand', 'enhance', 'ignore', 'favorite', 'push', 'title', 'rare', 'afford', 'cycle', 'mind', 'length', 'surprise', 'derive', 'dream', 'evoke', 'roast'];
   const formatKeyWords = () => {
     const rows = [];
-    for (let i = 0; i < secretKeyWords.length; i += 5) {
-      rows.push(secretKeyWords.slice(i, i + 5));
+    for (let i = 0; i < secretKeyWords.length; i += 6) {
+      rows.push(secretKeyWords.slice(i, i + 6));
     }
     return rows;
   };
-
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(secretKeyWords.join(' '));
     setCopied(true);
@@ -93,7 +69,6 @@ const SecretKey: React.FC = () => {
       setCopied(false);
     }, 2000);
   };
-
   const handleSaved = () => {
     // Trigger confetti effect
     confetti({
@@ -112,8 +87,7 @@ const SecretKey: React.FC = () => {
 
   // Sign-in layout with redesigned modern style
   if (isSignIn) {
-    return (
-      <div className="min-h-screen bg-background flex">
+    return <div className="min-h-screen bg-background flex">
         {/* Left Side - Form */}
         <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-12 relative">
           {/* Subtle background decoration */}
@@ -150,19 +124,14 @@ const SecretKey: React.FC = () => {
                     className="w-full aspect-square min-h-[200px] sm:min-h-[240px] md:min-h-[260px] text-lg sm:text-xl font-['Inter'] font-normal leading-relaxed rounded-2xl border-2 border-border/40 bg-background/90 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md resize-none placeholder:text-lg sm:placeholder:text-xl placeholder:font-['Inter'] placeholder:text-muted-foreground/50 placeholder:font-normal focus:outline-none focus:ring-0 focus:ring-offset-0 focus:border-border/60 dark:bg-card/50 dark:border-border/30 dark:hover:border-border/50 light:border-gray-200 light:hover:border-gray-300 p-6 sm:p-8" />
                   
                   {/* Error Message */}
-                  {showError && (
-                    <div className="flex items-center gap-2 text-red-500 text-sm animate-fade-in">
+                  {showError && <div className="flex items-center gap-2 text-red-500 text-sm animate-fade-in">
                       <AlertCircle className="w-4 h-4" />
                       <span>Please fill in the box</span>
-                    </div>
-                  )}
+                    </div>}
                 </div>
                 
                 {/* Continue Button */}
-                <Button 
-                  className="w-full h-12 text-lg font-semibold gradient-primary rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] focus:ring-0" 
-                  onClick={handleContinue}
-                >
+                <Button className="w-full h-12 text-lg font-semibold gradient-primary rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] focus:ring-0" onClick={handleContinue}>
                   Continue
                 </Button>
 
@@ -263,117 +232,122 @@ const SecretKey: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
 
-  // Modern compact secret key generation page
-  return (
-    <div className="min-h-screen bg-[#0b0f1a] flex flex-col items-center justify-center px-4 py-12 relative">
-      {/* Logo */}
-      <div className="mb-12">
-        <Logo />
-      </div>
+  // Original secret key generation page when coming from sign-up flow
+  return <div className="min-h-screen bg-background flex flex-col relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5"></div>
+      <div className="absolute top-20 left-20 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl"></div>
+      <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-xl"></div>
       
-      {/* Main Content Container */}
-      <div className="w-full max-w-lg">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="p-3 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-xl border border-indigo-500/30">
-              <Key className="w-6 h-6 text-indigo-400" />
-            </div>
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-12 relative z-10">
+        <div className="w-full max-w-2xl">
+          {/* Logo and Branding */}
+          <div className="flex justify-center mb-12">
+            <Logo />
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2 font-mono">
-            Your Secret Key
-          </h1>
-          <p className="text-gray-400 text-sm">
-            Save these words securely — they're your password
-          </p>
-        </div>
-        
-        {/* Compact Secret Key Container */}
-        <div 
-          ref={secretKeyRef} 
-          className="relative p-[1px] rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 animate-fade-in"
-        >
-          <div className="bg-[#0b0f1a] rounded-lg p-6">
-            <div className="grid grid-cols-5 gap-x-4 gap-y-3 text-center">
-              {formatKeyWords().map((row, rowIndex) => (
-                <React.Fragment key={`row-${rowIndex}`}>
-                  {row.map((word, wordIndex) => (
-                    <div 
-                      key={`word-${rowIndex}-${wordIndex}`} 
-                      className="font-mono text-xs text-gray-300 hover:text-white transition-colors cursor-default py-1"
-                    >
-                      {word}
-                    </div>
-                  ))}
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        {/* Action Buttons */}
-        <div className="space-y-3 mt-8">
-          <Button 
-            variant="outline" 
-            className="w-full py-3 flex items-center justify-center gap-2 bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200" 
-            onClick={handleCopyToClipboard}
-          >
-            {copied ? (
-              <>
-                <Check className="h-4 w-4" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Copy className="h-4 w-4" />
-                Copy to Clipboard
-              </>
-            )}
-          </Button>
           
-          <Button 
-            className="w-full py-3 text-base bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 hover:from-indigo-600 hover:via-purple-600 hover:to-blue-600 text-white border-0 transition-all duration-200 hover:scale-[1.02]" 
-            onClick={handleSaved}
-          >
-            I've Saved It
-          </Button>
-        </div>
+          {/* Main Content */}
+          <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-2xl animate-fade-in">
+            <div className="flex justify-center mb-6">
+              <div className="p-4 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full">
+                <Key className="w-8 h-8 text-white" />
+              </div>
+            </div>
+            
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 font-[Poppins] bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              Your Secret Key
+            </h1>
+            
+            {/* Description */}
+            <div className="mb-6 text-center">
+              <p className="text-lg text-foreground mb-4">
+                These 24 words are your password. Save them securely:
+              </p>
+              <ul className="space-y-2 text-left max-w-md mx-auto">
+                <li className="flex items-start">
+                  <span className="mr-2 mt-0.5">✏️</span>
+                  <span>Write them down</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2 mt-0.5">📦</span>
+                  <span>Store in a password manager</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2 mt-0.5">🔥</span>
+                  <span>Never share digitally</span>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Secret Key Card */}
+            <div className="my-8">
+              <div ref={secretKeyRef} className="relative p-1 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600">
+                <Card className="p-6 select-none animate-pulse rounded-xl bg-card/90 backdrop-blur-sm" style={{
+                animationDuration: '3s'
+              }}>
+                  <div className="grid grid-cols-6 gap-x-3 gap-y-4 sm:text-sm text-xs text-center">
+                    {formatKeyWords().map((row, rowIndex) => <React.Fragment key={`row-${rowIndex}`}>
+                        {row.map((word, wordIndex) => <div key={`word-${rowIndex}-${wordIndex}`} className="font-mono">
+                            {word}
+                          </div>)}
+                      </React.Fragment>)}
+                  </div>
+                </Card>
+              </div>
+            </div>
+            
+            {/* Buttons */}
+            <div className="space-y-4 mt-8">
+              <Button variant="outline" className="w-full py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300" onClick={handleCopyToClipboard}>
+                {copied ? <>
+                    <Check className="h-5 w-5" />
+                    Copied!
+                  </> : <>
+                    <Copy className="h-5 w-5" />
+                    Copy to Clipboard
+                  </>}
+              </Button>
+              
+              <Button className="w-full py-6 text-xl gradient-primary focus:ring-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" onClick={handleSaved}>
+                I've Saved It
+              </Button>
+            </div>
 
-        {/* Already have account link */}
-        <div className="mt-6 text-center">
-          <p className="text-gray-400 text-sm">
-            Already have an account?{" "}
-            <button onClick={handleSignIn} className="text-indigo-400 hover:text-indigo-300 hover:underline transition-colors">
-              Sign In
-            </button>
-          </p>
-        </div>
-        
-        {/* FAQ Section */}
-        <div className="mt-8">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="lost-key" className="border-gray-700">
-              <AccordionTrigger className="text-left flex items-center text-gray-300 hover:text-white">
-                <div className="flex items-center gap-2">
-                  <HelpCircle className="h-4 w-4" />
-                  <span className="text-sm">What if I lose my Secret Key?</span>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  If you lose your Secret Key, we cannot recover it for you. Your data is encrypted with this key, and without it, your bookmarks cannot be accessed. This is why it's crucial to store it securely offline or in a password manager. MarkNest prioritizes your privacy, which means we don't have access to your data.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+            {/* Already have account link */}
+            <div className="mt-6 text-center">
+              <p className="text-muted-foreground">
+                Already have an account?{" "}
+                <button onClick={handleSignIn} className="text-primary hover:underline">
+                  Sign In
+                </button>
+              </p>
+            </div>
+            
+            {/* FAQ Section */}
+            <div className="mt-8">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="lost-key">
+                  <AccordionTrigger className="text-left flex items-center">
+                    <div className="flex items-center gap-2">
+                      <HelpCircle className="h-5 w-5" />
+                      <span>What if I lose my Secret Key?</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-muted-foreground">
+                      If you lose your Secret Key, we cannot recover it for you. Your data is encrypted with this key, and without it, your bookmarks cannot be accessed. This is why it's crucial to store it securely offline or in a password manager. MarkNest prioritizes your privacy, which means we don't have access to your data.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
 
 export default SecretKey;
