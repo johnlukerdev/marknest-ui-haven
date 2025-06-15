@@ -22,7 +22,7 @@ const SignUp: React.FC = () => {
   };
 
   const handleSignIn = () => {
-    navigate('/secret-key', { state: { isSignIn: true } });
+    navigate('/signin');
   };
   
   return (
