@@ -257,8 +257,8 @@ const Archive: React.FC = () => {
                       )}
                     </Button>
                     
-                    {/* Show 3-dot menu only for selected cards in selection mode on mobile */}
-                    {isSelectionMode && selectedItems.includes(bookmark.id) && isMobile ? (
+                    {/* Mobile: Always show 3-dot menu */}
+                    {isMobile ? (
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button 
@@ -292,7 +292,7 @@ const Archive: React.FC = () => {
                         </PopoverContent>
                       </Popover>
                     ) : (
-                      /* Show normal restore button when not in selection mode or on desktop */
+                      /* Desktop: Show normal restore button when not in selection mode */
                       !selectedItems.includes(bookmark.id) && (
                         <Button 
                           variant="outline" 
@@ -300,7 +300,7 @@ const Archive: React.FC = () => {
                             e.stopPropagation();
                             handleRestore(bookmark.id);
                           }}
-                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
+                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 hover:bg-blue-500/20 border-blue-500/30 text-blue-400 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
                           size="sm"
                         >
                           <RotateCcw className="h-4 w-4" />
