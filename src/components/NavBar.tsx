@@ -235,29 +235,38 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
     <>
       <nav className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-lg shadow-sm">
         <div className="w-full flex h-16 items-center justify-between py-3 px-4 sm:px-6 lg:px-8 xl:px-12">
-          {/* Mobile Expanded Search Overlay */}
+          {/* Mobile Modern Search Overlay */}
           {isMobile && showSearch && (
-            <div className="absolute inset-0 z-50 bg-background/95 backdrop-blur-lg flex items-center px-4 animate-fade-in">
-              <div ref={mobileExpandedSearchRef} className="relative w-full max-w-lg mx-auto">
-                <Input 
-                  className="w-full h-12 text-base bg-transparent border-0 border-b-2 border-muted-foreground/20 rounded-none shadow-none focus:border-primary focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 pr-10 placeholder:text-muted-foreground/60" 
-                  placeholder="Search bookmarks..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  autoFocus
-                />
-                <button 
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
-                  onClick={handleMobileExpandedClearSearch}
-                >
-                  <X className="h-5 w-5" />
-                </button>
+            <div className="absolute inset-0 z-50 bg-background/98 backdrop-blur-xl flex items-center px-4 animate-slide-in-up">
+              <div ref={mobileExpandedSearchRef} className="relative w-full max-w-none mx-2">
+                <div className="relative group">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/60 group-focus-within:text-primary transition-colors duration-200" />
+                  <Input 
+                    className="w-full h-14 text-lg bg-muted/30 border-0 rounded-2xl shadow-sm focus:shadow-md focus:bg-muted/50 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 pl-12 pr-12 placeholder:text-muted-foreground/50 transition-all duration-300 font-medium" 
+                    placeholder="Search your bookmarks..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    autoFocus
+                  />
+                  <button 
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 hover:text-foreground hover:bg-muted/50 transition-all duration-200 p-2 rounded-full"
+                    onClick={handleMobileExpandedClearSearch}
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+                {/* Search hint */}
+                <div className="mt-3 text-center">
+                  <p className="text-sm text-muted-foreground/70">
+                    {searchQuery ? `Searching for "${searchQuery}"` : 'Start typing to search...'}
+                  </p>
+                </div>
               </div>
             </div>
           )}
 
           {/* Regular Navbar Content - Hidden when mobile search is expanded */}
-          <div className={`w-full flex items-center justify-between ${isMobile && showSearch ? 'opacity-0 pointer-events-none' : ''}`}>
+          <div className={`w-full flex items-center justify-between transition-opacity duration-300 ${isMobile && showSearch ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
             {/* Left section - Hamburger + Logo + My List Dropdown */}
             <div className="flex items-center gap-1">
               {/* White Hamburger Menu Button - Only show on mobile/tablet */}
@@ -343,10 +352,10 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
               </div>
             </div>
             
-            {/* Mobile Right section - Search + Theme Toggle */}
+            {/* Mobile Right section - Modern Search + Theme Toggle */}
             {isMobile && !isSettingsPage && (
               <div className="flex items-center gap-2">
-                {/* Mobile Search Button */}
+                {/* Modern Mobile Search Button */}
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -354,7 +363,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                         variant="ghost" 
                         size="icon" 
                         onClick={() => setShowSearch(true)}
-                        className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                        className="text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 rounded-xl p-2.5"
                       >
                         <Search className="h-5 w-5" />
                       </Button>
@@ -373,7 +382,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                         variant="ghost" 
                         size="icon" 
                         onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                        className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
+                        className="text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 rounded-xl p-2.5"
                       >
                         {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
                       </Button>
