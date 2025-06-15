@@ -356,9 +356,14 @@
     vertical-align: top !important;
     padding-top: 1rem !important;
     padding-left: 1rem !important;
+    padding-right: 1rem !important;
     line-height: 1.5 !important;
     overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
     white-space: pre-wrap !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    word-break: break-word !important;
   }
 
   #secret-key-input::placeholder {
@@ -374,6 +379,7 @@
     #secret-key-input {
       padding-top: 1.5rem !important;
       padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
     }
     
     #secret-key-input::placeholder {
