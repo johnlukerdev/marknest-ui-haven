@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '@/components/NavBar';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -258,57 +257,39 @@ const Archive: React.FC = () => {
                       )}
                     </Button>
                     
-                    {/* Mobile: Always show 3-dot menu */}
-                    {isMobile ? (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button 
-                            variant="ghost" 
-                            size="sm"
-                            className="p-2 focus:ring-0 text-muted-foreground hover:text-foreground"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <EllipsisVertical className="h-5 w-5" />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent 
-                          className="w-40 p-2 bg-popover border border-border rounded-xl shadow-lg" 
-                          align="end"
-                          sideOffset={8}
-                        >
-                          <div className="space-y-1">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="w-full justify-start gap-2 px-3 py-2 text-sm font-medium hover:bg-blue-500/20 text-blue-400 hover:text-blue-300"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleRestore(bookmark.id);
-                              }}
-                            >
-                              <RotateCcw className="h-4 w-4" />
-                              Restore
-                            </Button>
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    ) : (
-                      /* Desktop: Show normal restore button when not in selection mode */
-                      !selectedItems.includes(bookmark.id) && (
+                    {/* Always show 3-dot menu for all screen sizes */}
+                    <Popover>
+                      <PopoverTrigger asChild>
                         <Button 
-                          variant="outline" 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleRestore(bookmark.id);
-                          }}
-                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 hover:bg-blue-500/20 border-blue-500/30 text-blue-400 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm focus:ring-0"
+                          variant="ghost" 
                           size="sm"
+                          className="p-2 focus:ring-0 text-muted-foreground hover:text-foreground"
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          <RotateCcw className="h-4 w-4" />
-                          Restore
+                          <EllipsisVertical className="h-5 w-5" />
                         </Button>
-                      )
-                    )}
+                      </PopoverTrigger>
+                      <PopoverContent 
+                        className="w-48 p-2 bg-popover border border-border rounded-xl shadow-lg animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200" 
+                        align="end"
+                        sideOffset={8}
+                      >
+                        <div className="space-y-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="w-full justify-start gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground group text-sm font-medium"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRestore(bookmark.id);
+                            }}
+                          >
+                            <RotateCcw className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                            Restore
+                          </Button>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
                   </CardFooter>
                 </Card>
               ))}
