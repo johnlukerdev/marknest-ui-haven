@@ -11,24 +11,6 @@ interface BookmarkGridProps {
 }
 
 const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
-  // Safely get bookmark context - handle case where provider might not be ready
-  let bookmarkContext;
-  try {
-    bookmarkContext = useBookmarkContext();
-  } catch (error) {
-    // Context not available yet, use default values
-    bookmarkContext = {
-      bookmarks: [],
-      filteredBookmarks: [],
-      searchQuery: '',
-      isSelectMode: false,
-      selectedBookmarks: [],
-      toggleSelectMode: () => {},
-      bulkMoveToArchive: () => {},
-      bulkMoveToTrash: () => {}
-    };
-  }
-
   const { 
     bookmarks,
     filteredBookmarks,
@@ -38,7 +20,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
     selectedBookmarks,
     bulkMoveToArchive,
     bulkMoveToTrash
-  } = bookmarkContext;
+  } = useBookmarkContext();
 
   // Use filteredBookmarks for display, but check original bookmarks length for showing controls
   const displayBookmarks = filteredBookmarks;
