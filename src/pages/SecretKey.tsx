@@ -115,7 +115,7 @@ const SecretKey: React.FC = () => {
                   Access with Your Secret Key
                 </h1>
                 <p className="text-muted-foreground text-base sm:text-lg">
-                  Enter code to secret continue
+                  Unlock your dashboard with a code
                 </p>
               </div>
               
