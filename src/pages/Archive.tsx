@@ -12,7 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Archive as ArchiveIcon, RotateCcw, CheckSquare, X, Link, Check, Loader2, Trash2, Plus, Search, MoreHorizontal } from 'lucide-react';
+import { Archive as ArchiveIcon, RotateCcw, CheckSquare, X, Link, Check, Loader2, Trash2, Plus, Search, EllipsisVertical } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useMobile } from '@/hooks/use-mobile';
 
@@ -267,7 +267,7 @@ const Archive: React.FC = () => {
                             className="p-2 focus:ring-0 text-muted-foreground hover:text-foreground"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <MoreHorizontal className="h-5 w-5" />
+                            <EllipsisVertical className="h-5 w-5" />
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent 
