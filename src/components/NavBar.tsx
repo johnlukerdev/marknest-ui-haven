@@ -530,7 +530,7 @@ const NavBar: React.FC<NavBarProps> = ({ onAddBookmark, onMobileMenuToggle, cust
                       variant="ghost" 
                       className="h-full w-1/3 flex flex-col items-center justify-center rounded-none"
                     >
-                      <Plus className="h-14 w-14 text-foreground" />
+                      <Plus className="h-18 w-18 text-foreground" />
                     </Button>
                   </DrawerTrigger>
                   <DrawerContent className="p-4">
