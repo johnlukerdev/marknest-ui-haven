@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -155,7 +156,7 @@ const SecretKey: React.FC = () => {
                       onClick={handleSignUp}
                       className="text-primary hover:underline"
                     >
-                      Sign up now
+                      Sign up
                     </button>
                   </p>
                 </div>
