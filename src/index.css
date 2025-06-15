@@ -345,6 +345,28 @@
   .auth-transition {
     @apply transition-all duration-300 ease-in-out;
   }
+
+  /* Custom input text alignment for secret key input */
+  #secret-key-input {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    vertical-align: top !important;
+  }
+
+  #secret-key-input::placeholder {
+    position: absolute !important;
+    top: 1rem !important;
+    left: 1rem !important;
+  }
+
+  @media (min-width: 640px) {
+    #secret-key-input::placeholder {
+      top: 1.5rem !important;
+      left: 1.5rem !important;
+    }
+  }
 }
 
 /* Hides the drawer backdrop */

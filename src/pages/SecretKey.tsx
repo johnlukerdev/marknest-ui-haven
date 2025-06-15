@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -131,7 +130,7 @@ const SecretKey: React.FC = () => {
                       text-sm sm:text-base font-['Inter'] font-normal leading-relaxed
                       rounded-2xl border-2 border-border/40 bg-background/90 backdrop-blur-sm 
                       transition-all duration-200 shadow-sm hover:shadow-md
-                      p-4 sm:p-6 resize-none text-left align-top
+                      p-4 sm:p-6 resize-none
                       placeholder:text-sm sm:placeholder:text-base placeholder:font-['Inter'] 
                       placeholder:text-muted-foreground/50 placeholder:font-normal
                       focus:outline-none focus:ring-0 focus:ring-offset-0 focus:border-border/60
@@ -142,8 +141,9 @@ const SecretKey: React.FC = () => {
                     style={{
                       textAlign: 'left',
                       verticalAlign: 'top',
-                      paddingTop: '1rem',
-                      lineHeight: '1.5'
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start'
                     }}
                   />
                   
