@@ -8,6 +8,7 @@ import { toast } from '@/hooks/use-toast';
 import confetti from 'canvas-confetti';
 import { Input } from '@/components/ui/input';
 import Logo from '@/components/Logo';
+
 const SecretKey: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,6 +17,7 @@ const SecretKey: React.FC = () => {
 
   // Check if we're coming from sign-in button
   const isSignIn = location.state?.isSignIn || false;
+
   const handleContinue = () => {
     if (!secretKey.trim()) {
       setShowError(true);
@@ -27,14 +29,20 @@ const SecretKey: React.FC = () => {
     // Navigate to main app
     navigate('/');
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSecretKey(e.target.value);
     if (showError && e.target.value.trim()) {
       setShowError(false);
     }
   };
+
   const handleSignUp = () => {
     navigate('/signup');
+  };
+
+  const handleSignIn = () => {
+    navigate('/secret-key', { state: { isSignIn: true } });
   };
 
   // Sign-in layout with redesigned modern style
@@ -186,6 +194,7 @@ const SecretKey: React.FC = () => {
 
   // Sample secret key words
   const secretKeyWords = ['lesson', 'stick', 'edit', 'clarify', 'ugly', 'outdoor', 'peanut', 'hotel', 'stand', 'enhance', 'ignore', 'favorite', 'push', 'title', 'rare', 'afford', 'cycle', 'mind', 'length', 'surprise', 'derive', 'dream', 'evoke', 'roast'];
+  
   const formatKeyWords = () => {
     const rows = [];
     for (let i = 0; i < secretKeyWords.length; i += 6) {
@@ -193,6 +202,7 @@ const SecretKey: React.FC = () => {
     }
     return rows;
   };
+
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(secretKeyWords.join(' '));
     setCopied(true);
@@ -204,6 +214,7 @@ const SecretKey: React.FC = () => {
       setCopied(false);
     }, 2000);
   };
+
   const handleSaved = () => {
     // Trigger confetti effect
     confetti({
@@ -219,6 +230,7 @@ const SecretKey: React.FC = () => {
       navigate('/');
     }, 1000);
   };
+
   return <div className="min-h-screen bg-background flex flex-col relative">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5"></div>
@@ -298,6 +310,19 @@ const SecretKey: React.FC = () => {
                 I've Saved It
               </Button>
             </div>
+
+            {/* Already have account link */}
+            <div className="mt-6 text-center">
+              <p className="text-muted-foreground text-sm">
+                Already have an account?{" "}
+                <button
+                  onClick={handleSignIn}
+                  className="text-primary hover:underline"
+                >
+                  Sign In
+                </button>
+              </p>
+            </div>
             
             {/* FAQ Section */}
             <div className="mt-8">
@@ -322,4 +347,5 @@ const SecretKey: React.FC = () => {
       </div>
     </div>;
 };
+
 export default SecretKey;
