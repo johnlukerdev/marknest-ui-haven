@@ -123,10 +123,14 @@ const SecretKey: React.FC = () => {
               {/* Input Section */}
               <div className="space-y-6">
                 <div className="space-y-3">
+                  <label htmlFor="secret-key-input" className="block text-sm font-medium text-muted-foreground font-['Inter'] mb-2">
+                    Enter your secret key…
+                  </label>
                   <Input 
+                    id="secret-key-input"
                     type="text" 
-                    placeholder="Enter your secret key…" 
-                    className="w-full aspect-square min-h-[180px] sm:min-h-[220px] md:min-h-[240px] text-lg sm:text-xl md:text-2xl rounded-3xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 placeholder:text-muted-foreground/60 placeholder:text-sm sm:placeholder:text-base md:placeholder:text-lg placeholder:font-['Inter'] shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 p-6 sm:p-8 focus:ring-0 focus:ring-offset-0 font-['Poppins'] font-medium tracking-wide text-left flex items-start justify-start resize-none" 
+                    placeholder="" 
+                    className="w-full aspect-square min-h-[180px] sm:min-h-[220px] md:min-h-[240px] text-lg sm:text-xl md:text-2xl rounded-3xl border-2 border-border/50 bg-background/80 backdrop-blur-sm focus:border-indigo-500 transition-all duration-300 shadow-lg focus:shadow-xl focus:shadow-indigo-500/10 p-6 sm:p-8 focus:ring-0 focus:ring-offset-0 font-['Poppins'] font-medium tracking-wide text-left flex items-start justify-start resize-none" 
                     value={secretKey} 
                     onChange={handleInputChange} 
                   />
