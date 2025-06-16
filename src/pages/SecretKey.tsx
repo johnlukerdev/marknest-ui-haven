@@ -11,7 +11,6 @@ import { Input } from '@/components/ui/input';
 import Logo from '@/components/Logo';
 import { useRandomWords } from '@/hooks/useRandomWords';
 import { saveSecretKey, clearStoredSecretKey, hasStoredSecretKey, getStoredSecretKey } from '@/utils/secretKeyStorage';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const SecretKey: React.FC = () => {
   const navigate = useNavigate();
@@ -23,13 +22,13 @@ const SecretKey: React.FC = () => {
   const [showError, setShowError] = useState(false);
   const [copied, setCopied] = useState(false);
   const [hasSavedKey, setHasSavedKey] = useState(hasStoredSecretKey());
-  const [showPopup, setShowPopup] = useState(false);
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
   const secretKeyRef = useRef<HTMLDivElement>(null);
 
   // Check if we're coming from sign-in button
   const isSignIn = location.state?.isSignIn || false;
 
-  // Load stored secret key on component mount
+  // Load stored secret key on component mount for autocomplete
   useEffect(() => {
     if (isSignIn) {
       const storedKey = getStoredSecretKey();
@@ -39,9 +38,6 @@ const SecretKey: React.FC = () => {
     }
   }, [isSignIn]);
 
-  /**
-   * Handle Secret Key input validation and navigation
-   */
   const handleContinue = () => {
     if (!secretKey.trim()) {
       setShowError(true);
@@ -61,24 +57,23 @@ const SecretKey: React.FC = () => {
     }
   };
 
-  /**
-   * Handle input focus - check for saved key and show popup if exists
-   */
   const handleInputFocus = () => {
-    // Check if there's a saved key in localStorage
-    if (hasStoredSecretKey() && !secretKey) {
-      setShowPopup(true);
+    // Show autocomplete suggestion if there's a stored key
+    if (hasSavedKey && !secretKey) {
+      setShowAutocomplete(true);
     }
   };
 
-  /**
-   * Handle using the saved Secret Key from localStorage
-   */
+  const handleInputBlur = () => {
+    // Hide autocomplete after a short delay to allow clicking on it
+    setTimeout(() => setShowAutocomplete(false), 200);
+  };
+
   const handleUseStoredKey = () => {
     const storedKey = getStoredSecretKey();
     if (storedKey) {
       setSecretKey(storedKey);
-      setShowPopup(false);
+      setShowAutocomplete(false);
       toast({
         title: "Key Loaded",
         description: "Your saved secret key has been loaded"
@@ -86,20 +81,10 @@ const SecretKey: React.FC = () => {
     }
   };
 
-  /**
-   * Handle canceling the popup - close it and let user type manually
-   */
-  const handleCancelPopup = () => {
-    setShowPopup(false);
-  };
-
-  /**
-   * Clear saved Secret Key from localStorage (for sign-in page)
-   */
   const handleClearStoredKeyFromSignIn = () => {
     clearStoredSecretKey();
     setHasSavedKey(false);
-    setShowPopup(false);
+    setShowAutocomplete(false);
     toast({
       title: "Saved Key Cleared",
       description: "Your saved secret key has been removed from this browser"
@@ -126,7 +111,6 @@ const SecretKey: React.FC = () => {
     }
     return rows;
   };
-
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(secretKeyWords.join(' '));
     setCopied(true);
@@ -138,15 +122,7 @@ const SecretKey: React.FC = () => {
       setCopied(false);
     }, 2000);
   };
-
-  /**
-   * Save the Secret Key to localStorage and navigate to main app
-   */
   const handleSaved = () => {
-    // Save the secret key to localStorage
-    const keyString = secretKeyWords.join(' ');
-    saveSecretKey(keyString);
-    
     // Trigger confetti effect
     confetti({
       particleCount: 100,
@@ -156,29 +132,13 @@ const SecretKey: React.FC = () => {
       }
     });
 
-    toast({
-      title: "Secret Key Saved",
-      description: "Your secret key has been securely saved to this browser"
-    });
-
     // Navigate to main app
     setTimeout(() => {
       navigate('/');
     }, 1000);
   };
 
-  /**
-   * Clear saved Secret Key from localStorage (for signup page)
-   */
-  const handleClearStoredKey = () => {
-    clearStoredSecretKey();
-    toast({
-      title: "Saved Key Cleared",
-      description: "Your saved secret key has been removed from this browser"
-    });
-  };
-
-  // Sign-in layout with redesigned modern style and improved popup
+  // Sign-in layout with redesigned modern style
   if (isSignIn) {
     return <div className="min-h-screen bg-background flex">
         {/* Left Side - Form */}
@@ -200,71 +160,56 @@ const SecretKey: React.FC = () => {
                   Access with Your Secret Key
                 </h1>
                 <p className="text-muted-foreground text-base sm:text-lg">
-                  Enter your secret key to continue
+                  Enter code to secret continue
                 </p>
               </div>
               
-              {/* Input Section with Popover for saved key suggestion */}
+              {/* Input Section */}
               <div className="space-y-6">
                 <div className="space-y-3 relative">
-                  <Popover open={showPopup} onOpenChange={setShowPopup}>
-                    <PopoverTrigger asChild>
-                      <Input 
-                        id="secret-key-input" 
-                        type="text" 
-                        placeholder="Enter your secret key…" 
-                        value={secretKey} 
-                        onChange={handleInputChange}
-                        onFocus={handleInputFocus}
-                        autoComplete="off"
-                        className="w-full aspect-square min-h-[200px] sm:min-h-[240px] md:min-h-[260px] text-lg sm:text-xl font-['Inter'] font-normal leading-relaxed rounded-2xl border-2 border-border/40 bg-background/90 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md resize-none placeholder:text-lg sm:placeholder:text-xl placeholder:font-['Inter'] placeholder:text-muted-foreground/50 placeholder:font-normal focus:outline-none focus:ring-0 focus:ring-offset-0 focus:border-border/60 dark:bg-card/50 dark:border-border/30 dark:hover:border-border/50 light:border-gray-200 light:hover:border-gray-300 p-6 sm:p-8" />
-                    </PopoverTrigger>
-                    <PopoverContent 
-                      className="w-80 p-0 border-border/60 bg-card/95 backdrop-blur-sm"
-                      side="top"
-                      align="center"
-                    >
-                      <div className="p-6">
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
-                            <Shield className="w-5 h-5 text-green-500" />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-foreground">Use saved Secret Key?</h3>
-                            <p className="text-sm text-muted-foreground">Found a saved key from this browser</p>
-                          </div>
+                  <Input 
+                    id="secret-key-input" 
+                    type="text" 
+                    placeholder="Enter your secret key…" 
+                    value={secretKey} 
+                    onChange={handleInputChange}
+                    onFocus={handleInputFocus}
+                    onBlur={handleInputBlur}
+                    autoComplete="off"
+                    className="w-full aspect-square min-h-[200px] sm:min-h-[240px] md:min-h-[260px] text-lg sm:text-xl font-['Inter'] font-normal leading-relaxed rounded-2xl border-2 border-border/40 bg-background/90 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md resize-none placeholder:text-lg sm:placeholder:text-xl placeholder:font-['Inter'] placeholder:text-muted-foreground/50 placeholder:font-normal focus:outline-none focus:ring-0 focus:ring-offset-0 focus:border-border/60 dark:bg-card/50 dark:border-border/30 dark:hover:border-border/50 light:border-gray-200 light:hover:border-gray-300 p-6 sm:p-8" />
+                  
+                  {/* Autocomplete Suggestion */}
+                  {showAutocomplete && hasSavedKey && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border/60 rounded-xl shadow-lg z-50">
+                      <div className="p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-foreground">Saved Key Available</span>
+                          <Shield className="w-4 h-4 text-green-500" />
                         </div>
-                        
-                        <div className="flex gap-3">
-                          <Button 
-                            onClick={handleUseStoredKey}
-                            className="flex-1 gradient-primary"
-                          >
-                            Sign In
-                          </Button>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          Use your previously saved secret key from this browser
+                        </p>
+                        <div className="flex gap-2">
                           <Button 
                             variant="outline" 
-                            onClick={handleCancelPopup}
+                            size="sm" 
+                            onClick={handleUseStoredKey}
                             className="flex-1"
                           >
-                            Cancel
+                            Use Saved Key
                           </Button>
-                        </div>
-                        
-                        <div className="mt-4 pt-4 border-t border-border/30">
                           <Button 
                             variant="ghost" 
                             size="sm" 
                             onClick={handleClearStoredKeyFromSignIn}
-                            className="w-full text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
                           >
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            Clear saved key
+                            <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
                       </div>
-                    </PopoverContent>
-                  </Popover>
+                    </div>
+                  )}
                   
                   {/* Error Message */}
                   {showError && <div className="flex items-center gap-2 text-red-500 text-sm animate-fade-in">
@@ -493,18 +438,6 @@ const SecretKey: React.FC = () => {
               >
                 I've Saved It
               </Button>
-              
-              {/* Clear Saved Key Button - only show if key exists */}
-              {hasStoredSecretKey() && (
-                <Button 
-                  variant="outline"
-                  className="w-full py-4 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20 focus:ring-0 rounded-xl border-red-200 dark:border-red-800" 
-                  onClick={handleClearStoredKey}
-                >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Clear Saved Key
-                </Button>
-              )}
             </div>
 
             {/* Already have account link */}
