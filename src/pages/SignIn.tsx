@@ -63,41 +63,57 @@ const SignIn: React.FC = () => {
         
         {/* Right Section - Clean Modern Design */}
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 to-violet-900 items-center justify-center relative">
-          {/* Flat Dashboard Illustration */}
-          <div className="w-[320px] h-[320px] bg-slate-800/20 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center border border-white/10">
-            {/* Dashboard Header */}
-            <div className="w-full px-8 py-4 border-b border-white/10 mb-6">
-              <div className="flex items-center gap-3">
-                <Monitor className="w-6 h-6 text-white/80" />
-                <span className="text-white/80 text-lg font-medium">Dashboard</span>
+          {/* Modern Dashboard Illustration with Glassmorphism */}
+          <div className="w-[320px] h-[320px] bg-white/5 backdrop-blur-xl rounded-3xl flex flex-col border border-white/10 shadow-2xl shadow-purple-500/10 relative overflow-hidden group hover:shadow-purple-500/20 transition-all duration-300">
+            {/* Subtle inner glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-purple-500/5 rounded-3xl"></div>
+            
+            {/* Dashboard Header - More prominent */}
+            <div className="relative z-10 w-full px-8 py-6 border-b border-white/10 mb-8">
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-400 to-indigo-400 rounded-lg flex items-center justify-center">
+                  <Monitor className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-white text-xl font-semibold tracking-wide">Dashboard</span>
               </div>
             </div>
             
-            {/* Clean grid layout */}
-            <div className="grid grid-cols-2 gap-6 mb-8">
-              <div className="w-20 h-20 bg-white/10 rounded-lg border border-white/20 flex items-center justify-center">
-                <Link className="w-8 h-8 text-white/70" />
+            {/* Modern Icon Grid - 2x2 layout with better spacing */}
+            <div className="relative z-10 grid grid-cols-2 gap-8 mb-10 px-8">
+              {/* Link/Connect Icon */}
+              <div className="group/icon w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-2xl border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-purple-500/20">
+                <Link className="w-10 h-10 text-white/90 stroke-[1.5]" />
               </div>
-              <div className="w-20 h-20 bg-white/10 rounded-lg border border-white/20 flex items-center justify-center">
-                <Shield className="w-8 h-8 text-white/70" />
+              
+              {/* Shield/Security Icon */}
+              <div className="group/icon w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-2xl border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-purple-500/20">
+                <Shield className="w-10 h-10 text-white/90 stroke-[1.5]" />
               </div>
-              <div className="w-20 h-20 bg-white/10 rounded-lg border border-white/20 flex items-center justify-center">
-                <Zap className="w-8 h-8 text-white/70" />
+              
+              {/* Speed/Boost Icon */}
+              <div className="group/icon w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-2xl border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-purple-500/20">
+                <Zap className="w-10 h-10 text-white/90 stroke-[1.5]" />
               </div>
-              <div className="w-20 h-20 bg-white/10 rounded-lg border border-white/20 flex items-center justify-center">
-                <Monitor className="w-8 h-8 text-white/70" />
+              
+              {/* Device/Display Icon */}
+              <div className="group/icon w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-2xl border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-purple-500/20">
+                <Monitor className="w-10 h-10 text-white/90 stroke-[1.5]" />
               </div>
             </div>
             
-            {/* Status bars */}
-            <div className="space-y-3 w-full px-8">
-              <div className="h-2 bg-white/20 rounded-full">
-                <div className="h-full bg-white/40 rounded-full w-3/4"></div>
+            {/* Elegant Progress Indicators */}
+            <div className="relative z-10 space-y-4 w-full px-8">
+              <div className="h-3 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
+                <div className="h-full bg-gradient-to-r from-purple-400 to-indigo-400 rounded-full w-4/5 shadow-sm animate-pulse"></div>
               </div>
-              <div className="h-2 bg-white/20 rounded-full">
-                <div className="h-full bg-white/30 rounded-full w-1/2"></div>
+              <div className="h-3 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
+                <div className="h-full bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full w-3/5 shadow-sm"></div>
               </div>
             </div>
+            
+            {/* Floating elements for depth */}
+            <div className="absolute top-4 right-4 w-2 h-2 bg-purple-400/60 rounded-full animate-pulse"></div>
+            <div className="absolute bottom-4 left-4 w-1.5 h-1.5 bg-indigo-400/40 rounded-full animate-pulse delay-1000"></div>
           </div>
         </div>
       </div>
