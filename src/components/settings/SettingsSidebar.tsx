@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { User, CreditCard, Database, Tags, Settings, Info, List, X, Home } from 'lucide-react';
+import { User, CreditCard, Database, Tags, Settings, Info, List, X, Home, ArrowLeft } from 'lucide-react';
 import { useMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerClose } from '@/components/ui/drawer';
@@ -79,18 +79,7 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
         <DrawerContent className="h-[85vh]">
           <div className="p-4">
             <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <Button
-                  onClick={() => navigate('/')}
-                  className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0 rounded-full p-2 h-9 w-9 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95"
-                >
-                  <div className="relative z-10">
-                    <Home className="h-4 w-4" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </Button>
-                <h3 className="font-semibold text-lg text-foreground">Settings</h3>
-              </div>
+              <h3 className="font-semibold text-lg text-foreground">Settings</h3>
               <DrawerClose asChild>
                 <Button variant="ghost" size="icon" className="hover:bg-muted rounded-full">
                   <X className="h-5 w-5" />
@@ -98,6 +87,15 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
               </DrawerClose>
             </div>
             <nav className="space-y-2">
+              {/* Home Button - Mobile Only */}
+              <button
+                onClick={() => navigate('/')}
+                className="w-full flex items-center space-x-3 px-4 py-4 rounded-xl text-sm transition-all duration-200 text-muted-foreground hover:text-foreground"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span className="font-medium">Home</span>
+              </button>
+              
               {menuItems.map((item) => (
                 <button
                   key={item.id}
