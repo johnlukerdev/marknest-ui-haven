@@ -243,6 +243,14 @@
     @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600;
   }
 
+  .gradient-purple-blue {
+    @apply bg-gradient-to-r from-purple-500 to-blue-600;
+  }
+
+  .gradient-muted {
+    @apply bg-gradient-to-r from-muted/40 to-muted/20;
+  }
+
   /* New rotate utility */
   .group-hover\:rotate-360:hover {
     transform: rotate(360deg);
