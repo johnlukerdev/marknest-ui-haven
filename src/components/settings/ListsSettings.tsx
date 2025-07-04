@@ -3,12 +3,23 @@ import React, { useState } from 'react';
 import { Plus, ArrowUp, ArrowDown, MoreHorizontal, Edit, GripVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
 
 interface ListItem {
   id: string;
@@ -17,18 +28,62 @@ interface ListItem {
 }
 
 const ListsSettings: React.FC = () => {
+  const { toast } = useToast();
   const [lists, setLists] = useState<ListItem[]>([
     { id: '1', name: 'Default List', isDefault: true },
     { id: '2', name: 'Videos', isDefault: false },
     { id: '3', name: 'Websites', isDefault: false }
   ]);
 
+  // Dialog states
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
+  const [newListName, setNewListName] = useState('');
+  const [currentEditingList, setCurrentEditingList] = useState<ListItem | null>(null);
+
   const handleCreateList = () => {
-    // Will be implemented in future
+    setNewListName('');
+    setIsAddDialogOpen(true);
+  };
+
+  const handleAddListConfirm = () => {
+    if (newListName.trim()) {
+      const newList: ListItem = {
+        id: Date.now().toString(),
+        name: newListName.trim(),
+        isDefault: false
+      };
+      setLists([...lists, newList]);
+      setIsAddDialogOpen(false);
+      setNewListName('');
+      toast({
+        title: "List created",
+        description: `"${newList.name}" has been added to your lists.`,
+      });
+    }
   };
 
   const handleEditList = (list: ListItem) => {
-    // Will be implemented in future
+    setCurrentEditingList(list);
+    setNewListName(list.name);
+    setIsRenameDialogOpen(true);
+  };
+
+  const handleRenameConfirm = () => {
+    if (newListName.trim() && currentEditingList) {
+      setLists(lists.map(list => 
+        list.id === currentEditingList.id 
+          ? { ...list, name: newListName.trim() }
+          : list
+      ));
+      setIsRenameDialogOpen(false);
+      setNewListName('');
+      setCurrentEditingList(null);
+      toast({
+        title: "List renamed",
+        description: `List has been renamed to "${newListName.trim()}".`,
+      });
+    }
   };
 
   const moveList = (index: number, direction: 'up' | 'down') => {
@@ -46,8 +101,44 @@ const ListsSettings: React.FC = () => {
     setLists(newLists);
   };
 
-  const handleMoreActions = (list: ListItem) => {
-    // Will be implemented in future
+  const handleSetAsDefault = (list: ListItem) => {
+    setLists(lists.map(l => ({
+      ...l,
+      isDefault: l.id === list.id
+    })));
+    toast({
+      title: "Default list updated",
+      description: `"${list.name}" is now your default list.`,
+    });
+  };
+
+  const handleDuplicateList = (list: ListItem) => {
+    const duplicatedList: ListItem = {
+      id: Date.now().toString(),
+      name: `${list.name} (Copy)`,
+      isDefault: false
+    };
+    setLists([...lists, duplicatedList]);
+    toast({
+      title: "List duplicated",
+      description: `"${duplicatedList.name}" has been created.`,
+    });
+  };
+
+  const handleDeleteList = (list: ListItem) => {
+    if (list.isDefault) {
+      toast({
+        title: "Cannot delete default list",
+        description: "Please set another list as default before deleting this one.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setLists(lists.filter(l => l.id !== list.id));
+    toast({
+      title: "List deleted",
+      description: `"${list.name}" has been deleted.`,
+    });
   };
 
   return (
@@ -150,20 +241,22 @@ const ListsSettings: React.FC = () => {
                     className="w-56 bg-card/95 backdrop-blur-lg border-border/50 shadow-xl rounded-xl animate-scale-in"
                   >
                     <DropdownMenuItem 
-                      onClick={() => handleMoreActions(list)}
+                      onClick={() => handleSetAsDefault(list)}
                       className="rounded-lg m-1 hover:bg-muted/60 transition-colors duration-200"
+                      disabled={list.isDefault}
                     >
                       Set as default
                     </DropdownMenuItem>
                     <DropdownMenuItem 
-                      onClick={() => handleMoreActions(list)}
+                      onClick={() => handleDuplicateList(list)}
                       className="rounded-lg m-1 hover:bg-muted/60 transition-colors duration-200"
                     >
                       Duplicate list
                     </DropdownMenuItem>
                     <DropdownMenuItem 
-                      onClick={() => handleMoreActions(list)}
+                      onClick={() => handleDeleteList(list)}
                       className="rounded-lg m-1 hover:bg-destructive/10 text-destructive hover:text-destructive transition-colors duration-200"
+                      disabled={list.isDefault}
                     >
                       Delete list
                     </DropdownMenuItem>
@@ -174,6 +267,100 @@ const ListsSettings: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* Add List Dialog */}
+      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+        <DialogContent className="sm:max-w-[425px] bg-card/95 backdrop-blur-lg border-border/50">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Create New List</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
+              Enter a name for your new list. You can rename it later if needed.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="list-name" className="text-right text-foreground">
+                Name
+              </Label>
+              <Input
+                id="list-name"
+                value={newListName}
+                onChange={(e) => setNewListName(e.target.value)}
+                className="col-span-3 bg-background/50 border-border/50"
+                placeholder="Enter list name..."
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleAddListConfirm();
+                  }
+                }}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsAddDialogOpen(false)}
+              className="border-border/50 hover:bg-muted/60"
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleAddListConfirm}
+              disabled={!newListName.trim()}
+              className="gradient-purple-blue hover:shadow-lg"
+            >
+              Create List
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Rename List Dialog */}
+      <Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
+        <DialogContent className="sm:max-w-[425px] bg-card/95 backdrop-blur-lg border-border/50">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Rename List</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
+              Enter a new name for "{currentEditingList?.name}".
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="rename-list" className="text-right text-foreground">
+                Name
+              </Label>
+              <Input
+                id="rename-list"
+                value={newListName}
+                onChange={(e) => setNewListName(e.target.value)}
+                className="col-span-3 bg-background/50 border-border/50"
+                placeholder="Enter new name..."
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleRenameConfirm();
+                  }
+                }}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsRenameDialogOpen(false)}
+              className="border-border/50 hover:bg-muted/60"
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleRenameConfirm}
+              disabled={!newListName.trim()}
+              className="gradient-purple-blue hover:shadow-lg"
+            >
+              Rename
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
