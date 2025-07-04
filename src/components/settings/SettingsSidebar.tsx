@@ -90,10 +90,13 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
               {/* Home Button - Mobile Only */}
               <button
                 onClick={() => navigate('/')}
-                className="w-full flex items-center space-x-3 px-4 py-4 rounded-xl text-sm transition-all duration-200 text-muted-foreground hover:text-foreground"
+                className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0 rounded-full px-4 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95 w-full flex items-center justify-center space-x-3"
               >
-                <ArrowLeft className="h-4 w-4" />
-                <span className="font-medium">Home</span>
+                <div className="relative z-10 flex items-center gap-2">
+                  <Home className="h-4 w-4" />
+                  <span className="text-sm font-medium">Home</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </button>
               
               {menuItems.map((item) => (
