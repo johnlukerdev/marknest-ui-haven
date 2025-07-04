@@ -5,15 +5,17 @@ import BookmarkGrid from '@/components/BookmarkGrid';
 import BulkActionsBar from '@/components/BulkActionsBar';
 import { toast } from '@/hooks/use-toast';
 import { useMobile } from '@/hooks/use-mobile';
+import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 
 const Index: React.FC = () => {
   const isMobile = useMobile();
+  const { addBookmark } = useBookmarkContext();
   
   const handleAddBookmark = (url: string) => {
-    // In a real application, this would call an API to save the bookmark
+    addBookmark(url);
     toast({
       title: "Bookmark added",
-      description: `Added bookmark: ${url}`
+      description: `Successfully added bookmark`
     });
   };
 

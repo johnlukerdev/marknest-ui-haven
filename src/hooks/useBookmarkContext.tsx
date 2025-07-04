@@ -16,6 +16,7 @@ interface BookmarkContextType {
   isSelectMode: boolean;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  addBookmark: (url: string) => void;
   moveToTrash: (id: string) => void;
   restoreFromTrash: (id: string) => void;
   moveToArchive: (id: string) => void;
@@ -179,6 +180,21 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
     setSelectedBookmarks([]);
     setIsSelectMode(false);
   };
+
+  const addBookmark = (url: string) => {
+    // Extract domain for title
+    const domain = new URL(url).hostname.replace('www.', '');
+    const title = domain.charAt(0).toUpperCase() + domain.slice(1);
+    
+    const newBookmark: Bookmark = {
+      id: Date.now().toString(),
+      title: title,
+      url: url,
+      imageUrl: `https://images.unsplash.com/photo-${Math.random().toString().slice(2, 15)}?auto=format&fit=crop&q=80&w=1000`
+    };
+    
+    setBookmarks([newBookmark, ...bookmarks]);
+  };
   
   return (
     <BookmarkContext.Provider value={{
@@ -190,6 +206,7 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
       isSelectMode,
       searchQuery,
       setSearchQuery,
+      addBookmark,
       moveToTrash,
       restoreFromTrash,
       moveToArchive,
