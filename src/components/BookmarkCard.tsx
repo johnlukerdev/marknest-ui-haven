@@ -19,7 +19,7 @@ import {
   TooltipTrigger,
   Checkbox
 } from "@/components/ui";
-import { EllipsisVertical, Trash2, Link, Archive, Check } from "lucide-react";
+import { EllipsisVertical, Trash2, Link, Archive, Check, Globe, Loader2 } from "lucide-react";
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
 import { toast } from '@/hooks/use-toast';
 
@@ -27,12 +27,23 @@ interface BookmarkCardProps {
   id: string;
   title: string;
   url: string;
-  imageUrl: string;
+  imageUrl?: string;
+  description?: string;
+  domain?: string;
+  isLoading?: boolean;
 }
 
-const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl }) => {
-  // Extract domain for display
-  const displayUrl = new URL(url).hostname;
+const BookmarkCard: React.FC<BookmarkCardProps> = ({ 
+  id, 
+  title, 
+  url, 
+  imageUrl, 
+  description, 
+  domain, 
+  isLoading = false 
+}) => {
+  // Use provided domain or extract from URL
+  const displayUrl = domain || new URL(url).hostname;
   const { 
     moveToTrash, 
     moveToArchive, 
@@ -42,6 +53,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
   } = useBookmarkContext();
   
   const [isCopying, setIsCopying] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const isSelected = selectedBookmarks.includes(id);
   
   const handleDelete = () => {
@@ -116,13 +128,25 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({ id, title, url, imageUrl })
           </div>
         </div>
       )}
-      <div className="relative h-40 w-full overflow-hidden">
-        <img 
-          src={imageUrl} 
-          alt={title} 
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
-        />
+      <div className="relative h-40 w-full overflow-hidden bg-muted flex items-center justify-center">
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full w-full">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          </div>
+        ) : imageUrl && !imageError ? (
+          <img 
+            src={imageUrl} 
+            alt={title} 
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full w-full text-muted-foreground">
+            <Globe className="h-12 w-12 mb-2" />
+            <span className="text-xs font-medium">{domain || displayUrl}</span>
+          </div>
+        )}
       </div>
       <CardContent className="p-4 flex-grow">
         <div className="flex flex-col flex-grow">

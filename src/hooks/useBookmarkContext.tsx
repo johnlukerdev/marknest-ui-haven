@@ -1,10 +1,15 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import { linkPreviewService, LinkPreviewData } from '@/services/linkPreviewService';
+import { toast } from '@/hooks/use-toast';
 
 export interface Bookmark {
   id: string;
   title: string;
   url: string;
-  imageUrl: string;
+  imageUrl?: string;
+  description?: string;
+  domain: string;
+  isLoading?: boolean;
 }
 
 interface BookmarkContextType {
@@ -37,42 +42,54 @@ interface BookmarkProviderProps {
 }
 
 // Sample bookmark data
-const INITIAL_BOOKMARKS = [
+const INITIAL_BOOKMARKS: Bookmark[] = [
   {
     id: '1',
     title: 'The Ultimate Guide to Web Development in 2025',
     url: 'https://webdev.example.com/guide2025',
-    imageUrl: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1000'
+    imageUrl: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1000',
+    domain: 'webdev.example.com',
+    description: 'Complete guide to modern web development'
   },
   {
     id: '2',
     title: 'How to Master React Hooks: Advanced Techniques',
     url: 'https://reactjs.org/advanced-hooks',
-    imageUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1000'
+    imageUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1000',
+    domain: 'reactjs.org',
+    description: 'Advanced React hooks techniques and patterns'
   },
   {
     id: '3',
     title: 'Productivity Tips for Remote Developers',
     url: 'https://productivity.dev/remote-tips',
-    imageUrl: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=1000'
+    imageUrl: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=1000',
+    domain: 'productivity.dev',
+    description: 'Tips to boost productivity while working remotely'
   },
   {
     id: '4',
     title: 'Building Scalable Backend Systems with Node.js',
     url: 'https://nodejs.org/scalable-systems',
-    imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=1000'
+    imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=1000',
+    domain: 'nodejs.org',
+    description: 'Learn to build scalable backend architectures'
   },
   {
     id: '5',
     title: 'Design Patterns Every Developer Should Know',
     url: 'https://patterns.dev/essential',
-    imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1000'
+    imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1000',
+    domain: 'patterns.dev',
+    description: 'Essential design patterns for software development'
   },
   {
     id: '6',
     title: '10 VS Code Extensions That Will Change Your Life',
     url: 'https://vscode.tips/top-extensions',
-    imageUrl: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1000'
+    imageUrl: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1000',
+    domain: 'vscode.tips',
+    description: 'Must-have VS Code extensions for developers'
   },
 ];
 
@@ -181,19 +198,74 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
     setIsSelectMode(false);
   };
 
-  const addBookmark = (url: string) => {
-    // Extract domain for title
+  const addBookmark = async (url: string) => {
     const domain = new URL(url).hostname.replace('www.', '');
-    const title = domain.charAt(0).toUpperCase() + domain.slice(1);
+    const bookmarkId = Date.now().toString();
     
-    const newBookmark: Bookmark = {
-      id: Date.now().toString(),
-      title: title,
+    // Create placeholder bookmark that shows loading state
+    const placeholderBookmark: Bookmark = {
+      id: bookmarkId,
+      title: 'Loading...',
       url: url,
-      imageUrl: `https://images.unsplash.com/photo-${Math.random().toString().slice(2, 15)}?auto=format&fit=crop&q=80&w=1000`
+      domain: domain,
+      isLoading: true,
+      imageUrl: undefined
     };
     
-    setBookmarks([newBookmark, ...bookmarks]);
+    // Add placeholder immediately for instant feedback
+    setBookmarks([placeholderBookmark, ...bookmarks]);
+    
+    try {
+      // Fetch preview data
+      const previewData = await linkPreviewService.fetchPreview(url);
+      
+      // Update with real data
+      const finalBookmark: Bookmark = {
+        id: bookmarkId,
+        title: previewData.title,
+        url: previewData.url,
+        imageUrl: previewData.image,
+        description: previewData.description,
+        domain: previewData.domain,
+        isLoading: false
+      };
+      
+      setBookmarks(prevBookmarks => 
+        prevBookmarks.map(bookmark => 
+          bookmark.id === bookmarkId ? finalBookmark : bookmark
+        )
+      );
+      
+      // Show success toast
+      toast({
+        title: "Bookmark added",
+        description: `Added "${previewData.title}"`
+      });
+      
+    } catch (error) {
+      // Create fallback bookmark on error
+      const fallbackBookmark: Bookmark = {
+        id: bookmarkId,
+        title: domain.charAt(0).toUpperCase() + domain.slice(1),
+        url: url,
+        domain: domain,
+        isLoading: false,
+        imageUrl: undefined,
+        description: 'Failed to fetch preview'
+      };
+      
+      setBookmarks(prevBookmarks => 
+        prevBookmarks.map(bookmark => 
+          bookmark.id === bookmarkId ? fallbackBookmark : bookmark
+        )
+      );
+      
+      toast({
+        title: "Bookmark added",
+        description: "Preview could not be fetched",
+        variant: "default"
+      });
+    }
   };
   
   return (

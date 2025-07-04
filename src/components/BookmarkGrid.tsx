@@ -105,6 +105,9 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
               title={bookmark.title}
               url={bookmark.url}
               imageUrl={bookmark.imageUrl}
+              description={bookmark.description}
+              domain={bookmark.domain}
+              isLoading={bookmark.isLoading}
             />
           ))}
         </div>

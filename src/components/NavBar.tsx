@@ -6,9 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive, X, Menu, Loader2 } from "lucide-react";
+import { ChevronDown, Plus, Search, MoreHorizontal, LogOut, Settings, Sun, Moon, Trash2, Archive, X, Menu, Loader2, Key } from "lucide-react";
 import Logo from './Logo';
 import AddBookmarkForm from './AddBookmarkForm';
+import ApiKeySetup from './ApiKeySetup';
 import { useTheme } from '@/hooks/use-theme';
 import { useMobile } from '@/hooks/use-mobile';
 import { useBookmarkContext } from '@/hooks/useBookmarkContext';
@@ -39,6 +40,7 @@ const NavBar: React.FC<NavBarProps> = ({
 }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [apiKeySetupOpen, setApiKeySetupOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
@@ -337,16 +339,20 @@ const NavBar: React.FC<NavBarProps> = ({
                               <MoreHorizontal className="h-5 w-5" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-48 bg-background border border-border rounded-lg shadow-lg p-1">
-                            <DropdownMenuItem onClick={goToSettings} className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground">
-                              <Settings className="mr-3 h-4 w-4" />
-                              Settings
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={handleSignOut} className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground">
-                              <LogOut className="mr-3 h-4 w-4" />
-                              Sign Out
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
+                           <DropdownMenuContent align="end" className="w-48 bg-background border border-border rounded-lg shadow-lg p-1">
+                             <DropdownMenuItem onClick={() => setApiKeySetupOpen(true)} className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground">
+                               <Key className="mr-3 h-4 w-4" />
+                               API Settings
+                             </DropdownMenuItem>
+                             <DropdownMenuItem onClick={goToSettings} className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground">
+                               <Settings className="mr-3 h-4 w-4" />
+                               Settings
+                             </DropdownMenuItem>
+                             <DropdownMenuItem onClick={handleSignOut} className="px-3 py-2.5 rounded-md cursor-pointer focus:bg-muted hover:bg-muted transition-colors text-foreground">
+                               <LogOut className="mr-3 h-4 w-4" />
+                               Sign Out
+                             </DropdownMenuItem>
+                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TooltipTrigger>
                       <TooltipContent>
@@ -466,6 +472,16 @@ const NavBar: React.FC<NavBarProps> = ({
         </div>}
       
       {!isMobile && <AddBookmarkForm open={addDialogOpen} onOpenChange={setAddDialogOpen} onSubmit={onAddBookmark} />}
+      <ApiKeySetup 
+        open={apiKeySetupOpen} 
+        onOpenChange={setApiKeySetupOpen} 
+        onKeySet={() => {
+          toast({
+            title: "API Key Updated",
+            description: "Link preview settings have been updated"
+          });
+        }} 
+      />
     </>;
 };
 export default NavBar;
