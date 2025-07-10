@@ -37,20 +37,6 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
   if (!isMobile) {
     return (
       <aside className="hidden md:flex flex-col w-56 border-r border-border p-4 h-[calc(100vh-120px)]">
-        {/* Home Button */}
-        <div className="mb-6">
-          <Button
-            onClick={() => navigate('/')}
-            className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0 rounded-full px-4 py-2 h-10 w-fit transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95"
-          >
-            <div className="relative z-10 flex items-center gap-2">
-              <Home className="h-4 w-4" />
-              <span className="text-sm font-medium">Home</span>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </Button>
-        </div>
-        
         <h3 className="font-medium text-sm mb-4 text-muted-foreground px-2">SETTINGS</h3>
         <nav className="space-y-1">
           {menuItems.map((item) => (
@@ -87,18 +73,6 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
               </DrawerClose>
             </div>
             <nav className="space-y-2">
-              {/* Home Button - Mobile Only */}
-              <button
-                onClick={() => navigate('/')}
-                className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0 rounded-full px-4 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95 w-full flex items-center justify-center space-x-3"
-              >
-                <div className="relative z-10 flex items-center gap-2">
-                  <Home className="h-4 w-4" />
-                  <span className="text-sm font-medium">Home</span>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </button>
-              
               {menuItems.map((item) => (
                 <button
                   key={item.id}
