@@ -63,6 +63,42 @@ const SignIn: React.FC = () => {
         
         {/* Right Section - Clean Modern Design */}
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 to-violet-900 items-center justify-center relative">
+          {/* Floating Bookmark Cards - Top Right */}
+          <div className="absolute top-12 right-12 space-y-3 animate-fade-in">
+            <div className="w-48 h-12 bg-white/10 backdrop-blur-xl rounded-lg border border-white/20 flex items-center gap-3 px-4 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+              <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-500 rounded flex-shrink-0"></div>
+              <div className="flex-1 space-y-1">
+                <div className="h-2 bg-white/60 rounded w-24"></div>
+                <div className="h-1.5 bg-white/30 rounded w-16"></div>
+              </div>
+            </div>
+            <div className="w-48 h-12 bg-white/8 backdrop-blur-xl rounded-lg border border-white/15 flex items-center gap-3 px-4 hover:bg-white/12 transition-all duration-300 hover:scale-105">
+              <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded flex-shrink-0"></div>
+              <div className="flex-1 space-y-1">
+                <div className="h-2 bg-white/50 rounded w-20"></div>
+                <div className="h-1.5 bg-white/25 rounded w-12"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating Bookmark Cards - Bottom Left */}
+          <div className="absolute bottom-12 left-12 space-y-3 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="w-48 h-12 bg-white/8 backdrop-blur-xl rounded-lg border border-white/15 flex items-center gap-3 px-4 hover:bg-white/12 transition-all duration-300 hover:scale-105">
+              <div className="w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-500 rounded flex-shrink-0"></div>
+              <div className="flex-1 space-y-1">
+                <div className="h-2 bg-white/50 rounded w-28"></div>
+                <div className="h-1.5 bg-white/25 rounded w-18"></div>
+              </div>
+            </div>
+            <div className="w-48 h-12 bg-white/6 backdrop-blur-xl rounded-lg border border-white/10 flex items-center gap-3 px-4 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+              <div className="w-6 h-6 bg-gradient-to-br from-orange-400 to-red-500 rounded flex-shrink-0"></div>
+              <div className="flex-1 space-y-1">
+                <div className="h-2 bg-white/40 rounded w-22"></div>
+                <div className="h-1.5 bg-white/20 rounded w-14"></div>
+              </div>
+            </div>
+          </div>
+
           {/* Modern Dashboard Illustration with Glassmorphism */}
           <div className="w-[320px] h-[320px] bg-white/5 backdrop-blur-xl rounded-3xl flex flex-col border border-white/10 shadow-2xl shadow-purple-500/10 relative overflow-hidden group hover:shadow-purple-500/20 transition-all duration-300">
             {/* Subtle inner glow */}
