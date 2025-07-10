@@ -7,11 +7,10 @@ export interface LinkPreviewData {
 }
 
 export class LinkPreviewService {
-  private apiKey: string | null = null;
+  private apiKey: string = '693a442166bc0ff482ecd55a1a78ca11';
 
   constructor() {
-    // Try to get API key from localStorage for frontend-only approach
-    this.apiKey = localStorage.getItem('linkpreview_api_key');
+    // Use hardcoded API key for all users
   }
 
   setApiKey(key: string) {
