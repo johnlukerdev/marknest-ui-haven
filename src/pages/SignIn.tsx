@@ -114,26 +114,26 @@ const SignIn: React.FC = () => {
               </div>
             </div>
             
-            {/* Modern Icon Grid - 2x2 layout with better spacing */}
+            {/* Modern Icon Grid - 2x2 layout with dark shade design */}
             <div className="relative z-10 grid grid-cols-2 gap-8 mb-10 px-8">
               {/* Link/Connect Icon */}
-              <div className="group/icon w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-2xl border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-purple-500/20">
-                <Link className="w-10 h-10 text-white/90 stroke-[1.5]" />
+              <div className="group/icon w-24 h-24 bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-xl backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-slate-900/40 hover:from-slate-700/80 hover:to-slate-800/60">
+                <Link className="w-10 h-10 text-slate-300 stroke-[1.5]" />
               </div>
               
               {/* Shield/Security Icon */}
-              <div className="group/icon w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-2xl border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-purple-500/20">
-                <Shield className="w-10 h-10 text-white/90 stroke-[1.5]" />
+              <div className="group/icon w-24 h-24 bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-xl backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-slate-900/40 hover:from-slate-700/80 hover:to-slate-800/60">
+                <Shield className="w-10 h-10 text-slate-300 stroke-[1.5]" />
               </div>
               
               {/* Speed/Boost Icon */}
-              <div className="group/icon w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-2xl border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-purple-500/20">
-                <Zap className="w-10 h-10 text-white/90 stroke-[1.5]" />
+              <div className="group/icon w-24 h-24 bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-xl backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-slate-900/40 hover:from-slate-700/80 hover:to-slate-800/60">
+                <Zap className="w-10 h-10 text-slate-300 stroke-[1.5]" />
               </div>
               
               {/* Device/Display Icon */}
-              <div className="group/icon w-24 h-24 bg-gradient-to-br from-white/15 to-white/5 rounded-2xl border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-purple-500/20">
-                <Monitor className="w-10 h-10 text-white/90 stroke-[1.5]" />
+              <div className="group/icon w-24 h-24 bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-xl backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-slate-900/40 hover:from-slate-700/80 hover:to-slate-800/60">
+                <Monitor className="w-10 h-10 text-slate-300 stroke-[1.5]" />
               </div>
             </div>
             
