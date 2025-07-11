@@ -99,7 +99,7 @@ const SignIn: React.FC = () => {
 
             {/* Modern Feature Grid */}
             <div className="grid grid-cols-2 gap-6 max-w-sm mx-auto">
-              <div className="group p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+              <div className="group p-6 bg-slate-900/20 backdrop-blur-xl rounded-2xl border border-slate-700/30 hover:bg-slate-800/30 transition-all duration-300 hover:scale-105">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-400/20 to-indigo-400/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
                   <Shield className="w-6 h-6 text-purple-300" />
                 </div>
@@ -107,7 +107,7 @@ const SignIn: React.FC = () => {
                 <p className="text-white/60 text-xs leading-relaxed">End-to-end encrypted</p>
               </div>
 
-              <div className="group p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+              <div className="group p-6 bg-slate-900/20 backdrop-blur-xl rounded-2xl border border-slate-700/30 hover:bg-slate-800/30 transition-all duration-300 hover:scale-105">
                 <div className="w-12 h-12 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
                   <Zap className="w-6 h-6 text-indigo-300" />
                 </div>
@@ -115,7 +115,7 @@ const SignIn: React.FC = () => {
                 <p className="text-white/60 text-xs leading-relaxed">Lightning quick access</p>
               </div>
 
-              <div className="group p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+              <div className="group p-6 bg-slate-900/20 backdrop-blur-xl rounded-2xl border border-slate-700/30 hover:bg-slate-800/30 transition-all duration-300 hover:scale-105">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
                   <Monitor className="w-6 h-6 text-purple-300" />
                 </div>
@@ -123,7 +123,7 @@ const SignIn: React.FC = () => {
                 <p className="text-white/60 text-xs leading-relaxed">Cross-device sync</p>
               </div>
 
-              <div className="group p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+              <div className="group p-6 bg-slate-900/20 backdrop-blur-xl rounded-2xl border border-slate-700/30 hover:bg-slate-800/30 transition-all duration-300 hover:scale-105">
                 <div className="w-12 h-12 bg-gradient-to-br from-indigo-400/20 to-blue-400/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
                   <Link className="w-6 h-6 text-indigo-300" />
                 </div>
