@@ -86,13 +86,13 @@ const SignIn: React.FC = () => {
           <div className="relative z-10 text-center space-y-12 px-8">
             {/* Hero Text */}
             <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-light text-white tracking-wide">
+              <h2 className="text-4xl md:text-5xl font-light text-white tracking-wide font-[Poppins]">
                 Your Digital
                 <span className="block bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent font-medium">
                   Universe
                 </span>
               </h2>
-              <p className="text-xl text-white/70 font-light max-w-md mx-auto leading-relaxed">
+              <p className="text-xl text-white/70 font-light max-w-md mx-auto leading-relaxed font-[Poppins]">
                 Seamlessly organize, access, and discover everything that matters to you
               </p>
             </div>
