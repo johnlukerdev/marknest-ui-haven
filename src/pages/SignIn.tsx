@@ -63,11 +63,23 @@ const SignIn: React.FC = () => {
         
         {/* Right Section - Modern Futuristic Design */}
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 to-violet-900 items-center justify-center relative overflow-hidden">
-          {/* Animated Background Elements */}
+          {/* Animated Background Elements with Dark Shading */}
           <div className="absolute inset-0">
+            {/* Dark gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/20 via-transparent to-slate-800/30"></div>
+            
+            {/* Dark geometric shapes */}
+            <div className="absolute top-20 left-20 w-40 h-40 bg-slate-900/30 rounded-2xl blur-2xl rotate-12 animate-pulse"></div>
+            <div className="absolute bottom-32 right-16 w-28 h-28 bg-slate-800/40 rounded-full blur-xl animate-pulse delay-700"></div>
+            
+            {/* Original light elements */}
             <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-xl animate-pulse"></div>
             <div className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-lg animate-pulse delay-1000"></div>
             <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-indigo-400/10 rounded-full blur-md animate-pulse delay-500"></div>
+            
+            {/* Additional dark accent elements */}
+            <div className="absolute top-1/3 right-20 w-20 h-20 bg-slate-700/25 rounded-lg blur-lg rotate-45 animate-pulse delay-300"></div>
+            <div className="absolute bottom-1/4 left-1/3 w-36 h-36 bg-slate-900/20 rounded-full blur-2xl animate-pulse delay-1500"></div>
           </div>
 
           {/* Main Content Container */}
