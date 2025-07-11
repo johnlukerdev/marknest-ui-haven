@@ -83,7 +83,10 @@ const SignIn: React.FC = () => {
           </div>
 
           {/* Main Content Container */}
-          <div className="relative z-10 text-center space-y-12 px-8">
+          <div className="relative z-10 text-center space-y-10 px-6 max-w-md mx-auto">
+            {/* Dark shade overlay */}
+            <div className="absolute inset-0 bg-slate-900/15 rounded-3xl backdrop-blur-sm -z-10"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-800/10 via-transparent to-slate-900/20 rounded-3xl -z-10"></div>
             {/* Hero Text */}
             <div className="space-y-6">
               <h2 className="text-4xl md:text-5xl font-light text-white tracking-wide font-[Poppins]">
