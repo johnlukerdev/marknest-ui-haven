@@ -95,7 +95,7 @@ const SignIn: React.FC = () => {
                   Universe
                 </span>
               </h2>
-              <p className="text-xl text-white/70 font-light max-w-md mx-auto leading-relaxed font-[Poppins]">
+              <p className="text-lg text-white/70 font-light max-w-md mx-auto leading-relaxed font-[Poppins]">
                 Seamlessly organize, access, and discover everything that matters to you
               </p>
             </div>
