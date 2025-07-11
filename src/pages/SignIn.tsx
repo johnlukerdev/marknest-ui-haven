@@ -61,96 +61,76 @@ const SignIn: React.FC = () => {
           </div>
         </div>
         
-        {/* Right Section - Clean Modern Design */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 to-violet-900 items-center justify-center relative">
-          {/* Floating Bookmark Cards - Top Right */}
-          <div className="absolute top-12 right-12 space-y-3 animate-fade-in">
-            <div className="w-48 h-12 bg-white/10 backdrop-blur-xl rounded-lg border border-white/20 flex items-center gap-3 px-4 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-              <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-500 rounded flex-shrink-0"></div>
-              <div className="flex-1 space-y-1">
-                <div className="h-2 bg-white/60 rounded w-24"></div>
-                <div className="h-1.5 bg-white/30 rounded w-16"></div>
-              </div>
-            </div>
-            <div className="w-48 h-12 bg-white/8 backdrop-blur-xl rounded-lg border border-white/15 flex items-center gap-3 px-4 hover:bg-white/12 transition-all duration-300 hover:scale-105">
-              <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded flex-shrink-0"></div>
-              <div className="flex-1 space-y-1">
-                <div className="h-2 bg-white/50 rounded w-20"></div>
-                <div className="h-1.5 bg-white/25 rounded w-12"></div>
-              </div>
-            </div>
+        {/* Right Section - Modern Futuristic Design */}
+        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-900 to-violet-900 items-center justify-center relative overflow-hidden">
+          {/* Animated Background Elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-xl animate-pulse"></div>
+            <div className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-lg animate-pulse delay-1000"></div>
+            <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-indigo-400/10 rounded-full blur-md animate-pulse delay-500"></div>
           </div>
 
-          {/* Floating Bookmark Cards - Bottom Left */}
-          <div className="absolute bottom-12 left-12 space-y-3 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <div className="w-48 h-12 bg-white/8 backdrop-blur-xl rounded-lg border border-white/15 flex items-center gap-3 px-4 hover:bg-white/12 transition-all duration-300 hover:scale-105">
-              <div className="w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-500 rounded flex-shrink-0"></div>
-              <div className="flex-1 space-y-1">
-                <div className="h-2 bg-white/50 rounded w-28"></div>
-                <div className="h-1.5 bg-white/25 rounded w-18"></div>
-              </div>
+          {/* Main Content Container */}
+          <div className="relative z-10 text-center space-y-12 px-8">
+            {/* Hero Text */}
+            <div className="space-y-6">
+              <h2 className="text-4xl md:text-5xl font-light text-white tracking-wide">
+                Your Digital
+                <span className="block bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent font-medium">
+                  Universe
+                </span>
+              </h2>
+              <p className="text-xl text-white/70 font-light max-w-md mx-auto leading-relaxed">
+                Seamlessly organize, access, and discover everything that matters to you
+              </p>
             </div>
-            <div className="w-48 h-12 bg-white/6 backdrop-blur-xl rounded-lg border border-white/10 flex items-center gap-3 px-4 hover:bg-white/10 transition-all duration-300 hover:scale-105">
-              <div className="w-6 h-6 bg-gradient-to-br from-orange-400 to-red-500 rounded flex-shrink-0"></div>
-              <div className="flex-1 space-y-1">
-                <div className="h-2 bg-white/40 rounded w-22"></div>
-                <div className="h-1.5 bg-white/20 rounded w-14"></div>
-              </div>
-            </div>
-          </div>
 
-          {/* Modern Dashboard Illustration with Glassmorphism */}
-          <div className="w-[320px] h-[320px] bg-white/5 backdrop-blur-xl rounded-3xl flex flex-col border border-white/10 shadow-2xl shadow-purple-500/10 relative overflow-hidden group hover:shadow-purple-500/20 transition-all duration-300">
-            {/* Subtle inner glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-purple-500/5 rounded-3xl"></div>
-            
-            {/* Dashboard Header - More prominent */}
-            <div className="relative z-10 w-full px-8 py-6 border-b border-white/10 mb-8">
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-400 to-indigo-400 rounded-lg flex items-center justify-center">
-                  <Monitor className="w-4 h-4 text-white" />
+            {/* Modern Feature Grid */}
+            <div className="grid grid-cols-2 gap-6 max-w-sm mx-auto">
+              <div className="group p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-400/20 to-indigo-400/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                  <Shield className="w-6 h-6 text-purple-300" />
                 </div>
-                <span className="text-white text-xl font-semibold tracking-wide">Dashboard</span>
+                <h3 className="text-white text-sm font-medium mb-2">Secure</h3>
+                <p className="text-white/60 text-xs leading-relaxed">End-to-end encrypted</p>
+              </div>
+
+              <div className="group p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+                <div className="w-12 h-12 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                  <Zap className="w-6 h-6 text-indigo-300" />
+                </div>
+                <h3 className="text-white text-sm font-medium mb-2">Fast</h3>
+                <p className="text-white/60 text-xs leading-relaxed">Lightning quick access</p>
+              </div>
+
+              <div className="group p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                  <Monitor className="w-6 h-6 text-purple-300" />
+                </div>
+                <h3 className="text-white text-sm font-medium mb-2">Anywhere</h3>
+                <p className="text-white/60 text-xs leading-relaxed">Cross-device sync</p>
+              </div>
+
+              <div className="group p-6 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+                <div className="w-12 h-12 bg-gradient-to-br from-indigo-400/20 to-blue-400/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                  <Link className="w-6 h-6 text-indigo-300" />
+                </div>
+                <h3 className="text-white text-sm font-medium mb-2">Smart</h3>
+                <p className="text-white/60 text-xs leading-relaxed">AI-powered organization</p>
               </div>
             </div>
-            
-            {/* Modern Icon Grid - 2x2 layout with dark shade design */}
-            <div className="relative z-10 grid grid-cols-2 gap-8 mb-10 px-8">
-              {/* Link/Connect Icon */}
-              <div className="group/icon w-24 h-24 bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-xl backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-slate-900/40 hover:from-slate-700/80 hover:to-slate-800/60">
-                <Link className="w-10 h-10 text-slate-300 stroke-[1.5]" />
-              </div>
-              
-              {/* Shield/Security Icon */}
-              <div className="group/icon w-24 h-24 bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-xl backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-slate-900/40 hover:from-slate-700/80 hover:to-slate-800/60">
-                <Shield className="w-10 h-10 text-slate-300 stroke-[1.5]" />
-              </div>
-              
-              {/* Speed/Boost Icon */}
-              <div className="group/icon w-24 h-24 bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-xl backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-slate-900/40 hover:from-slate-700/80 hover:to-slate-800/60">
-                <Zap className="w-10 h-10 text-slate-300 stroke-[1.5]" />
-              </div>
-              
-              {/* Device/Display Icon */}
-              <div className="group/icon w-24 h-24 bg-gradient-to-br from-slate-800/80 to-slate-900/60 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-xl backdrop-blur-sm hover:scale-105 transition-all duration-200 hover:shadow-slate-900/40 hover:from-slate-700/80 hover:to-slate-800/60">
-                <Monitor className="w-10 h-10 text-slate-300 stroke-[1.5]" />
-              </div>
+
+            {/* Floating Accent Elements */}
+            <div className="relative">
+              <div className="absolute -top-8 -left-8 w-1 h-16 bg-gradient-to-b from-transparent via-purple-400/30 to-transparent"></div>
+              <div className="absolute -top-8 -right-8 w-1 h-16 bg-gradient-to-b from-transparent via-indigo-400/30 to-transparent"></div>
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-transparent via-purple-400/30 to-transparent"></div>
             </div>
-            
-            {/* Elegant Progress Indicators */}
-            <div className="relative z-10 space-y-4 w-full px-8">
-              <div className="h-3 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
-                <div className="h-full bg-gradient-to-r from-purple-400 to-indigo-400 rounded-full w-4/5 shadow-sm animate-pulse"></div>
-              </div>
-              <div className="h-3 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
-                <div className="h-full bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full w-3/5 shadow-sm"></div>
-              </div>
-            </div>
-            
-            {/* Floating elements for depth */}
-            <div className="absolute top-4 right-4 w-2 h-2 bg-purple-400/60 rounded-full animate-pulse"></div>
-            <div className="absolute bottom-4 left-4 w-1.5 h-1.5 bg-indigo-400/40 rounded-full animate-pulse delay-1000"></div>
           </div>
+
+          {/* Corner Accent Lines */}
+          <div className="absolute top-8 right-8 w-16 h-16 border-t-2 border-r-2 border-white/20 rounded-tr-2xl"></div>
+          <div className="absolute bottom-8 left-8 w-16 h-16 border-b-2 border-l-2 border-white/20 rounded-bl-2xl"></div>
         </div>
       </div>
 
