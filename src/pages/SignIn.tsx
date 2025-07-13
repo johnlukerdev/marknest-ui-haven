@@ -216,7 +216,7 @@ const SignIn: React.FC = () => {
               </div>
               <h3 className="text-lg font-medium text-foreground mb-3">Built for Focus</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Say goodbye to clutter. MarkNest keeps your bookmarks clean, searchable, and always within reach.
+                No more clutter. MarkNest keeps bookmarks tidy and easy to find.
               </p>
             </div>
             
@@ -226,7 +226,7 @@ const SignIn: React.FC = () => {
               </div>
               <h3 className="text-lg font-medium text-foreground mb-3">Privacy First</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Your data stays yours. With end-to-end encryption, only you can access your content.
+                Only you can see your data — fully encrypted, always private.
               </p>
             </div>
             
@@ -236,7 +236,7 @@ const SignIn: React.FC = () => {
               </div>
               <h3 className="text-lg font-medium text-foreground mb-3">Always in Sync</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Across all your devices — effortlessly. No installs, no confusion, just seamless access.
+                Access anywhere, anytime. No setup needed.
               </p>
             </div>
           </div>
