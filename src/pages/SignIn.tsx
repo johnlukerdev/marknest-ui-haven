@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Logo from '@/components/Logo';
-import { Monitor, Shield, Zap, Link, Target, RefreshCw } from 'lucide-react';
+import { Monitor, Shield, Zap, Link, Target, RefreshCw, Lock } from 'lucide-react';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -198,44 +198,44 @@ const SignIn: React.FC = () => {
       </div>
 
       {/* Why People Choose MarkNest Section */}
-      <div className="bg-muted/20 py-20">
-        <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-20">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-medium text-foreground mb-6">
+      <div className="bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900/50 dark:to-slate-800/30 py-24">
+        <div className="max-w-4xl mx-auto px-8 md:px-12 lg:px-20">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-6 tracking-tight">
               Why People Choose MarkNest
             </h2>
-            <p className="text-muted-foreground text-base max-w-3xl mx-auto leading-relaxed">
-              MarkNest isn't just a bookmarking tool — it's your second brain. In a digital world full of distractions, it helps you collect, organize, and protect the content that truly matters to you.
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+              MarkNest helps you save, organize, and protect what matters.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="text-center group animate-fade-in">
-              <div className="w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform duration-200">
-                <Target className="w-8 h-8 text-blue-400" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="text-center group animate-fade-in p-8 bg-white/50 dark:bg-slate-900/50 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                <Target className="w-10 h-10 text-blue-500" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-3">Built for Focus</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <h3 className="text-xl font-semibold text-foreground mb-4">Built for Focus</h3>
+              <p className="text-muted-foreground leading-relaxed">
                 Say goodbye to clutter. MarkNest keeps your bookmarks clean, searchable, and always within reach.
               </p>
             </div>
             
-            <div className="text-center group animate-fade-in delay-200">
-              <div className="w-16 h-16 bg-emerald-500/20 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform duration-200">
-                <Shield className="w-8 h-8 text-emerald-400" />
+            <div className="text-center group animate-fade-in delay-200 p-8 bg-white/50 dark:bg-slate-900/50 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                <Lock className="w-10 h-10 text-emerald-500" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-3">Privacy First</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <h3 className="text-xl font-semibold text-foreground mb-4">Privacy First</h3>
+              <p className="text-muted-foreground leading-relaxed">
                 Your data stays yours. With end-to-end encryption, only you can access your content.
               </p>
             </div>
             
-            <div className="text-center group animate-fade-in delay-500">
-              <div className="w-16 h-16 bg-violet-500/20 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform duration-200">
-                <RefreshCw className="w-8 h-8 text-violet-400" />
+            <div className="text-center group animate-fade-in delay-500 p-8 bg-white/50 dark:bg-slate-900/50 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-violet-500/10 to-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                <RefreshCw className="w-10 h-10 text-violet-500" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-3">Always in Sync</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <h3 className="text-xl font-semibold text-foreground mb-4">Always in Sync</h3>
+              <p className="text-muted-foreground leading-relaxed">
                 Across all your devices — effortlessly. No installs, no confusion, just seamless access.
               </p>
             </div>
