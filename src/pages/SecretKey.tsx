@@ -167,16 +167,16 @@ const SecretKey: React.FC = () => {
               {/* Input Section */}
               <div className="space-y-6">
                 <div className="space-y-3 relative">
-                  <Input 
+                  <textarea 
                     id="secret-key-input" 
-                    type="text" 
                     placeholder="Enter your secret key…" 
                     value={secretKey} 
-                    onChange={handleInputChange}
+                    onChange={(e) => setSecretKey(e.target.value)}
                     onFocus={handleInputFocus}
                     onBlur={handleInputBlur}
                     autoComplete="off"
-                    className="w-full aspect-square min-h-[200px] sm:min-h-[240px] md:min-h-[260px] text-lg sm:text-xl font-['Inter'] font-normal leading-relaxed rounded-2xl border-2 border-border/40 bg-background/90 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md resize-none placeholder:text-lg sm:placeholder:text-xl placeholder:font-['Inter'] placeholder:text-muted-foreground/50 placeholder:font-normal focus:outline-none focus:ring-0 focus:ring-offset-0 focus:border-border/60 dark:bg-card/50 dark:border-border/30 dark:hover:border-border/50 light:border-gray-200 light:hover:border-gray-300 p-6 sm:p-8" />
+                    className="w-full h-[200px] sm:h-[240px] md:h-[260px] text-lg sm:text-xl font-['Inter'] font-normal leading-relaxed rounded-2xl border-2 border-border/40 bg-background/90 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md resize-none placeholder:text-lg sm:placeholder:text-xl placeholder:font-['Inter'] placeholder:text-muted-foreground/50 placeholder:font-normal focus:outline-none focus:ring-0 focus:ring-offset-0 focus:border-border/60 dark:bg-card/50 dark:border-border/30 dark:hover:border-border/50 light:border-gray-200 light:hover:border-gray-300 p-6 sm:p-8"
+                  />
                   
                   {/* Autocomplete Suggestion */}
                   {showAutocomplete && hasSavedKey && (
