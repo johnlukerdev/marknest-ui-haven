@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Logo from '@/components/Logo';
-import { Monitor, Shield, Zap, Link, Target, RefreshCw } from 'lucide-react';
+import { Monitor, Shield, Zap, Link, Target, RefreshCw, Lock } from 'lucide-react';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -205,7 +205,7 @@ const SignIn: React.FC = () => {
               Why People Choose MarkNest
             </h2>
             <p className="text-muted-foreground text-base max-w-3xl mx-auto leading-relaxed">
-              MarkNest isn't just a bookmarking tool — it's your second brain. In a digital world full of distractions, it helps you collect, organize, and protect the content that truly matters to you.
+              MarkNest helps you save, organize, and protect what matters.
             </p>
           </div>
           
@@ -222,7 +222,7 @@ const SignIn: React.FC = () => {
             
             <div className="text-center group animate-fade-in delay-200">
               <div className="w-16 h-16 bg-emerald-500/20 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform duration-200">
-                <Shield className="w-8 h-8 text-emerald-400" />
+                <Lock className="w-8 h-8 text-emerald-400" />
               </div>
               <h3 className="text-lg font-medium text-foreground mb-3">Privacy First</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
