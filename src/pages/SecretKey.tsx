@@ -296,30 +296,6 @@ const SecretKey: React.FC = () => {
           </div>
         </div>
         
-        {/* Mobile Information Section - Below the card */}
-        <div className="lg:hidden absolute bottom-0 left-0 right-0 p-4">
-          <div className="bg-card/90 backdrop-blur-sm border border-border/50 rounded-2xl p-6 animate-fade-in">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* End-to-end encryption */}
-              <div className="flex items-start gap-3">
-                <div className="text-xl">🔐</div>
-                <div>
-                  <h3 className="text-foreground font-bold text-sm mb-1">End-to-end encryption</h3>
-                  <p className="text-muted-foreground text-xs">Your data is protected by your secret key.</p>
-                </div>
-              </div>
-              
-              {/* Smart organizing */}
-              <div className="flex items-start gap-3">
-                <div className="text-xl">📁</div>
-                <div>
-                  <h3 className="text-foreground font-bold text-sm mb-1">Smart organizing</h3>
-                  <p className="text-muted-foreground text-xs">Organize your digital footprint with ease.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>;
   }
 
