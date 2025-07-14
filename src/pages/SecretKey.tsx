@@ -343,39 +343,23 @@ const SecretKey: React.FC = () => {
               Your Secret Key
             </h1>
             
-            {/* Subtitle */}
-            <p className="text-lg text-muted-foreground text-center mb-8">
-              This is your private key — your only way back into MarkNest.
-            </p>
-
-            {/* Explanation above key box */}
-            <div className="mb-6 text-center bg-muted/30 rounded-xl p-4">
-              <p className="text-foreground mb-2">
-                This page shows your personal Secret Key. It's a set of 24 words that acts as your password.
-              </p>
-              <p className="text-sm text-muted-foreground mb-1">
-                📌 You'll need it every time you log in.
-              </p>
-              <p className="text-sm text-muted-foreground">
-                🔒 Save it safely — we can't help you recover it later.
-              </p>
-            </div>
-
-            {/* Tips */}
+            {/* Description */}
             <div className="mb-6 text-center">
-              <p className="text-lg font-semibold text-foreground mb-4">🧠 Tips</p>
+              <p className="text-lg text-foreground mb-4">
+                These 24 words are your password. Save them securely:
+              </p>
               <ul className="space-y-2 text-left max-w-md mx-auto">
                 <li className="flex items-start">
                   <span className="mr-2 mt-0.5">✏️</span>
-                  <span>Write it down on paper</span>
+                  <span>Write them down</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 mt-0.5">📦</span>
-                  <span>Save it in a password manager</span>
+                  <span>Store in a password manager</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="mr-2 mt-0.5">🚫</span>
-                  <span>Don't share or store it online</span>
+                  <span className="mr-2 mt-0.5">🔥</span>
+                  <span>Never share digitally</span>
                 </li>
               </ul>
             </div>
@@ -410,31 +394,43 @@ const SecretKey: React.FC = () => {
             
             {/* Buttons */}
             <div className="space-y-4 mt-8">
-              <Button 
-                variant="outline" 
-                className="w-full py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300" 
-                onClick={handleCopyToClipboard}
-                disabled={wordsLoading}
-              >
-                {copied ? (
-                  <>
-                    <Check className="h-5 w-5" />
-                    Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-5 w-5" />
-                    Copy to Clipboard
-                  </>
-                )}
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  className="flex-1 py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300" 
+                  onClick={handleCopyToClipboard}
+                  disabled={wordsLoading}
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-5 w-5" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-5 w-5" />
+                      Copy to Clipboard
+                    </>
+                  )}
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="px-6 py-6 flex items-center justify-center gap-2 focus:ring-0 rounded-xl border-2 hover:scale-[1.02] transition-all duration-300" 
+                  onClick={regenerateWords}
+                  disabled={wordsLoading}
+                  title="Generate new words"
+                >
+                  <RefreshCw className={`h-5 w-5 ${wordsLoading ? 'animate-spin' : ''}`} />
+                </Button>
+              </div>
               
               <Button 
-                className="w-full py-6 gradient-primary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] focus:ring-0" 
+                className="w-full py-6 text-xl gradient-primary focus:ring-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
                 onClick={handleSaved}
                 disabled={wordsLoading}
               >
-                ✅ I've Saved It
+                I've Saved It
               </Button>
             </div>
 
