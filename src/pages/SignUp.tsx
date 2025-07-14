@@ -36,35 +36,48 @@ const SignUp: React.FC = () => {
           
           {/* Main Content */}
           <div className="bg-card border border-border rounded-xl p-8 shadow-lg animate-fade-in">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 font-[Poppins]">
-              Join MarkNest Today
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 font-[Poppins]">
+              🚀 Get Started with MarkNest
             </h1>
+            
+            <p className="text-lg text-muted-foreground text-center mb-8">
+              Unlock secure, seamless access to your digital world.
+            </p>
             
             {/* Value Proposition */}
             <div className="mb-8 text-center">
-              <p className="text-lg text-foreground mb-4">Your privacy comes first:</p>
-              <ul className="space-y-3 text-left max-w-md mx-auto">
+              <ul className="space-y-4 text-left max-w-md mx-auto">
                 <li className="flex items-start">
-                  <span className="mr-2 mt-1">🔒</span>
-                  <span>Everything encrypted with your Secret Key</span>
+                  <span className="mr-3 mt-1 text-lg">🔐</span>
+                  <div>
+                    <div className="font-semibold text-foreground">Private by Design</div>
+                    <div className="text-muted-foreground text-sm">Your secret key encrypts everything you save.</div>
+                  </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="mr-2 mt-1">🌐</span>
-                  <span>Access from any device securely</span>
+                  <span className="mr-3 mt-1 text-lg">🌍</span>
+                  <div>
+                    <div className="font-semibold text-foreground">Access from Anywhere</div>
+                    <div className="text-muted-foreground text-sm">Syncs across all your devices, automatically.</div>
+                  </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="mr-2 mt-1">🚫</span>
-                  <span>No tracking, no ads, no compromises</span>
+                  <span className="mr-3 mt-1 text-lg">🚫</span>
+                  <div>
+                    <div className="font-semibold text-foreground">No Ads, No Spying</div>
+                    <div className="text-muted-foreground text-sm">We never track or sell your data — ever.</div>
+                  </div>
                 </li>
               </ul>
             </div>
             
-            {/* Animated Lock Icon */}
+            {/* Glowing Lock Icon */}
             <div className="flex justify-center my-8">
-              <div className="p-6 bg-background/50 rounded-full hover:scale-105 transition-all duration-300 group">
+              <div className="relative p-6 bg-primary/10 backdrop-blur-sm rounded-2xl border border-primary/20 shadow-lg shadow-primary/20 hover:scale-105 transition-all duration-300 group">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-sm"></div>
                 <Lock 
-                  size={64} 
-                  className="text-primary group-hover:rotate-360 transition-transform duration-700"
+                  size={48} 
+                  className="relative text-primary group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
             </div>
