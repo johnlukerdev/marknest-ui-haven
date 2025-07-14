@@ -446,21 +446,70 @@ const SecretKey: React.FC = () => {
             
             {/* FAQ Section */}
             <div className="mt-8">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="lost-key">
-                  <AccordionTrigger className="text-left flex items-center">
-                    <div className="flex items-center gap-2">
-                      <HelpCircle className="h-5 w-5" />
-                      <span>What if I lose my Secret Key?</span>
+              <Accordion type="single" collapsible className="w-full space-y-3">
+                <AccordionItem value="lost-key" className="border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left flex items-center px-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">❓</span>
+                      <span className="font-semibold">Lost your Secret Key?</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-muted-foreground">
-                      If you lose your Secret Key, we cannot recover it for you. Your data is encrypted with this key, and without it, your bookmarks cannot be accessed. This is why it's crucial to store it securely offline or in a password manager. MarkNest prioritizes your privacy, which means we don't have access to your data.
-                    </p>
+                  <AccordionContent className="px-4 pb-4">
+                    <div className="text-muted-foreground space-y-2">
+                      <p>Your Secret Key is the only way to unlock your data.</p>
+                      <p>If it's lost, we can't restore your access — for your own privacy.</p>
+                      <p>MarkNest doesn't store or see your key.</p>
+                      <p className="font-medium text-foreground">Please save it securely. Once it's gone, it's gone.</p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="save-key" className="border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left flex items-center px-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">🔐</span>
+                      <span className="font-semibold">Best Places to Save Your Key</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4">
+                    <div className="text-muted-foreground space-y-3">
+                      <p className="font-medium text-foreground">Your key = your access. Store it somewhere only you can reach:</p>
+                      <ul className="space-y-2 ml-2">
+                        <li>• A secure password manager (like Bitwarden or 1Password)</li>
+                        <li>• A locked notes app</li>
+                        <li>• Safely written and stored offline</li>
+                      </ul>
+                      <p className="text-sm">Avoid saving it in emails, chat apps, or shared docs.</p>
+                      <p className="font-medium text-foreground">Treat it like your most private vault key.</p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="no-password" className="border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left flex items-center px-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">🧩</span>
+                      <span className="font-semibold">Why No Password?</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4">
+                    <div className="text-muted-foreground space-y-2">
+                      <p>We ditched passwords for something stronger.</p>
+                      <p>Your Secret Key is private, unguessable, and never stored by us.</p>
+                      <p>No sign-ups. No tracking. No middlemen.</p>
+                      <p className="font-medium text-foreground">Just a single key that puts you in full control.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+              
+              {/* Final Tip */}
+              <div className="mt-6 text-center">
+                <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+                  <span className="text-base">💡</span>
+                  <span><strong>Tip:</strong> Back up your key today. You'll thank yourself later.</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
