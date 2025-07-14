@@ -250,7 +250,7 @@ const SecretKey: React.FC = () => {
         </div>
         
         {/* Right Side - Information Section */}
-        <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 items-center justify-center relative overflow-hidden">
+        <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-indigo-900 to-violet-900 items-center justify-center relative overflow-hidden">
           {/* Soft background effects */}
           <div className="absolute inset-0">
             <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-400/10 rounded-full blur-3xl"></div>
