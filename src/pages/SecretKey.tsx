@@ -277,12 +277,30 @@ const SecretKey: React.FC = () => {
                 </div>
               </div>
               
-              {/* Smart organizing */}
+              {/* Your Web, Your Way */}
               <div className="flex items-start gap-4">
-                <div className="text-2xl">📁</div>
+                <div className="text-2xl">🗝️</div>
                 <div>
-                  <h3 className="text-white font-bold text-lg mb-2">Smart organizing</h3>
-                  <p className="text-white/70 text-base leading-relaxed">Organize your digital footprint with ease.</p>
+                  <h3 className="text-white font-bold text-lg mb-2">Your Web, Your Way</h3>
+                  <p className="text-white/70 text-base leading-relaxed">Instant access to what matters — anytime.</p>
+                </div>
+              </div>
+              
+              {/* No Logins, No Leaks */}
+              <div className="flex items-start gap-4">
+                <div className="text-2xl">🛡️</div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2">No Logins, No Leaks</h3>
+                  <p className="text-white/70 text-base leading-relaxed">One key. Total control. Fully encrypted.</p>
+                </div>
+              </div>
+              
+              {/* No Tracking. No Traces. */}
+              <div className="flex items-start gap-4">
+                <div className="text-2xl">🕵️</div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2">No Tracking. No Traces.</h3>
+                  <p className="text-white/70 text-base leading-relaxed">We don't see your data — only you can.</p>
                 </div>
               </div>
             </div>
