@@ -268,6 +268,15 @@ const SecretKey: React.FC = () => {
             
             {/* Information Blocks */}
             <div className="space-y-8 animate-fade-in">
+              {/* Fast & Secure Access */}
+              <div className="flex items-start gap-4">
+                <div className="text-2xl">⚡</div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2">Fast & Secure Access</h3>
+                  <p className="text-white/70 text-base leading-relaxed">Get what you need instantly, without compromise.</p>
+                </div>
+              </div>
+              
               {/* End-to-end encryption */}
               <div className="flex items-start gap-4">
                 <div className="text-2xl">🔐</div>
