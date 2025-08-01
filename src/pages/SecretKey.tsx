@@ -273,7 +273,7 @@ const SecretKey: React.FC = () => {
                 <div className="text-2xl">🔐</div>
                 <div>
                   <h3 className="text-white font-bold text-lg mb-2">End-to-end encryption</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Your data is protected by your secret key.</p>
+                  <p className="text-white/70 text-base leading-relaxed">Your data is protected by your secret key.</p>
                 </div>
               </div>
               
@@ -282,7 +282,7 @@ const SecretKey: React.FC = () => {
                 <div className="text-2xl">🗝️</div>
                 <div>
                   <h3 className="text-white font-bold text-lg mb-2">Your Web, Your Way</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Instant access to what matters anytime.</p>
+                  <p className="text-white/70 text-base leading-relaxed">Instant access to what matters anytime.</p>
                 </div>
               </div>
               
@@ -300,7 +300,7 @@ const SecretKey: React.FC = () => {
                 <div className="text-2xl">🕵️</div>
                 <div>
                   <h3 className="text-white font-bold text-lg mb-2">No Tracking. No Traces.</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">We don't see your data only you can.</p>
+                  <p className="text-white/70 text-base leading-relaxed">We don't see your data only you can.</p>
                 </div>
               </div>
             </div>
