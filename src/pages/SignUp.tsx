@@ -48,24 +48,24 @@ const SignUp: React.FC = () => {
             <div className="mb-8 text-center">
               <ul className="space-y-4 text-left max-w-md mx-auto">
                 <li className="flex items-start">
-                  <span className="mr-3 mt-1 text-lg">🔐</span>
+                  <span className="mr-3 mt-1 text-lg">✨</span>
                   <div>
-                    <div className="font-semibold text-foreground text-base">Private by Design</div>
-                    <div className="text-muted-foreground text-base">Your secret key encrypts everything you save.</div>
+                    <div className="font-semibold text-foreground text-base">Guarantee Your Privacy</div>
+                    <div className="text-muted-foreground text-base">Your secret key is generated only for you. It encrypts everything you create, view, or save — instantly and locally.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="mr-3 mt-1 text-lg">🌍</span>
+                  <span className="mr-3 mt-1 text-lg">🔐</span>
                   <div>
-                    <div className="font-semibold text-foreground text-base">Access from Anywhere</div>
-                    <div className="text-muted-foreground text-base">Syncs across all your devices, automatically.</div>
+                    <div className="font-semibold text-foreground text-base">Only You Can Access</div>
+                    <div className="text-muted-foreground text-base">We can't see, access, or modify your data. Not now, not ever. Your digital world stays private, by default.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-3 mt-1 text-lg">🚫</span>
                   <div>
-                    <div className="font-semibold text-foreground text-base">No Ads, No Spying</div>
-                    <div className="text-muted-foreground text-base">We never track or sell your data — ever.</div>
+                    <div className="font-semibold text-foreground text-base">No Accounts. No Logs.</div>
+                    <div className="text-muted-foreground text-base">There's no email, no login, and no tracking. Just one key — total control is always in your hands.</div>
                   </div>
                 </li>
               </ul>
