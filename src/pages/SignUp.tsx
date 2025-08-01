@@ -40,7 +40,7 @@ const SignUp: React.FC = () => {
               🚀 Get Started with MarkNest
             </h1>
             
-            <p className="text-lg text-muted-foreground text-center mb-8">
+            <p className="text-sm text-muted-foreground text-center mb-8">
               Unlock secure, seamless access to your digital world.
             </p>
             
@@ -50,22 +50,22 @@ const SignUp: React.FC = () => {
                 <li className="flex items-start">
                   <span className="mr-3 mt-1 text-lg">🔐</span>
                   <div>
-                    <div className="font-semibold text-foreground">Private by Design</div>
-                    <div className="text-muted-foreground text-sm">Your secret key encrypts everything you save.</div>
+                    <div className="font-semibold text-foreground text-base">Private by Design</div>
+                    <div className="text-muted-foreground text-base">Your secret key encrypts everything you save.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-3 mt-1 text-lg">🌍</span>
                   <div>
-                    <div className="font-semibold text-foreground">Access from Anywhere</div>
-                    <div className="text-muted-foreground text-sm">Syncs across all your devices, automatically.</div>
+                    <div className="font-semibold text-foreground text-base">Access from Anywhere</div>
+                    <div className="text-muted-foreground text-base">Syncs across all your devices, automatically.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-3 mt-1 text-lg">🚫</span>
                   <div>
-                    <div className="font-semibold text-foreground">No Ads, No Spying</div>
-                    <div className="text-muted-foreground text-sm">We never track or sell your data — ever.</div>
+                    <div className="font-semibold text-foreground text-base">No Ads, No Spying</div>
+                    <div className="text-muted-foreground text-base">We never track or sell your data — ever.</div>
                   </div>
                 </li>
               </ul>
