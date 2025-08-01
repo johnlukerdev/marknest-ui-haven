@@ -262,7 +262,7 @@ const SecretKey: React.FC = () => {
             {/* Main Lock Icon */}
             <div className="mb-12 flex justify-center">
               <div className="p-6 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 rounded-2xl backdrop-blur-sm">
-                <Lock className="w-20 h-20 text-white/80" />
+                <Lock className="w-16 h-16 text-white/80" />
               </div>
             </div>
             
