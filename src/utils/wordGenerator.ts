@@ -1,64 +1,46 @@
 
-// Vowels and consonants for creating pronounceable words
-const VOWELS = 'aeiou';
-const CONSONANTS = 'bcdfghjklmnpqrstvwxyz';
-
-// Common syllable patterns for more realistic words
-const PATTERNS = [
-  'cvc', 'cvvc', 'ccvc', 'cvcv', 'vcvc', 'cvccv'
+// Simple English words for secret key generation
+const SIMPLE_WORDS = [
+  'cat', 'dog', 'tree', 'book', 'run', 'smile', 'house', 'car',
+  'bird', 'fish', 'sun', 'moon', 'star', 'light', 'dark', 'red',
+  'blue', 'green', 'happy', 'sad', 'fast', 'slow', 'big', 'small',
+  'water', 'fire', 'earth', 'wind', 'love', 'hope', 'dream', 'play',
+  'work', 'sleep', 'eat', 'walk', 'jump', 'dance', 'sing', 'laugh',
+  'cry', 'think', 'learn', 'teach', 'help', 'share', 'give', 'take',
+  'build', 'break', 'fix', 'make', 'create', 'write', 'read', 'listen',
+  'speak', 'see', 'hear', 'feel', 'touch', 'smell', 'taste', 'know',
+  'find', 'lose', 'win', 'lose', 'start', 'stop', 'go', 'come',
+  'stay', 'leave', 'open', 'close', 'push', 'pull', 'lift', 'drop',
+  'warm', 'cold', 'hot', 'cool', 'fresh', 'old', 'new', 'clean',
+  'dirty', 'soft', 'hard', 'smooth', 'rough', 'sweet', 'sour', 'bitter',
+  'salt', 'sugar', 'bread', 'milk', 'fruit', 'flower', 'grass', 'cloud',
+  'rain', 'snow', 'wind', 'storm', 'peace', 'quiet', 'noise', 'sound',
+  'music', 'song', 'voice', 'word', 'story', 'poem', 'art', 'paint',
+  'draw', 'color', 'shape', 'line', 'circle', 'square', 'heart', 'mind',
+  'soul', 'body', 'hand', 'foot', 'eye', 'ear', 'nose', 'mouth',
+  'hair', 'skin', 'bone', 'blood', 'life', 'death', 'birth', 'grow',
+  'child', 'adult', 'young', 'old', 'man', 'woman', 'friend', 'family',
+  'mother', 'father', 'sister', 'brother', 'baby', 'gift', 'party', 'game'
 ];
 
 /**
- * Generate a single random word of specified length
+ * Shuffle an array using Fisher-Yates algorithm
  */
-function generateWord(length: number): string {
-  // Choose a pattern that fits the length
-  const availablePatterns = PATTERNS.filter(p => p.length <= length);
-  const pattern = availablePatterns[Math.floor(Math.random() * availablePatterns.length)] || 'cvc';
-  
-  let word = '';
-  
-  for (let i = 0; i < pattern.length && word.length < length; i++) {
-    const char = pattern[i];
-    if (char === 'c') {
-      word += CONSONANTS[Math.floor(Math.random() * CONSONANTS.length)];
-    } else if (char === 'v') {
-      word += VOWELS[Math.floor(Math.random() * VOWELS.length)];
-    }
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  
-  // Fill remaining length with alternating consonants and vowels
-  while (word.length < length) {
-    if (word.length % 2 === 0) {
-      word += CONSONANTS[Math.floor(Math.random() * CONSONANTS.length)];
-    } else {
-      word += VOWELS[Math.floor(Math.random() * VOWELS.length)];
-    }
-  }
-  
-  return word.toLowerCase();
+  return shuffled;
 }
 
 /**
  * Generate an array of unique random words
  */
 export function generateRandomWords(count: number): string[] {
-  const words = new Set<string>();
-  const maxAttempts = count * 10; // Prevent infinite loops
-  let attempts = 0;
-  
-  while (words.size < count && attempts < maxAttempts) {
-    const length = Math.floor(Math.random() * 3) + 5; // 5-7 letters
-    const word = generateWord(length);
-    
-    // Only add if it's not a duplicate and looks reasonable
-    if (word.length >= 5 && word.length <= 7) {
-      words.add(word);
-    }
-    attempts++;
-  }
-  
-  return Array.from(words);
+  const shuffled = shuffleArray(SIMPLE_WORDS);
+  return shuffled.slice(0, Math.min(count, SIMPLE_WORDS.length));
 }
 
 /**
