@@ -50,8 +50,8 @@ const SignUp: React.FC = () => {
                 <li className="flex items-start">
                   <span className="mr-3 mt-1 text-lg">🔐</span>
                   <div>
-                    <div className="font-semibold text-foreground text-base">Guarantees your privacy </div>
-                    <div className="text-muted-foreground text-base">MarkNest won't be able to see, access, or modify your content  </div>
+                    <div className="font-semibold text-foreground text-base">Guarantees Your Privacy </div>
+                    <div className="text-muted-foreground text-base">MarkNest won't be able to see, access,  your content  </div>
                   </div>
                 </li>
                 <li className="flex items-start">
