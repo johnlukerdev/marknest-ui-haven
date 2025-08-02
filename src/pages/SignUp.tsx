@@ -78,14 +78,6 @@ const SignUp: React.FC = () => {
               </ul>
             </div>
             
-            {/* Glowing Lock Icon */}
-            <div className="flex justify-center my-8">
-              <div className="relative p-6 bg-primary/10 backdrop-blur-sm rounded-2xl border border-primary/20 shadow-lg shadow-primary/20 hover:scale-105 transition-all duration-300 group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-sm"></div>
-                <Lock size={48} className="relative text-primary group-hover:scale-110 transition-transform duration-300" />
-              </div>
-            </div>
-            
             {/* CTA Buttons */}
             <div className="space-y-4 mt-8">
               <Button className="w-full py-6 text-lg gradient-primary focus:ring-0" onClick={handleGetSecretKey}>
