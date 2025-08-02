@@ -25,14 +25,14 @@ const SignUp: React.FC = () => {
   };
   return <div className="min-h-screen bg-background flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
-        <div className="w-full max-w-lg">
+        <div className="w-full max-w-xl">
           {/* Logo and Branding */}
           <div className="flex justify-center mb-8">
             <Logo />
           </div>
           
           {/* Main Content */}
-          <div className="bg-card border border-border rounded-xl p-8 shadow-lg animate-fade-in">
+          <div className="bg-card border border-border rounded-xl p-10 shadow-lg animate-fade-in">
             <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 font-[Poppins]">
               🚀 Get Started with MarkNest
             </h1>
