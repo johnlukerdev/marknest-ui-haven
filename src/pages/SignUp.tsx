@@ -69,10 +69,10 @@ const SignUp: React.FC = () => {
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="mr-3 mt-1 text-lg">⚡</span>
+                  <span className="mr-3 mt-1 text-lg">🔒</span>
                   <div>
-                    <div className="font-semibold text-foreground text-base">Lightning Fast</div>
-                    <div className="text-muted-foreground text-base">Instant search and organization of all your bookmarks.</div>
+                    <div className="font-semibold text-foreground text-base">Private by Design</div>
+                    <div className="text-muted-foreground text-base">Your secret key encrypts everything you save.</div>
                   </div>
                 </li>
               </ul>
