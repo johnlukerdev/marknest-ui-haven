@@ -68,6 +68,13 @@ const SignUp: React.FC = () => {
                     <div className="text-muted-foreground text-base">We never track or sell your data — ever.</div>
                   </div>
                 </li>
+                <li className="flex items-start">
+                  <span className="mr-3 mt-1 text-lg">⚡</span>
+                  <div>
+                    <div className="font-semibold text-foreground text-base">Lightning Fast</div>
+                    <div className="text-muted-foreground text-base">Instant search and organization of all your bookmarks.</div>
+                  </div>
+                </li>
               </ul>
             </div>
             
