@@ -342,13 +342,10 @@ const SecretKey: React.FC = () => {
           
           {/* Main Content */}
           <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-2xl animate-fade-in">
-            <div className="flex justify-center mb-6">
-              <div className="p-4 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full">
-                <Key className="w-8 h-8 text-white" />
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 font-[Poppins] bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent flex items-center justify-center gap-3">
+              <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full">
+                <Key className="w-6 h-6 text-white" />
               </div>
-            </div>
-            
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 font-[Poppins] bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
               Your Secret Key
             </h1>
             
