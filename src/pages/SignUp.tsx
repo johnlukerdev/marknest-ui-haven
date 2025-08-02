@@ -42,7 +42,6 @@ const SignUp: React.FC = () => {
             
             {/* Quick Start Info */}
             <div className="text-center mb-8">
-              <h2 className="text-xl font-semibold text-foreground mb-2">🔑 Instant Setup</h2>
               <p className="text-sm text-muted-foreground">
                 You'll receive a unique key that instantly encrypts your data.
               </p>
