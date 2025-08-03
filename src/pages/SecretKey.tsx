@@ -453,6 +453,29 @@ const SecretKey: React.FC = () => {
             {/* FAQ Section */}
             <div className="mt-8">
               <Accordion type="single" collapsible className="w-full space-y-3">
+                <AccordionItem value="what-is-secret-key" className="border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left flex items-center px-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">🔑</span>
+                      <span className="font-semibold">What is a Secret Key?</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4">
+                    <div className="text-muted-foreground space-y-2">
+                      <p>A Secret Key is your unique 24-word passphrase that acts as your digital identity.</p>
+                      <p>Think of it as a master key that unlocks all your data - bookmarks, settings, and everything you save.</p>
+                      <p>Unlike traditional passwords, your Secret Key is:</p>
+                      <ul className="space-y-1 ml-4 mt-2">
+                        <li>• Generated randomly for maximum security</li>
+                        <li>• Never stored on our servers</li>
+                        <li>• The only way to access your encrypted data</li>
+                        <li>• Impossible to recover if lost</li>
+                      </ul>
+                      <p className="font-medium text-foreground mt-3">Your Secret Key = Your Privacy. Keep it safe!</p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
                 <AccordionItem value="lost-key" className="border rounded-lg bg-card/50 backdrop-blur-sm">
                   <AccordionTrigger className="text-left flex items-center px-4">
                     <div className="flex items-center gap-3">
