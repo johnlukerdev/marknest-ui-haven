@@ -89,16 +89,6 @@ const MiscSettings: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium">✉️ Email Notifications</p>
-              <p className="text-sm text-muted-foreground">Receive updates about your bookmarks</p>
-            </div>
-            <Switch
-              defaultChecked={true}
-              onCheckedChange={(checked) => handleSettingChange('Email Notifications', checked ? 'Enabled' : 'Disabled')}
-            />
-          </div>
 
           <div className="flex items-center justify-between">
             <div>
