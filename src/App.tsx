@@ -14,6 +14,7 @@ import Trash from "./pages/Trash";
 import Archive from "./pages/Archive";
 import Settings from "./pages/Settings";
 import BillingHistory from "./pages/BillingHistory";
+import ManageSubscription from "./pages/ManageSubscription";
 import { BookmarkProvider } from "./hooks/useBookmarkContext";
 import LoadingScreen from "./components/LoadingScreen";
 import { useInitialLoad } from "./hooks/useInitialLoad";
@@ -37,6 +38,7 @@ const AppContent = () => {
             <Route path="/archive" element={<Archive />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/billing-history" element={<BillingHistory />} />
+            <Route path="/manage-subscription" element={<ManageSubscription />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

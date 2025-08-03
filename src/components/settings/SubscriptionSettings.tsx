@@ -38,7 +38,10 @@ const SubscriptionSettings: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3">
-            <Button className="bg-purple-600 hover:bg-purple-700">
+            <Button 
+              className="bg-purple-600 hover:bg-purple-700"
+              onClick={() => navigate('/manage-subscription')}
+            >
               Manage Subscription
             </Button>
             <Button 
