@@ -146,14 +146,14 @@ const SecretKey: React.FC = () => {
           {/* Subtle background decoration */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/3 to-purple-500/3 rounded-none"></div>
           
-          <div className="w-full max-w-md relative z-10">
+          <div className="w-full max-w-sm relative z-10">
             {/* Logo */}
             <div className="flex justify-center mb-12 sm:mb-16">
               <Logo />
             </div>
             
             {/* Modern Card Container */}
-            <div className="bg-card border border-border/60 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-black/5">
+            <div className="bg-card border border-border/60 rounded-3xl p-5 sm:p-8 shadow-2xl shadow-black/5">
               {/* Header */}
               <div className="text-center mb-8">
                 <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 font-[Poppins]">
