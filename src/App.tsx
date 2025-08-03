@@ -13,6 +13,7 @@ import { ThemeProvider } from "./hooks/use-theme";
 import Trash from "./pages/Trash";
 import Archive from "./pages/Archive";
 import Settings from "./pages/Settings";
+import BillingHistory from "./pages/BillingHistory";
 import { BookmarkProvider } from "./hooks/useBookmarkContext";
 import LoadingScreen from "./components/LoadingScreen";
 import { useInitialLoad } from "./hooks/useInitialLoad";
@@ -35,6 +36,7 @@ const AppContent = () => {
             <Route path="/trash" element={<Trash />} />
             <Route path="/archive" element={<Archive />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/billing-history" element={<BillingHistory />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -4,8 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CreditCard, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const SubscriptionSettings: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
@@ -38,7 +41,10 @@ const SubscriptionSettings: React.FC = () => {
             <Button className="bg-purple-600 hover:bg-purple-700">
               Manage Subscription
             </Button>
-            <Button variant="outline">
+            <Button 
+              variant="outline"
+              onClick={() => navigate('/billing-history')}
+            >
               View Billing History
             </Button>
           </div>
