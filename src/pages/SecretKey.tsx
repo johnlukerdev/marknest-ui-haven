@@ -365,7 +365,7 @@ const SecretKey: React.FC = () => {
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 mt-0.5">🔥</span>
-                  <span>Never share it online or with anyone you don't trust</span>
+                  <span>It's your personal key — keep it somewhere easy to find</span>
                 </li>
               </ul>
             </div>
