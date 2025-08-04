@@ -357,15 +357,15 @@ const SecretKey: React.FC = () => {
               <ul className="space-y-2 text-left max-w-md mx-auto">
                 <li className="flex items-start">
                   <span className="mr-2 mt-0.5">✏️</span>
-                  <span>Write them down</span>
+                  <span>Write it down in a safe place</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 mt-0.5">📦</span>
-                  <span>Store in a password manager</span>
+                  <span>Store it in a trusted password manager</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 mt-0.5">🔥</span>
-                  <span>Never share digitally</span>
+                  <span>Never share it online or with anyone you don't trust</span>
                 </li>
               </ul>
             </div>
