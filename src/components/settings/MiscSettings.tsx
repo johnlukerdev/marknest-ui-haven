@@ -100,9 +100,6 @@ const MiscSettings: React.FC = () => {
           <Button variant="outline" className="w-full justify-start">
             🗑️ Clear Cache
           </Button>
-          <Button variant="outline" className="w-full justify-start">
-            📊 Usage Analytics
-          </Button>
         </CardContent>
       </Card>
     </div>
