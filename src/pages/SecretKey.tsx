@@ -148,7 +148,7 @@ const SecretKey: React.FC = () => {
           
           <div className="w-full max-w-md relative z-10">
             {/* Logo */}
-            <div className="flex justify-center mb-12 sm:mb-16">
+            <div className="flex justify-center mb-6">
               <Logo />
             </div>
             
