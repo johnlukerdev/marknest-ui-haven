@@ -80,7 +80,7 @@ const AccountSettings: React.FC = () => {
               <ul className="list-disc list-inside space-y-1 text-muted-foreground">
                 <li>Want to take a break? Just log out — your data will be safe.</li>
                 <li>You can archive bookmarks instead of deleting them.</li>
-                <li>Having an issue? <Button variant="link" className="p-0 h-auto" onClick={() => window.location.href = '/contact-support'}>Contact support</Button> — we'd love to help.</li>
+                <li>Having an issue? <Button variant="link" className="p-0 h-auto">Contact support</Button> — we'd love to help.</li>
               </ul>
             </div>
           </div>
