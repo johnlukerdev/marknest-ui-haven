@@ -38,7 +38,7 @@ const Logo: React.FC<LogoProps> = ({ onClick }) => {
       className={`flex items-center gap-1 transition-all duration-200 ${navigate ? 'hover:cursor-pointer' : ''}`}
       onClick={handleClick}
     >
-      <div className="relative h-10 w-10 overflow-hidden">
+      <div className="relative h-8 w-8 overflow-hidden">
         <div className="absolute inset-0 gradient-primary rounded-full"></div>
         <div className="absolute inset-[2px] bg-background rounded-full"></div>
         <div className="absolute inset-0 flex items-center justify-center">
