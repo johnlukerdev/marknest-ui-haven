@@ -29,15 +29,15 @@ const SignIn: React.FC = () => {
             </div>
             
             <div className="space-y-4 md:space-y-8">
-              <h1 className="text-2xl md:text-4xl lg:text-5xl font-medium mb-3 md:mb-6 font-[Poppins] text-foreground leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-3 md:mb-6 font-[Poppins] text-foreground leading-tight whitespace-nowrap">
                 Welcome to MarkNest
               </h1>
               
-              <p className="text-indigo-400 text-base md:text-lg lg:text-xl mb-4 md:mb-8 leading-relaxed">
+              <p className="text-indigo-400 text-lg md:text-xl lg:text-2xl mb-4 md:mb-8 leading-relaxed">
                 Organize, access, and explore your digital world with one click.
               </p>
               
-              <p className="text-muted-foreground text-sm md:text-base mb-6 md:mb-12 leading-relaxed">
+              <p className="text-muted-foreground text-base md:text-lg mb-6 md:mb-12 leading-relaxed">
                 MarkNest helps you save, manage, and revisit your favorite content anytime. From videos to articles to tools, keep everything in one nest — beautifully encrypted and always at your fingertips.
               </p>
               
