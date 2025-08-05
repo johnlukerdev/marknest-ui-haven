@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { Clock } from 'lucide-react';
+import Logo from '@/components/Logo';
 
 interface ContactFormData {
   name: string;
@@ -56,9 +57,12 @@ const ContactSupport: React.FC = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-background text-foreground p-4">
-        <div className="max-w-2xl mx-auto pt-16">
-          <Card>
+    <div className="min-h-screen bg-background text-foreground p-4">
+      <div className="max-w-2xl mx-auto pt-16">
+        <div className="flex justify-center mb-8">
+          <Logo />
+        </div>
+        <Card>
             <CardContent className="pt-6 text-center space-y-4">
               <div className="text-6xl">✅</div>
               <h1 className="text-2xl font-semibold">Thanks! We've received your message and will be in touch soon.</h1>
@@ -76,6 +80,9 @@ const ContactSupport: React.FC = () => {
   return (
     <div className="min-h-screen bg-background text-foreground p-4">
       <div className="max-w-2xl mx-auto pt-16">
+        <div className="flex justify-center mb-8">
+          <Logo />
+        </div>
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center">We're Here to Help</CardTitle>
