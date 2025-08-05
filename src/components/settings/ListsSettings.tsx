@@ -150,13 +150,10 @@ const ListsSettings: React.FC = () => {
         </h2>
         <Button 
           onClick={handleCreateList} 
-          className="group relative overflow-hidden gradient-purple-blue hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 active:scale-95 rounded-xl px-6 py-2.5 font-medium"
+          className="flex items-center gap-2"
         >
-          <div className="relative z-10 flex items-center gap-2">
-            <Plus className="h-4 w-4 transition-transform group-hover:rotate-90 duration-300" />
-            <span>Add List</span>
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <Plus className="h-4 w-4" />
+          <span>Add List</span>
         </Button>
       </div>
 
