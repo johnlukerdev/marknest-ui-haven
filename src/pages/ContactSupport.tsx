@@ -82,16 +82,17 @@ const ContactSupport: React.FC = () => {
   return (
     <div className="min-h-screen bg-background text-foreground p-4">
       <div className="max-w-2xl mx-auto pt-16">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </Button>
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-between items-center mb-8">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => navigate(-1)}
+            className="flex items-center justify-center"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
           <Logo />
+          <div className="w-10"></div> {/* Spacer for centering */}
         </div>
         <Card>
           <CardHeader>
