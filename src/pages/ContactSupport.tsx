@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
-import { Clock } from 'lucide-react';
+import { Clock, ArrowLeft } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 interface ContactFormData {
@@ -20,6 +21,7 @@ interface ContactFormData {
 const ContactSupport: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<ContactFormData>();
+  const navigate = useNavigate();
 
   const selectedTopic = watch('topic');
 
@@ -80,6 +82,14 @@ const ContactSupport: React.FC = () => {
   return (
     <div className="min-h-screen bg-background text-foreground p-4">
       <div className="max-w-2xl mx-auto pt-16">
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate(-1)}
+          className="mb-4 flex items-center gap-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
         <div className="flex justify-center mb-8">
           <Logo />
         </div>
