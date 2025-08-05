@@ -22,13 +22,36 @@ const ContactSupport: React.FC = () => {
 
   const selectedTopic = watch('topic');
 
-  const onSubmit = (data: ContactFormData) => {
-    console.log('Contact form submitted:', data);
-    setIsSubmitted(true);
-    toast({
-      title: "Thanks! We've received your message and will be in touch soon.",
-      description: "We usually reply within 24 hours.",
-    });
+  const onSubmit = async (data: ContactFormData) => {
+    try {
+      const response = await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...data,
+          to: 'johnluker26@gmail.com'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      setIsSubmitted(true);
+      toast({
+        title: "Thanks! We've received your message and will be in touch soon.",
+        description: "We usually reply within 24 hours.",
+      });
+    } catch (error) {
+      console.error('Error sending contact form:', error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again or contact us directly at johnluker26@gmail.com",
+        variant: "destructive",
+      });
+    }
   };
 
   if (isSubmitted) {
