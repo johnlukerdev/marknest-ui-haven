@@ -79,7 +79,7 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChang
                   onClick={() => handleItemClick(item.id)}
                   className={`w-full flex items-center space-x-3 px-4 py-4 rounded-xl text-sm transition-all duration-200 ${
                     activeTab === item.id
-                      ? 'bg-gradient-to-r from-purple-500/10 to-indigo-500/10 text-purple-600 dark:text-purple-400 border border-purple-300/50 dark:border-purple-200/20 font-medium'
+                      ? 'bg-gradient-to-r from-purple-500/10 to-indigo-500/10 text-purple-600 border border-purple-200 font-medium'
                       : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                   }`}
                 >

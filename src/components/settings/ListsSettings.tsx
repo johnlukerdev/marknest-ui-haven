@@ -144,7 +144,7 @@ const ListsSettings: React.FC = () => {
   return (
     <div className="animate-fade-in space-y-6">
       {/* Header Section */}
-      <div className="flex items-center justify-between light:bg-gray-50 dark:bg-transparent p-4 rounded-lg">
+      <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
           Lists
         </h2>
@@ -158,7 +158,7 @@ const ListsSettings: React.FC = () => {
       </div>
 
       {/* Lists Grid */}
-      <div className="space-y-3 light:bg-gray-50 dark:bg-transparent p-4 rounded-lg">
+      <div className="space-y-3">
         {lists.map((list, index) => (
           <div 
             key={list.id}

@@ -21,7 +21,7 @@ const MiscSettings: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 mb-6 light:bg-gray-50 dark:bg-transparent p-4 rounded-lg">
+      <div className="flex items-center gap-3 mb-6">
         <div className="p-2 bg-orange-500/10 rounded-lg">
           <Settings className="h-6 w-6 text-orange-500" />
         </div>
@@ -31,7 +31,7 @@ const MiscSettings: React.FC = () => {
         </div>
       </div>
 
-      <Card className="light:bg-gray-50/70">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {theme === 'dark' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
@@ -56,7 +56,7 @@ const MiscSettings: React.FC = () => {
       </Card>
 
 
-      <Card className="light:bg-gray-50/70">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Bell className="h-5 w-5" />
@@ -89,7 +89,7 @@ const MiscSettings: React.FC = () => {
         </CardContent>
       </Card>
 
-      <Card className="light:bg-gray-50/70">
+      <Card>
         <CardHeader>
           <CardTitle>Advanced</CardTitle>
         </CardHeader>

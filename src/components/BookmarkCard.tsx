@@ -112,7 +112,7 @@ const BookmarkCard: React.FC<BookmarkCardProps> = ({
   return (
     <Card 
       id={`card-${id}`} 
-      className={`overflow-hidden hover-scale group card-enter flex flex-col h-full relative bg-card light:bg-gray-50/70 ${
+      className={`overflow-hidden hover-scale group card-enter flex flex-col h-full relative ${
         isSelectMode ? 'cursor-pointer' : ''
       } ${
         isSelected ? 'ring-2 ring-primary bg-selected' : ''

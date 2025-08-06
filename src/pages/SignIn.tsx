@@ -24,26 +24,26 @@ const SignIn: React.FC = () => {
         {/* Left Section - Content */}
         <div className="flex-1 flex flex-col p-8 md:p-12 lg:p-20 justify-center">
           <div className="max-w-xl">
-            <div className="mb-12">
+            <div className="mb-6 md:mb-12">
               <Logo />
             </div>
             
-            <div className="space-y-8">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-6 font-[Poppins] text-foreground leading-tight">
+            <div className="space-y-4 md:space-y-8">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-3 md:mb-6 font-[Poppins] text-foreground leading-tight whitespace-nowrap">
                 Welcome to MarkNest
               </h1>
               
-              <p className="text-indigo-400 text-lg md:text-xl mb-8 leading-relaxed">
+              <p className="text-indigo-400 text-lg md:text-xl lg:text-2xl mb-4 md:mb-8 leading-relaxed">
                 Organize, access, and explore your digital world with one click.
               </p>
               
-              <p className="text-muted-foreground text-base mb-12 leading-relaxed">
+              <p className="text-muted-foreground text-base md:text-lg mb-6 md:mb-12 leading-relaxed">
                 MarkNest helps you save, manage, and revisit your favorite content anytime. From videos to articles to tools, keep everything in one nest — beautifully encrypted and always at your fingertips.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                 <Button 
-                  className="text-base py-6 px-7 rounded-xl gradient-primary w-full sm:w-auto min-w-[140px]"
+                  className="text-sm md:text-base py-4 md:py-6 px-5 md:px-7 rounded-xl gradient-primary w-full sm:w-auto min-w-[120px] md:min-w-[140px]"
                   onClick={() => navigate('/signup')}
                 >
                   Get Started
@@ -51,7 +51,7 @@ const SignIn: React.FC = () => {
                 
                 <Button 
                   variant="outline" 
-                  className="text-base py-6 px-7 rounded-xl border-[1.5px] border-muted-foreground/30 hover:border-indigo-500/50 w-full sm:w-auto min-w-[140px] bg-transparent hover:bg-card/20"
+                  className="text-sm md:text-base py-4 md:py-6 px-5 md:px-7 rounded-xl border-[1.5px] border-muted-foreground/30 hover:border-indigo-500/50 w-full sm:w-auto min-w-[120px] md:min-w-[140px] bg-transparent hover:bg-card/20"
                   onClick={() => navigate('/secret-key', { state: { isSignIn: true } })}
                 >
                   Sign In

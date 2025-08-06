@@ -48,7 +48,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
                   variant="outline" 
                   size="sm" 
                   onClick={bulkMoveToArchive}
-                  className="hidden sm:flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/50 text-blue-600 dark:border-blue-500/30 dark:text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/70 dark:hover:border-blue-400/50 hover:text-blue-700 dark:hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
+                  className="hidden sm:flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                 >
                   <Archive className="h-4 w-4" />
                   <span>Archive</span>
@@ -57,7 +57,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
                   variant="outline" 
                   size="sm" 
                   onClick={bulkMoveToTrash}
-                  className="hidden sm:flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/50 text-red-600 dark:border-red-500/30 dark:text-red-400 hover:bg-red-500/20 hover:border-red-500/70 dark:hover:border-red-400/50 hover:text-red-700 dark:hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
+                  className="hidden sm:flex items-center justify-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                 >
                   <Trash2 className="h-4 w-4" />
                   <span>Delete</span>
@@ -73,7 +73,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ onAddBookmark }) => {
                 onClick={toggleSelectMode}
                 className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 ${
                   isSelectMode 
-                    ? 'bg-violet-500/20 border-violet-500/60 text-violet-700 dark:border-violet-500/40 dark:text-violet-300 hover:bg-violet-500/30 hover:border-violet-500/80 dark:hover:border-violet-500/50 hover:text-violet-800 dark:hover:text-violet-200 hover:shadow-lg hover:shadow-violet-500/25' 
+                    ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
                     : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
                 }`}
               >

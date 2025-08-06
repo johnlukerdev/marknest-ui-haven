@@ -11,7 +11,7 @@ const SubscriptionSettings: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 mb-6 light:bg-gray-50 dark:bg-transparent p-4 rounded-lg">
+      <div className="flex items-center gap-3 mb-6">
         <div className="p-2 bg-purple-500/10 rounded-lg">
           <CreditCard className="h-6 w-6 text-purple-500" />
         </div>
@@ -21,7 +21,7 @@ const SubscriptionSettings: React.FC = () => {
         </div>
       </div>
 
-      <Card className="border-purple-200/20 bg-gradient-to-br from-purple-500/5 to-blue-500/5 light:bg-gray-50/70">
+      <Card className="border-purple-200/20 bg-gradient-to-br from-purple-500/5 to-blue-500/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-purple-500" />
