@@ -28,7 +28,7 @@ const DataSettings: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="hover:shadow-md transition-shadow">
+        <Card className="hover:shadow-md transition-shadow light:bg-gray-50/70">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Globe className="h-5 w-5 text-blue-500" />
@@ -48,7 +48,7 @@ const DataSettings: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-md transition-shadow">
+        <Card className="hover:shadow-md transition-shadow light:bg-gray-50/70">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Upload className="h-5 w-5 text-green-500" />
@@ -69,7 +69,7 @@ const DataSettings: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-md transition-shadow">
+        <Card className="hover:shadow-md transition-shadow light:bg-gray-50/70">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Download className="h-5 w-5 text-purple-500" />
@@ -90,7 +90,7 @@ const DataSettings: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-md transition-shadow border-red-200/20">
+        <Card className="hover:shadow-md transition-shadow border-red-200/20 light:bg-gray-50/70">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg text-red-600">
               <Trash2 className="h-5 w-5" />

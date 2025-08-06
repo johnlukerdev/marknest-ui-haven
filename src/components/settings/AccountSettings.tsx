@@ -42,7 +42,7 @@ const AccountSettings: React.FC = () => {
       <h2 className="text-2xl font-semibold">Account Settings</h2>
 
       {/* Delete Account Section */}
-      <Card className="border-destructive/20">
+      <Card className="border-destructive/20 light:bg-gray-50/70">
         <CardHeader className="border-b border-destructive/20">
           <CardTitle className="text-destructive">Delete Account</CardTitle>
           <CardDescription>

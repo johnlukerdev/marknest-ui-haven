@@ -166,7 +166,7 @@ const Trash: React.FC = () => {
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
+                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-blue-500/10 border-blue-500/50 text-blue-600 dark:border-blue-500/30 dark:text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/70 dark:hover:border-blue-400/50 hover:text-blue-700 dark:hover:text-blue-300 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                         onClick={handleBulkRestore}
                         disabled={isLoading || selectedItems.length === 0}
                       >
@@ -176,7 +176,7 @@ const Trash: React.FC = () => {
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
+                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-red-500/10 border-red-500/50 text-red-600 dark:border-red-500/30 dark:text-red-400 hover:bg-red-500/20 hover:border-red-500/70 dark:hover:border-red-400/50 hover:text-red-700 dark:hover:text-red-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105 active:scale-95 backdrop-blur-sm"
                         onClick={handleBulkDelete}
                         disabled={isLoading || selectedItems.length === 0}
                       >
@@ -190,7 +190,7 @@ const Trash: React.FC = () => {
                     size="sm"
                     className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 focus:ring-0 ${
                       isSelectionMode 
-                        ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
+                        ? 'bg-violet-500/20 border-violet-500/60 text-violet-700 dark:border-violet-500/40 dark:text-violet-300 hover:bg-violet-500/30 hover:border-violet-500/80 dark:hover:border-violet-500/50 hover:text-violet-800 dark:hover:text-violet-200 hover:shadow-lg hover:shadow-violet-500/25' 
                         : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
                     }`}
                     onClick={toggleSelectionMode}
@@ -219,7 +219,7 @@ const Trash: React.FC = () => {
                     size="sm"
                     className={`flex items-center justify-center w-10 h-10 p-0 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95 focus:ring-0 ${
                       isSelectionMode 
-                        ? 'bg-violet-500/20 border-violet-500/40 text-violet-300 hover:bg-violet-500/30 hover:shadow-lg hover:shadow-violet-500/25' 
+                        ? 'bg-violet-500/20 border-violet-500/60 text-violet-700 dark:border-violet-500/40 dark:text-violet-300 hover:bg-violet-500/30 hover:border-violet-500/80 dark:hover:border-violet-500/50 hover:text-violet-800 dark:hover:text-violet-200 hover:shadow-lg hover:shadow-violet-500/25' 
                         : 'bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:text-foreground hover:shadow-md'
                     }`}
                     onClick={toggleSelectionMode}
@@ -281,7 +281,7 @@ const Trash: React.FC = () => {
               {trashBookmarks.map((bookmark) => (
                 <Card 
                   key={bookmark.id} 
-                  className={`overflow-hidden hover-scale group card-enter flex flex-col h-full relative ${
+                  className={`overflow-hidden hover-scale group card-enter flex flex-col h-full relative bg-card light:bg-gray-50/70 ${
                     isSelectionMode ? 'cursor-pointer' : ''
                   } ${
                     selectedItems.includes(bookmark.id) ? 'ring-2 ring-primary bg-selected' : ''
