@@ -48,7 +48,7 @@ const TagsSettings: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-6 light:bg-gray-50 dark:bg-transparent p-4 rounded-lg">
         <div className="p-2 bg-green-500/10 rounded-lg">
           <Tag className="h-6 w-6 text-green-500" />
         </div>
@@ -58,7 +58,7 @@ const TagsSettings: React.FC = () => {
         </div>
       </div>
 
-      <Card>
+      <Card className="light:bg-gray-50/70">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Plus className="h-5 w-5" />
@@ -84,7 +84,7 @@ const TagsSettings: React.FC = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="light:bg-gray-50/70">
         <CardHeader>
           <CardTitle>Your Tags</CardTitle>
         </CardHeader>
