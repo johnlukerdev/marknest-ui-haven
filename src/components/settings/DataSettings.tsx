@@ -2,8 +2,19 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Database, Globe, Download, Upload, Trash2 } from 'lucide-react';
+import { Database, Globe, Download, Upload, Trash2, AlertTriangle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog';
 import { toast } from '@/hooks/use-toast';
 
 const DataSettings: React.FC = () => {
@@ -101,13 +112,38 @@ const DataSettings: React.FC = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Permanently remove all your data. This action cannot be undone.
             </p>
-            <Button 
-              variant="destructive" 
-              className="w-full"
-              onClick={() => handleDataAction('Data Deletion')}
-            >
-              ❌ Delete Everything
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button 
+                  variant="destructive" 
+                  className="w-full"
+                >
+                  ❌ Delete Everything
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="sm:max-w-md">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5 text-red-500" />
+                    Delete All Data
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-left">
+                    Are you absolutely sure you want to delete all your data? This action is permanent and cannot be undone. All your bookmarks, lists, tags, and saved content will be permanently removed.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+                  <AlertDialogCancel className="w-full sm:w-auto">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="w-full sm:w-auto bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                    onClick={() => handleDataAction('Data Deletion')}
+                  >
+                    Delete Everything
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardContent>
         </Card>
       </div>
