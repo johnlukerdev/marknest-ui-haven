@@ -91,13 +91,42 @@ const DataSettings: React.FC = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Download a complete backup of all your saved content.
             </p>
-            <Button 
-              variant="outline" 
-              className="w-full"
-              onClick={() => handleDataAction('Data Export')}
-            >
-              📤 Export Data
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                >
+                  📤 Export Data
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="sm:max-w-lg">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-2xl font-semibold mb-4">
+                    Export All Data
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-left space-y-4">
+                    <p className="text-base text-muted-foreground">
+                      Export all your data from the server to your device as a text file.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      It may take several minutes to export all your data.
+                    </p>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex-col sm:flex-row gap-3 mt-6">
+                  <AlertDialogCancel className="w-full sm:w-auto">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="w-full sm:w-auto bg-transparent border border-input text-foreground hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => handleDataAction('Data Export')}
+                  >
+                    Export All My Data
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardContent>
         </Card>
 
